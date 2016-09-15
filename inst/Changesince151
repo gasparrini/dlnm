@@ -1,0 +1,36 @@
+==============================================================================
+Changes since dlnm 1.5.1 (5 Jan 2012) : further info
+===================================
+
+Since version 1.5.1, the dlnm package includes important changes.
+Basic info are provided in:
+file.show(system.file("ChangeLog",package="dlnm"))
+
+The main changes involve the function 'crossbasis', for which a completely new 
+usage has been implemented. This new approach eliminates the long list of 
+arguments used to specify the two basis functions for the two dimensions, and 
+replaces them with two arguments argvar and arglag. These are lists of the same
+arguments to be passed to the new function 'onebasis', which in turn replaces
+'mkbasis' and 'mklagbasis'. The other important change involves the argument
+maxlag, now replaced by lag, optionally a vector of 2 values specifying min and 
+max lag.
+
+The main issue with the new version is that the compatibility of the old code 
+is not complete. Old arguments of 'crossbasis' are still accepted, passed 
+through ..., but, unfortunately, the attributes of the created cross-basis 
+matrix are now different, and any call to one of the old attributes will 
+return NULL.
+
+The code included in as online material of published articles still works and
+produces the same results, although returning a warning about the new usage of
+'crossbasis'. However, user-defined code may not work anymore, and users need 
+to modify it compatibly with the new version.
+
+These changes have been included in order to simplify the syntax and to allow
+for future changes.
+
+The authors apologize for the inconvenience.
+Please report any issue with the new version to:
+antonio.gasparrini@lshtm.ac.uk
+
+For general info on the package, type help(dlnm) and vignette('dlnmOverview')

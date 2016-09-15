@@ -1,0 +1,23 @@
+==============================================================================
+Changes in dlnm 2.2.0 (14 March 2016) : further info
+===================================
+
+Since version 2.2.0, the centering procedure has been moved from basis
+generation to basis prediction, namely from onebasis()-crossbasis() to
+crosspred()-crossreduce(). This change simplifies the steps for obtaining
+predictions with different references, as it avoids refitting the model each
+time. It also simplifies the internal structure of the package.
+
+The user is required to specify the centering point through the same argument
+'cen', which however is now included in crosspred() or crossreduce(). If
+specified in onebasis() or crossbasis(), a warning is returned, and the info is
+kept for backward compatibility with previous code. However, the user is
+strongly suggested to adopt the new usage.
+
+An updated version of code published in various articles is available at:
+www.ag-myresearch.com
+
+For general info on the package, type help(dlnm) and vignette('dlnmOverview')
+
+Please report any issue with the new version to:
+antonio.gasparrini@lshtm.ac.uk

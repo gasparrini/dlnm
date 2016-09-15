@@ -1,0 +1,69 @@
+#################
+# EXPORTED
+#################
+#
+export(onebasis,crossbasis,crosspred,crossreduce)
+export(plot.crosspred,lines.crosspred,points.crosspred)
+#export(smooth.construct.cbs.smooth.spec)
+#export(cbPen)
+export(plot.crossreduce,lines.crossreduce,points.crossreduce)
+export(summary.onebasis,summary.crossbasis,summary.crosspred,summary.crossreduce)
+export(coef.crosspred,vcov.crosspred,coef.crossreduce,vcov.crossreduce)
+export(logknots,equalknots)
+export(exphist)
+#
+#
+#################
+# NOT EXPORTED
+#################
+#
+# poly,thr,strata,lin, integer
+# ps, cr
+#
+#################
+# INTERNAL
+#################
+#
+# DOCUMENTED
+# checkcrossbasis,checkgroup,checkonebasis,fci,getcoef,getlink,getvcov,mkat,
+# mkcen,mklag,mkXpred,seqlag
+#
+# NOT DOCUMENTED:
+#.onAttach
+#
+#################
+# IMPORTED
+#################
+#
+import(stats,graphics,grDevices)
+importFrom(utils,packageDescription)
+importFrom(utils,modifyList)
+importFrom(splines,ns)
+importFrom(splines,bs)
+importFrom(nlme,fixef)
+importFrom(tsModel,Lag)
+#importFrom(mgcv,smooth.construct.tensor.smooth.spec)
+importFrom(mgcv,tensor.prod.model.matrix)
+importFrom(mgcv,PredictMat)
+#
+#################
+# METHODS
+#################
+#
+S3method(summary, onebasis)
+S3method(summary, crossbasis)
+S3method(summary, crosspred)
+S3method(summary, crossreduce)
+#
+S3method(plot, crosspred)
+S3method(lines, crosspred)
+S3method(points, crosspred)
+S3method(plot, crossreduce)
+S3method(lines, crossreduce)
+S3method(points, crossreduce)
+S3method(plot, crossreduce)
+#
+S3method(coef, crosspred)
+S3method(vcov, crosspred)
+S3method(coef, crossreduce)
+S3method(vcov, crossreduce)

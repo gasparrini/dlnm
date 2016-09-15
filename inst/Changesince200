@@ -1,0 +1,44 @@
+==============================================================================
+Changes in dlnm 2.0.0 (10 Sept 2013) : further info
+===================================
+
+Since version 2.0.0, the dlnm package includes important changes. These changes 
+affect the usage of code developed for older versions. In particular, some
+default values in the functions crossbasis() and onebasis() are now different, 
+and the use of code for versions between 1.5.1 and 2.0.0 can generate different
+results with the new version, although a warning is returned. Also, the usage of
+versions older than 1.5.1 does not work anymore. 
+See below for details.
+
+The function onebasis() is now a wrapper for other existing functions, and also 
+its syntax has slightly changed. In particular, the default values for the
+arguments are now those of the called functions themselves. The new functions
+strata(), poly(), lthr() and integer() are now available, which with ns() and 
+bs() in the package splines now offer all the options available earlier. Other
+existing or user-defined functions can be applied to extend the framework.
+
+The functions crossbasis() calls onebasis() internally, and the same changes
+apply to it. An important change is that the knots for the spline functions or 
+cut-offs for strata in the lag dimension are now placed at equally-spaced
+percentiles if not specified, differently from the default in previous versions.
+This implies that code produced for versions earlier than 2.0.0 generates
+different results with the new versions. The new function logknots() has been
+added for placing the knots at equally-spaced values in the log scale, the
+default previously used.
+
+The syntax for the old versions still works in many other cases, and changes are
+included internally when possible. However, the functions return a warning with
+a suggestion of adopting the new syntax.
+
+An updated version of code published in various articles is available at:
+www.ag-myresearch.com
+
+Detailed info on changes are provided in:
+file.show(system.file("ChangeLog",package="dlnm"))
+
+These changes have been included for consistency and were unavoidable. The
+authors apologize for the inconvenience.
+Please report any issue with the new version to:
+antonio.gasparrini@lshtm.ac.uk
+
+For general info on the package, type help(dlnm) and vignette('dlnmOverview')
