@@ -1,13 +1,15 @@
 \name{dlnm-internal}
+\alias{fci}
+\alias{findrank}
+\alias{getcoef}
+\alias{getlink}
+\alias{getvcov}
+\alias{mkaddSlag}
 \alias{mkat}
 \alias{mkcen}
 \alias{mklag}
 \alias{mkXpred}
-\alias{fci}
 \alias{seqlag}
-\alias{getcoef}
-\alias{getvcov}
-\alias{getlink}
 
 
 \title{ Internal Functions for Package dlnm }
@@ -17,13 +19,17 @@ These functions are called internally by other functions and are not meant to be
 }
 
 \usage{
-getcoef(model, class)
+fci(ci, x, high, low, ci.arg, plot.arg, noeff=NULL)
 
-getvcov(model, class)
+findrank(X)
+
+getcoef(model, class)
 
 getlink(model, class)
 
-fci(ci, x, high, low, ci.arg, plot.arg, noeff=NULL)
+getvcov(model, class)
+
+mkaddSlag(addSlag, d)
 
 mkat(at, from, to, by, range, lag, bylag)
 
@@ -37,14 +43,17 @@ seqlag(lag, by=1)
 }
 
 \arguments{
-  \item{model }{ a regression model object.}
-  \item{class }{ a regression model class.}
   \item{ci }{ type of confidence intervals representation.}
   \item{x }{ the coordinates of the x axis.}
   \item{high, low }{ the coordinates of the y axis for the interval.}
   \item{ci.arg }{ list of arguments to draw the confidence intervals.}
   \item{plot.arg }{ list of arguments of the main plot.}
   \item{noeff }{ reference value of the null effect.}
+  \item{X }{ a matrix.}
+  \item{model }{ a regression model object.}
+  \item{class }{ a regression model class.}
+  \item{addSlag }{ matrix or vector (or list of matrices and/or vectors) defining additional penalties on the lag structure.}
+  \item{d }{ numeric vector of length 2 providing the cross-basis dimensions.}
   \item{at }{ either a numeric vector representing the values of a constant exposure throughout the lag period defined by \code{lag}, or a matrix of exposure histories over the same lag period used for estimation.}
   \item{from, to}{ range of predictor values used for prediction.}
   \item{by, bylag}{ increment of the sequences of predictor and lag values used for prediction.}
@@ -57,9 +66,13 @@ seqlag(lag, by=1)
 }
 
 \details{
-The functions \code{getcoef}, \code{getvcov} and \code{getlink} extract coefficients and (co)variance matrix, and the model link, depending on the class of the model, and returns a message error if the process fails. They are used internally in \code{\link{crosspred}} and \code{\link{crossreduce}}.
-
 The function \code{fci} provides different options for representing confidence intervals, and it is called internally in plotting functions.
+
+The function \code{findrank} returns the rank of a matrix.
+
+The functions \code{getcoef}, \code{getlink}, and \code{getvcov} extract coefficients, the model link, and (co)variance matrix, respectively, depending on the class of the model, and returns a message error if the process fails. They are used internally in \code{\link{crosspred}} and \code{\link{crossreduce}}.
+
+The function \code{mkaddSlag} returns a list of penalty matrices defining additional penalties on the lag structure. It is used intenally in functions for performing penalized models.
 
 The function \code{mkat} is used internally in \code{\link{crosspred}} to define the values used for predictions.
 

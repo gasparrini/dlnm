@@ -1,7 +1,7 @@
 \name{integer}
 \alias{integer}
 
-\title{ Generate a Basis Matrix of with a Indicator Variables for Integer Values }
+\title{ Generate a Basis Matrix of Indicator Variables for Integer Values }
 
 \description{
 The function generates a basis matrix including indicator variables defining intervals for integer values. It is meant to be used internally by \code{\link{onebasis}} and \code{\link{crossbasis}} and not directly run by the users.
