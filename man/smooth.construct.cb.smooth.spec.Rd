@@ -2,10 +2,10 @@
 \alias{smooth.construct.cb.smooth.spec}
 \alias{Predict.matrix.cb.smooth}
 
-\title{ ... }
+\title{ Cross-Basis Spline Smooths for a DLNM }
 
 \description{
-...
+... Smooth class for bi-dimensional cross-basis splines
 }
 
 \usage{
