@@ -18,7 +18,7 @@ exphist(exp, time, lag)
 }
 
 \details{
-This function is used to define matrices of exposure histories to be used in \code{\link{crosspred}} for obtaining predictions.
+This function is used to define matrices of exposure histories (backward in time) given an exposure profile (forward in time). Among other uses, this can be applied to define specific exposure histories for obtaining predictions in \code{\link{crosspred}}.
 
 The exposure profile in \code{exp} is assumed to represent a series of exposure events defined forward in time, starting from time 1 and on. An exposure history is then evaluated backward in time for each point defined by \code{time} (rounded to integers) on the lag period defined by \code{lag}.
 

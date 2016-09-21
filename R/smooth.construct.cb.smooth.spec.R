@@ -22,9 +22,9 @@ smooth.construct.cb.smooth.spec <- function(object, data, knots) {
   term <- object$term
   dim <- length(term)
 #
-  # EVALUATE k (FROM bs.dim, DEFAULT TO 5)
+  # EVALUATE k (FROM bs.dim, DEFAULT TO 10)
   k <- object$bs.dim
-  k[k<0] <- 5
+  k[k<0] <- 10
   if(length(k)==1) k <- rep(k,2)
 #
   # EVALUATE bs (STORED IN xt, DEFAULT TO 'ps', AND ONLY 'ps'-'cr' ACCEPTED)

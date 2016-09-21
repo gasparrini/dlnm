@@ -47,11 +47,11 @@ Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and Hall
 \author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}, adapting code available from functions included in the package \pkg{mgcv} by Simon N. Wood.}
 
 \note{
-While the function can be used to fit penalized models with the \code{\link[mgcv]{gam}} regression function in \pkg{mgcv} including the penalty matrix in the argument \code{paraPen}, the use of the \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}} is to be preferred. The function is primarily added here to specify penalized DLMs and DLNMs using the sa-called \emph{external} method (see \code{\link{cbPen}}).
+The function is primarily added here to specify penalized DLMs and DLNMs using the so-called \emph{external} method, \emph{i.e.} by including the penalty matrix in the argument \code{paraPen} of the \code{\link[mgcv]{gam}} regression function in \pkg{mgcv}  (see \code{\link{cbPen}}). However, this approach can be also used to fit standard unidimensional P-spline models as an alternative to the use of specific \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}}, as it takes advantage of the use of prediction and plotting functions in \pkg{dlnm}.
 }
 
 \seealso{
-\code{\link{cr}} for penalized cubic regression splines. \code{\link{bs}} and \code{\link{ns}} for B-splines and natural cubic splines, respectively. \code{\link{cbPen}} for defining tensor-type bi-dimensional penalties in DLNMs. The \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}} for cross-basis spline smooths.
+\code{\link{cr}} for penalized cubic regression splines. \code{\link{bs}} and \code{\link{ns}} for B-splines and natural cubic splines, respectively. \code{\link{cbPen}} for defining tensor-type bi-dimensional penalties in DLNMs. The related \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}} for P-spline smooths in \pkg{mgcv}. The \code{\link[=smooth.construct.cb.smooth.spec]{smooth constructor}} for cross-basis spline smooths.
 
 See \code{\link{dlnm-package}} for an introduction to the package and for links to package vignettes providing more detailed information.
 }

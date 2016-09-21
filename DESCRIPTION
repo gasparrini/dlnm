@@ -3,8 +3,10 @@ Type: Package
 Title: Distributed Lag Non-Linear Models
 Version: 2.2.7
 Date: 2016-09-19
-Author: Antonio Gasparrini and Ben Armstrong
-Maintainer: Antonio Gasparrini <antonio.gasparrini@lshtm.ac.uk>
+Authors@R: c(
+  person("Antonio","Gasparrini",role=c("aut","cre"),email="antonio.gasparrini@lshtm.ac.uk"),
+  person("Ben","Armstrong",role="aut",email="ben.armstrong@lshtm.ac.uk"),
+  person("Fabian","Scheipl",role="ctb",email="fabian.scheipl@stat.uni-muenchen.de"))
 Imports: stats, graphics, grDevices, utils, splines, nlme, mgcv, tsModel
 Depends: R (>= 3.2)
 Suggests: survival, lme4, gee, geepack, mvmeta
