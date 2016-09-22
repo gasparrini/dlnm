@@ -45,7 +45,7 @@ Gasparrini A. Modeling exposure-lag-response associations with distributed lag n
 Gasparrini A., Armstrong, B.,Kenward M. G. Distributed lag non-linear models. \emph{Statistics in Medicine}. 2010; \bold{29}(21):2224-2234. [freely available \href{http://www.ag-myresearch.com/statmed2010}{here}]
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 Missing values in \code{x} are allowed, but this causes the observation (for non-time series data with \code{x} as a matrix) or the following observations corresponding to the lag period (for time series data with \code{x} as a vector series) to be set to \code{NA}. Although correct, this could generate computational problems in the presence of a high number of missing observations.

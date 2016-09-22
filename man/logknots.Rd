@@ -34,7 +34,7 @@ An intercept is included by default (\code{intercept=TRUE}), consistently with t
 A numeric vector of knot or cut-off values, to be used in the \code{arglag} list argument of \code{\link{crossbasis}} for reproducing the default of versions of \pkg{dlnm} earlier than 2.0.0.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \seealso{
 \code{\link{equalknots}} for placing the knots at equally-spaced values. \code{\link{crossbasis}} to generate cross-basis matrices.

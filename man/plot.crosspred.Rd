@@ -63,7 +63,7 @@ Gasparrini A. Modeling exposure-lag-response associations with distributed lag n
 Gasparrini A., Armstrong, B.,Kenward M. G. Distributed lag non-linear models. \emph{Statistics in Medicine}. 2010; \bold{29}(21):2224-2234. [freely available \href{http://www.ag-myresearch.com/statmed2010}{here}]
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 All the predictions are plotted using a reference value corresponding to the centering point for continuous functions or different values for the other functions (see the related help pages). This is determined by the argument \code{cen} in \code{\link{crosspred}}. Exponentiated predictions are returned by default if \code{x$model.link} is equal to \code{log} or \code{logit}.

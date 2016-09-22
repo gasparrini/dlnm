@@ -80,7 +80,7 @@ Gasparrini A. Modeling exposure-lag-response associations with distributed lag n
 Gasparrini A., Armstrong, B.,Kenward M. G. Distributed lag non-linear models. \emph{Statistics in Medicine}. 2010; \bold{29}(21):2224-2234. [freely available \href{http://www.ag-myresearch.com/statmed2010}{here}]
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 All the predictions are generated using a reference value, which if not directly specific by \code{cen} is given default values corresponding to the mid-range point for continuous functions. Before version 2.2.0 of \pkg{dlnm}, centering was produced in \code{\link{onebasis}} or \code{\link{crossbasis}} (see the related help pages), and for backward compatibility this information is kept (with a warning) and used in \code{crosspred} unless \code{cen} is directly defined as an argument.

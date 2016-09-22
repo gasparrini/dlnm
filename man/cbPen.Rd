@@ -33,7 +33,7 @@ The vector \code{sp} must have the same length as the number of penalties, inclu
 A list including penalty matrices plus two vectors \code{rank} and \code{sp} defining their rank and the smoothing parameters. This list is consistent with the argument \code{paraPen} in the regression function \code{\link[mgcv]{gam}} function of \pkg{mgcv}.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \seealso{
 \code{\link{ps}} and \code{\link{cr}} for penalized spline functions. The \code{\link[=smooth.construct.cb.smooth.spec]{smooth constructor}} for cross-basis spline smooths.

@@ -52,7 +52,7 @@ Please use \code{citation("dlnm")} to cite this package.
 \author{
 Antonio Gasparrini and Ben Armstrong, with contributions from Fabian Scheipl
 
-Maintainer: Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}
+Maintainer: Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>
 }
 
 \references{

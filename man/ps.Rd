@@ -44,7 +44,7 @@ Eilers P. H. C. and Marx B. D. Flexible smoothing with B-splines and penalties. 
 Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and Hall/CRC Press, 2006.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}, adapting code available from functions included in the package \pkg{mgcv} by Simon N. Wood.}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>, adapting code available from functions included in the package \pkg{mgcv} by Simon N. Wood.}
 
 \note{
 The function is primarily added here to specify penalized DLMs and DLNMs using the so-called \emph{external} method, \emph{i.e.} by including the penalty matrix in the argument \code{paraPen} of the \code{\link[mgcv]{gam}} regression function in \pkg{mgcv}  (see \code{\link{cbPen}}). However, this approach can be also used to fit standard unidimensional P-spline models as an alternative to the use of specific \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}}, as it takes advantage of the use of prediction and plotting functions in \pkg{dlnm}.

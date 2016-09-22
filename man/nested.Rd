@@ -32,7 +32,7 @@ The exposure history for each subject (series of yearly exposures) can be recove
 These nested case-control data were extracted from a simulated cohort with 300 cases of cancer and a time-varying exposure.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \seealso{
 \code{\link{drug}} for an example of randomized controlled trial data. \code{\link{chicagoNMMAPS}} for an example of time series data.

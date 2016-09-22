@@ -24,7 +24,7 @@ The function returns a basis matrix with the un-transformed variable, optionally
 A matrix object of class \code{"lin"}. It contains the attribute \code{intercept}.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 This function is mainly used internally thorugh \code{\link{onebasis}} to create basis matrices. It is not exported in the namespace, and can be accessed through the triple colon operator '\code{:::}' (see Examples below). 

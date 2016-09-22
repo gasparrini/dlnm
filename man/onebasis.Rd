@@ -51,7 +51,7 @@ In addition, any other existing or user-defined function can be potentially call
 A matrix object of class \code{"onebasis"} which can be included in a model formula in order to estimate the association. It contains the attributes \code{fun}, \code{range} (range of the original vector of observations) and additional attributes specific to the chosen function. The method \code{summary.onebasis} returns a summary of the basis matrix and the related attributes.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 This function offers a wide range of options about modelling the shape of the exposure-response relationships, also simplifying or extending the use of existing functions. The function \code{\link{crosspred}} can be called on objects of class \code{"onebasis"} in order to obtain predictions and plotting of such unidimensional associations. If more than one variable is transformed through \code{onebasis} in the same model, different names must be specified. 

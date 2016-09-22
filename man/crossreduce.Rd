@@ -66,7 +66,7 @@ A list object of class \code{"crossreduce"} with the following (optional) compon
 Gasparrini A., Armstrong, B., Kenward M. G. Reducing and meta-analyzing estimates from distributed lag non-linear models.\emph{BMC Medical Research Methodology}. 2013; \bold{13}(1):1. [freely available \href{http://www.ag-myresearch.com/bmcmrm2013}{here}].
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 All the predictions are generated using a reference value, which if not directly specific by \code{cen} is given default values corresponding to the mid-range point for continuous functions. Before version 2.2.0 of \pkg{dlnm}, centering was produced in \code{\link{crossbasis}} (see the related help page), and for backward compatibility this information is kept (with a warning) and used in \code{crossreduce} unless \code{cen} is directly defined as an argument.

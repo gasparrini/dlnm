@@ -85,7 +85,7 @@ The function \code{mkXpred} is used internally in \code{\link{crosspred}} to def
 The function \code{seqlag} is used internally in several other functions to create the vector with the sequence of lags given the range provided.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 These and other undocumented internal functions are not exported in the namespace of the package \pkg{dlnm}. The user can visualize them through the use of the triple colon operator '\code{:::}' or through the function \code{\link{getAnywhere}} (see the examples below).  

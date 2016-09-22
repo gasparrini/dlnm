@@ -28,7 +28,7 @@ The number of knots is set with the argument \code{nk}, or otherwise determined 
 A numeric vector of knot or cut-off values.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \seealso{
 \code{\link{logknots}} for placing the knots at equally-spaced log values. \code{\link{crossbasis}} to generate cross-basis matrices.

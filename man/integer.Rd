@@ -26,7 +26,7 @@ The argument \code{intercept} determines the presence of an intercept. If \code{
 \value{
 A matrix object of class \code{"integer"}. It contains the attributes \code{values} and \code{intercept}.}
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 This function is mainly used internally thorugh \code{\link{onebasis}} to create basis matrices. It is not exported in the namespace to avoid conflicts with the function with the same name in the package \pkg{base}, and can be accessed through the triple colon operator '\code{:::}' (see Examples below).
