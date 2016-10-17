@@ -224,6 +224,3 @@ NULL
 #' cohort with 300 cases of cancer and a time-varying exposure.
 #' @keywords datasets
 NULL
-
-
-
