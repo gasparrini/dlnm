@@ -1,6 +1,17 @@
 ###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2016
 #
+#' @describeIn internals used internally in \code{\link{crosspred}} to
+#'    define the basis or cross-basis matrix for computing predictions.
+#' @param type type of model from which predictions are needed. See \code{\link{crosspred}}.
+#' @param basis type of basis object from which predictions are needed. See \code{\link{crosspred}}.
+#' @param at either a numeric vector representing the values of a constant 
+#'   exposure throughout the lag period defined by \code{lag}, or a matrix of 
+#'   exposure histories over the same lag period used for estimation.
+#' @param predvar vector or matrix of predictor values used for prediction
+#' @param predlag vector or matrix of lag values used for prediction
+#' @param cen logical or a numeric scalar. It specifies the centering value,
+#'   then used as a reference for predictions.
 mkXpred <-
 function(type, basis, at, predvar, predlag, cen) {
 #

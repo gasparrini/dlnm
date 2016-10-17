@@ -1,6 +1,13 @@
 ###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2016
-#
+
+#' @describeIn internals extracts coefficients depending on the class of the model, 
+#' and returns a message error if the process fails. Used internally in \code{\link{crosspred}} and
+#' \code{\link{crossreduce}}.
+#' @importFrom nlme fixef
+#' @importFrom lme4 fixef
+#' @param model a regression model object.
+#' @param class a regression model class.
 getcoef <-
   function(model, class) {
     #

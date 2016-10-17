@@ -1,6 +1,18 @@
 ###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2016
 #
+#' @describeIn internals used internally in \code{\link{crosspred}} to define
+#'   the values used for predictions.
+#' @param at either a numeric vector representing the values of a constant 
+#'   exposure throughout the lag period defined by \code{lag}, or a matrix of 
+#'   exposure histories over the same lag period used for estimation.
+#' @param from min of predictor values used for prediction.
+#' @param to max of predictor values used for prediction.
+#' @param by increment of the sequences of predictor used for prediction.
+#' @param bylag increment of the sequences of lag values used for prediction.
+#' @param range range of values used for prediction.
+#' @param lag either an integer scalar or vector of length 2, defining the
+#'   maximum lag or the lag range, respectively.
 mkat <-
 function(at, from, to, by, range, lag, bylag) {
 #

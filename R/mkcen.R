@@ -1,6 +1,13 @@
 ###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2016
 #
+#' @describeIn internals used internally in \code{\link{crosspred}} to
+#' define the centering value for computing predictions.
+#' @param cen logical or a numeric scalar. It specifies the centering value,
+#' then used as a reference for predictions.
+#' @param type type of model from which predictions are needed. See \code{\link{crosspred}}.
+#' @param basis type of basis object from which predictions are needed. See \code{\link{crosspred}}.
+#' @param range range of values used for prediction.
 mkcen <-
 function(cen, type, basis, range) {
 #

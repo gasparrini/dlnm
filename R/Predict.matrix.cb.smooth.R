@@ -1,6 +1,7 @@
 ###
 ### R routines for the R package dlnm (c) Antonio Gasparrini and Fabian Scheipl 2016
 #
+#' @importFrom mgcv PredictMat Predict.matrix tensor.prod.model.matrix
 Predict.matrix.cb.smooth <- function(object, data) {
 #
 ################################################################################

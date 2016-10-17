@@ -1,11 +1,18 @@
 ###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2016
-#
-fci <-
-function(ci, x, high, low, ci.arg, plot.arg, noeff=NULL) {
-#
-################################################################################
-#
+
+#' @describeIn internals \code{fci} provides different options for representing
+#'   confidence intervals, and it is called internally in plotting functions.
+#' @param ci type of confidence intervals representation.
+#' @param x the coordinates of the x axis.
+#' @param high,low the coordinates of the y axis for the interval.
+#' @param ci.arg list of arguments to draw the confidence intervals.
+#' @param plot.arg list of arguments of the main plot.
+#' @param noeff reference value of the null effect.
+#' @importFrom utils modifyList
+#' @importFrom graphics polygon segments lines abline
+#' @importFrom grDevices grey
+fci <- function(ci, x, high, low, ci.arg, plot.arg, noeff=NULL) {
   if(ci=="area") {
     polygon.arg <- modifyList(list(col=grey(0.9),border=NA),ci.arg)
     polygon.arg <- modifyList(polygon.arg,

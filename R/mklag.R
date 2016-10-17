@@ -1,6 +1,10 @@
 ###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2016
 #
+#' @describeIn internals used internally in several other functions to
+#'  check/define the vector of length 2 representing the lag interval.
+#' @param lag either an integer scalar or vector of length 2, defining the
+#'   maximum lag or the lag range, respectively.
 mklag <- 
 function(lag) {
 #

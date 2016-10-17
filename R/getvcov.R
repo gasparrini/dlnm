@@ -1,6 +1,10 @@
 ###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2016
 #
+#' @describeIn internals extracts coefficient covariance depending on the class of the model, 
+#' and returns a message error if the process fails. Used internally in \code{\link{crosspred}} and
+#' \code{\link{crossreduce}}.
+#' @inheritParams getcoef
 getvcov <-
   function(model, class) {
     #
