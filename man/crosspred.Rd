@@ -10,7 +10,7 @@ crosspred(basis, model = NULL, coef = NULL, vcov = NULL,
   lag, bylag = 1, cen = NULL, ci.level = 0.95, cumul = FALSE)
 }
 \arguments{
-\item{basis}{an object of class \code{"onebasis"} or \code{"crossbasis"}.}
+\item{basis}{an object of class \code{'onebasis'} or \code{'crossbasis'}.}
 
 \item{model}{a model object for which the prediction is desired. See Details
 below.}
@@ -42,7 +42,7 @@ along lags are also predicted. See Details.}
 \item{\dots}{additional arguments to be passed to \code{summary}.}
 }
 \value{
-A list object of class \code{"crosspred"} with the following
+A list object of class \code{'crosspred'} with the following
 (optional) components: \item{predvar }{ vector or matrix of values used for
 prediction, depending on the format of the argument \code{at} (see Details
 above).} \item{cen }{ (optional) numeric scalar defining the centering
@@ -163,17 +163,17 @@ be specified.
 }
 \examples{
 
-### default usage - see vignette("dlnmTS")
+### default usage - see vignette('dlnmTS')
 
 # seasonal analysis: select summer months only
 chicagoNMMAPSseas <- subset(chicagoNMMAPS, month>5 & month<10)
 
 # create the crossbasis objects, including info on groups
 cb2.o3 <- crossbasis(chicagoNMMAPSseas$o3, lag=5,
-  argvar=list(fun="thr",thr=40.3), arglag=list(fun="integer"),
+  argvar=list(fun='thr',thr=40.3), arglag=list(fun='integer'),
   group=chicagoNMMAPSseas$year)
 cb2.temp <- crossbasis(chicagoNMMAPSseas$temp, lag=10,
-  argvar=list(fun="thr",thr=c(15,25)), arglag=list(fun="strata",breaks=c(2,6)),
+  argvar=list(fun='thr',thr=c(15,25)), arglag=list(fun='strata',breaks=c(2,6)),
   group=chicagoNMMAPSseas$year)
 summary(cb2.o3)
 summary(cb2.temp)
@@ -187,25 +187,26 @@ model2 <- glm(death ~  cb2.o3 + cb2.temp + ns(doy, 4) + ns(time,3) + dow,
 pred2.o3 <- crosspred(cb2.o3, model2, at=c(0:65,40.3,50.3))
 
 # get figures for the overall cumulative association, with ci
-pred2.o3$allRRfit["50.3"]
-cbind(pred2.o3$allRRlow, pred2.o3$allRRhigh)["50.3",]
+pred2.o3$allRRfit['50.3']
+cbind(pred2.o3$allRRlow, pred2.o3$allRRhigh)['50.3',]
 
 # plot the estimated lag-response curve (with 80\%CI)
-plot(pred2.o3, "slices", var=50.3, ci="bars", type="p", col=2, pch=19,
-  ci.level=0.80, main="Lag-response a 10-unit increase above threshold (80CI)")
+plot(pred2.o3, 'slices', var=50.3, ci='bars', type='p', col=2, pch=19,
+  ci.level=0.80, main='Lag-response a 10-unit increase above threshold (80CI)')
 # plot the estimated overall cumulative exposure-response curve
-plot(pred2.o3,"overall",xlab="Ozone", ci="l", col=3, ylim=c(0.9,1.3), lwd=2,
-  ci.arg=list(col=1,lty=3), main="Overall cumulative association for 5 lags")
+plot(pred2.o3,'overall',xlab='Ozone', ci='l', col=3, ylim=c(0.9,1.3), lwd=2,
+  ci.arg=list(col=1,lty=3), main='Overall cumulative association for 5 lags')
   
 # plot the estimated exposure-lag-response surface
-plot(pred2.o3, xlab="Ozone", main="3D: default perspective")
-plot(pred2.o3, xlab="Ozone", main="3D: different perspective", theta=250, phi=40)
+plot(pred2.o3, xlab='Ozone', main='3D: default perspective')
+plot(pred2.o3, xlab='Ozone', main='3D: different perspective', theta=250, phi=40)
 
-### extended usage - see vignette("dlnmExtended")
+\dontrun{
+### extended usage - see vignette('dlnmExtended')
 
 # generate the matrix of exposure histories from the weekly data
 Qdrug <- as.matrix(drug[,rep(7:4, each=7)])
-colnames(Qdrug) <- paste("lag", 0:27, sep="")
+colnames(Qdrug) <- paste('lag', 0:27, sep='')
 
 # define the decay function
 fdecay <- function(x, scale=5, ...) {
@@ -215,8 +216,8 @@ fdecay <- function(x, scale=5, ...) {
 }
 
 # define the cross-basis
-cbdrug2 <- crossbasis(Qdrug, lag=27, argvar=list("lin"),
-  arglag=list(fun="fdecay",scale=6))
+cbdrug2 <- crossbasis(Qdrug, lag=27, argvar=list('lin'),
+  arglag=list(fun='fdecay',scale=6))
 summary(cbdrug2)
 
 # run the model and predict
@@ -238,9 +239,9 @@ dynhist <- exphist(expdrug, lag=27)
 pdyndrug <- crosspred(cbdrug2, mdrug2, at=dynhist)
 
 # plot of the evolution of the effects along time given the doses
-plot(pdyndrug,"overall", ylab="Effect", xlab="Time (days)", ylim=c(-5,27), 
+plot(pdyndrug,'overall', ylab='Effect', xlab='Time (days)', ylim=c(-5,27), 
   xlim=c(1,50))
-
+}
 }
 \author{
 Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>

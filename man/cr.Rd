@@ -27,7 +27,7 @@ below.}
 (default).}
 }
 \value{
-A matrix object of class \code{"cr"}. It contains the attributes
+A matrix object of class \code{'cr'}. It contains the attributes
 \code{df}, \code{knots}, \code{intercept}, \code{fx}, and \code{S}, with
 values which can be different than the arguments provided due to internal
 reset.
@@ -67,10 +67,6 @@ standard unidimensional penalized cubic spline models as an alternative to
 the use of specific \code{\link[=smooth.construct.cr.smooth.spec]{smooth
 constructor}}, as it takes advantage of the use of prediction and plotting
 functions in \pkg{dlnm}.
-}
-\examples{
-
-rnorm(1)
 }
 \author{
 Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>, with

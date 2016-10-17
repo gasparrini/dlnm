@@ -7,7 +7,7 @@
 cbPen(cb, sp = -1, addSlag = NULL)
 }
 \arguments{
-\item{cb}{an object of class \code{"onebasis"} or \code{"crossbasis"}.}
+\item{cb}{an object of class \code{'onebasis'} or \code{'crossbasis'}.}
 
 \item{sp}{supplied smoothing parameters. See Details below.}
 
@@ -57,11 +57,6 @@ including additional penalties on the lags, and it is replicated accordingly
 if of length 1. Positive or zero elements are taken as fixed smoothing
 parameters. Negative elements signal that these parameters need to be
 estimated.
-}
-\examples{
-
-rnorm(1)
-
 }
 \author{
 Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>

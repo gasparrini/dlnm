@@ -78,6 +78,13 @@
 #' 
 #' @keywords package
 NULL
+# TODOs
+# - argument order of exphist, exphistint is different - why ?!?
+# - vignette Rnw sources are missing
+# - looking up "fun"-string in onebasis/checkonebasis instead of handing over a
+#   proper function invites nasty scoping issues that seem to break examples in 
+#   R CMD check. 
+
 
 #-------------------------------------------------------------------------------
 
@@ -93,12 +100,12 @@ NULL
 #' @seealso See \code{\link{dlnm-package}} for an introduction to the package
 #' and for links to package vignettes providing more detailed information.
 #' @keywords internal
-#' @aliases internals internal
+#' @aliases internals dlnm-internal
 #' @name internals
-NULL 
+NULL
 
 #-------------------------------------------------------------------------------
-# documentation for datasets below 
+# documentation for datasets below
 
 
 #' A Trial on the Effect of Time-Varying Doses of a Drug

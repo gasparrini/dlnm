@@ -18,7 +18,7 @@ knots or cut-offs must be created. See Details below.}
 
 \item{df}{degree of freedom.}
 
-\item{degree}{degree of the piecewise polynomial. Only for \code{fun="bs"}.}
+\item{degree}{degree of the piecewise polynomial. Only for \code{fun='bs'}.}
 
 \item{intercept}{logical. If an intercept is included in the basis function.}
 }
@@ -50,39 +50,39 @@ as a vector variable for which the range is computed internally.
 The number of knots is set with the argument \code{nk}, or otherwise
 determined by the choice of function and number of degrees of freedom
 through the arguments \code{fun} and \code{df}. Specifically, the number of
-knots is set to \code{df-1-intercept} for \code{"ns"},
-\code{df-degree-intercept} for \code{"bs"}, or \code{df-intercept} for
-\code{"strata"}.
+knots is set to \code{df-1-intercept} for \code{'ns'},
+\code{df-degree-intercept} for \code{'bs'}, or \code{df-intercept} for
+\code{'strata'}.
 
 An intercept is included by default (\code{intercept=TRUE}), consistently
 with the default for the lag space.
 }
 \examples{
-
+library(splines)
 ### setting 3 knots for lag 0-20
 logknots(20, 3)
 logknots(c(0,20), 3)
 
 ### setting knots and cut-offs for different functions
-logknots(20, fun="ns", df=4)
-logknots(20, fun="bs", df=4, degree=2)
-logknots(20, fun="strata", df=4)
+logknots(20, fun='ns', df=4)
+logknots(20, fun='bs', df=4, degree=2)
+logknots(20, fun='strata', df=4)
 
 ### with and without without intercept
-logknots(20, fun="ns", df=4)
-logknots(20, fun="ns", df=4, intercept=FALSE)
+logknots(20, fun='ns', df=4)
+logknots(20, fun='ns', df=4, intercept=FALSE)
 
 ### replicating an old example in time series analysis
 lagknots <- logknots(30, 3)
-cb <- crossbasis(chicagoNMMAPS$temp, lag=30, argvar=list(fun="bs",df=5,
+cb <- crossbasis(chicagoNMMAPS$temp, lag=30, argvar=list(fun='bs',df=5,
   degree=2), arglag=list(knots=lagknots))
 summary(cb)
 library(splines)
 model <- glm(death ~  cb + ns(time, 7*14) + dow, 
   family=quasipoisson(), chicagoNMMAPS)
 pred <- crosspred(cb, model, cen=21, by=1)
-plot(pred, xlab="Temperature", col="red", zlab="RR", shade=0.6,
-  main="3D graph of temperature effect")
+plot(pred, xlab='Temperature', col='red', zlab='RR', shade=0.6,
+  main='3D graph of temperature effect')
 
 }
 \author{

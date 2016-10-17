@@ -22,7 +22,7 @@ stratum. See Details below.}
 basis matrix. See Details below.}
 }
 \value{
-A matrix object of class \code{"strata"}. It contains the attributes
+A matrix object of class \code{'strata'}. It contains the attributes
 \code{df}, \code{breaks}, \code{ref} and \code{intercept}, with values which
 can be different than the arguments provided due to internal reset.
 }
@@ -66,11 +66,11 @@ dlnm:::strata(1:5, df=3, intercept=TRUE)
 dlnm:::strata(1:5, df=3, ref=2, intercept=TRUE)
 
 ### use as an internal function in onebasis
-b <- onebasis(chicagoNMMAPS$pm10, "strata", breaks=c(20,40))
+b <- onebasis(chicagoNMMAPS$pm10, 'strata', breaks=c(20,40))
 summary(b)
 model <- glm(death ~ b, family=quasipoisson(), chicagoNMMAPS)
 pred <- crosspred(b, model, at=0:60)
-plot(pred, xlab="PM10", ylab="RR", main="RR for PM10")
+plot(pred, xlab='PM10', ylab='RR', main='RR for PM10')
 
 }
 \author{

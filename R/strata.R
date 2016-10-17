@@ -1,6 +1,4 @@
-###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2016
-#
 
 
 #' Generate a Basis Matrix of Indicator Variables
@@ -35,7 +33,7 @@
 #' stratum. See Details below.
 #' @param intercept logical. If \code{TRUE}, an intercept is included in the
 #' basis matrix. See Details below.
-#' @return A matrix object of class \code{"strata"}. It contains the attributes
+#' @return A matrix object of class \code{'strata'}. It contains the attributes
 #' \code{df}, \code{breaks}, \code{ref} and \code{intercept}, with values which
 #' can be different than the arguments provided due to internal reset.
 #' @note This function is mainly used internally thorugh \code{\link{onebasis}}
@@ -61,47 +59,42 @@
 #' dlnm:::strata(1:5, df=3, ref=2, intercept=TRUE)
 #' 
 #' ### use as an internal function in onebasis
-#' b <- onebasis(chicagoNMMAPS$pm10, "strata", breaks=c(20,40))
+#' b <- onebasis(chicagoNMMAPS$pm10, 'strata', breaks=c(20,40))
 #' summary(b)
 #' model <- glm(death ~ b, family=quasipoisson(), chicagoNMMAPS)
 #' pred <- crosspred(b, model, at=0:60)
-#' plot(pred, xlab="PM10", ylab="RR", main="RR for PM10")
+#' plot(pred, xlab='PM10', ylab='RR', main='RR for PM10')
 #' 
-strata <-
-function(x, df=1, breaks=NULL, ref=1, intercept=FALSE) {
-#
-################################################################################
-#
+strata <- function(x, df = 1, breaks = NULL, ref = 1, intercept = FALSE) {
+  # 
   nx <- names(x)
   x <- as.vector(x)
-  range <- range(x,na.rm=TRUE)
-#
+  range <- range(x, na.rm = TRUE)
   # DEFINE breaks AND df IF NEEDED
-  if(!is.null(breaks)) {
+  if (!is.null(breaks)) {
     breaks <- sort(unique(breaks))
-  } else if(df-intercept>0) 
-    breaks <- quantile(x,1/(df-intercept+1)*1:((df-intercept)),na.rm=TRUE)
-  df <- length(breaks)+intercept
-#
+  } else if (df - intercept > 0) 
+    breaks <- quantile(x, 1/(df - intercept + 1) * 1:((df - intercept)), na.rm = TRUE)
+  df <- length(breaks) + intercept
   # TRANSFORMATION
-  xcat <- cut(x,c(range[1]-0.0001,breaks,range[2]+0.0001),right=FALSE)
-  basis <- matrix(outer(xcat,levels(xcat),"==")+0,ncol=length(levels(xcat)))
-#
+  xcat <- cut(x, c(range[1] - 1e-04, breaks, range[2] + 1e-04), right = FALSE)
+  basis <- matrix(outer(xcat, levels(xcat), "==") + 0, ncol = length(levels(xcat)))
   # DEFINE REFERENCE
-  if(!ref%in%seq(0,ncol(basis)))
+  if (!ref %in% seq(0, ncol(basis))) 
     stop("wrong value in 'ref' argument. See help('strata')")
-  if(!intercept&&ref==0) ref <- 1
-  if(!is.null(breaks)) {
-    if(ref!=0) basis <- basis[,-ref,drop=FALSE]
-    if(intercept&&ref!=0) basis <- cbind(1,basis)
+  if (!intercept && ref == 0) 
+    ref <- 1
+  if (!is.null(breaks)) {
+    if (ref != 0) 
+      basis <- basis[, -ref, drop = FALSE]
+    if (intercept && ref != 0) 
+      basis <- cbind(1, basis)
   }
-#
   # NAMES AND ATTRIBUTES
-  dimnames(basis) <- list(nx,seq(ncol(basis)))
-  attributes(basis) <- c(attributes(basis),list(df=df,breaks=breaks,ref=ref,
-    intercept=intercept))
-#
-  class(basis) <- c("strata","matrix")
-#
+  dimnames(basis) <- list(nx, seq(ncol(basis)))
+  attributes(basis) <- c(attributes(basis), list(df = df, breaks = breaks, ref = ref, intercept = intercept))
+  # 
+  class(basis) <- c("strata", "matrix")
+  # 
   return(basis)
 }

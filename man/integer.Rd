@@ -16,7 +16,7 @@ computed. Used internally, usually to be left as missing.}
 basis matrix. See Details below.}
 }
 \value{
-A matrix object of class \code{"integer"}. It contains the
+A matrix object of class \code{'integer'}. It contains the
 attributes \code{values} and \code{intercept}.
 }
 \description{

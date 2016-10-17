@@ -1,6 +1,4 @@
-###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2016
-#
 
 
 #' Generate a Cross-Basis Matrix for a DLNM
@@ -60,7 +58,7 @@
 #' @param group a factor or a list of factors defining groups of observations.
 #' Only for time series data.
 #' @param \dots additional arguments. See Details below.
-#' @return A matrix object of class \code{"crossbasis"} which can be included
+#' @return A matrix object of class \code{'crossbasis'} which can be included
 #' in a model formula in order to fit a DLNM. It contains the attributes
 #' \code{df} (vector of length 2 with the df for each dimension), \code{range}
 #' (range of the original vector of observations), \code{lag} (lag range),
@@ -129,15 +127,16 @@
 #' @keywords smooth ts
 #' @importFrom utils modifyList
 #' @importFrom tsModel Lag
+#' @export
 #' @examples
 #' 
-#' ### example of application in time series analysis - see vignette("dlnmTS")
+#' ### example of application in time series analysis - see vignette('dlnmTS')
 #' 
 #' # create the crossbasis objects and summarize their contents
-#' cb1.pm <- crossbasis(chicagoNMMAPS$pm10, lag=15, argvar=list(fun="lin"),
-#'   arglag=list(fun="poly",degree=4))
+#' cb1.pm <- crossbasis(chicagoNMMAPS$pm10, lag=15, argvar=list(fun='lin'),
+#'   arglag=list(fun='poly',degree=4))
 #' cb1.temp <- crossbasis(chicagoNMMAPS$temp, lag=3, argvar=list(df=5),
-#'   arglag=list(fun="strata",breaks=1))
+#'   arglag=list(fun='strata',breaks=1))
 #' summary(cb1.pm)
 #' summary(cb1.temp)
 #' 
@@ -148,20 +147,20 @@
 #' pred1.pm <- crosspred(cb1.pm, model1, at=0:20, bylag=0.2, cumul=TRUE)
 #' 
 #' # plot the lag-response curves for specific and incremental cumulative effects
-#' plot(pred1.pm, "slices", var=10, col=3, ylab="RR", ci.arg=list(density=15,lwd=2),
-#'   main="Lag-response curve for a 10-unit increase in PM10")
-#' plot(pred1.pm, "slices", var=10, col=2, cumul=TRUE, ylab="Cumulative RR",
-#'   main="Lag-response curve of incremental cumulative effects")
+#' plot(pred1.pm, 'slices', var=10, col=3, ylab='RR', ci.arg=list(density=15,lwd=2),
+#'   main='Lag-response curve for a 10-unit increase in PM10')
+#' plot(pred1.pm, 'slices', var=10, col=2, cumul=TRUE, ylab='Cumulative RR',
+#'   main='Lag-response curve of incremental cumulative effects')
 #' 
-#' ### example of application beyond time series - see vignette("dlnmExtended")
+#' ### example of application beyond time series - see vignette('dlnmExtended')
 #' 
 #' # generate the matrix of exposure histories from the 5-year periods
 #' Qnest <- t(apply(nested, 1, function(sub) exphist(rep(c(0,0,0,sub[5:14]), 
-#'   each=5), sub["age"], lag=c(3,40))))
+#'   each=5), sub['age'], lag=c(3,40))))
 #' 
 #' # define the cross-basis
-#' cbnest <- crossbasis(Qnest, lag=c(3,40), argvar=list("bs",degree=2,df=3),
-#'   arglag=list(fun="ns",knots=c(10,30),intercept=FALSE))
+#' cbnest <- crossbasis(Qnest, lag=c(3,40), argvar=list('bs',degree=2,df=3),
+#'   arglag=list(fun='ns',knots=c(10,30),intercept=FALSE))
 #' summary(cbnest)
 #' 
 #' # run the model and predict
@@ -170,108 +169,77 @@
 #' pnest <- crosspred(cbnest,mnest, cen=0, at=0:20*5)
 #' 
 #' # bi-dimensional exposure-lag-response association
-#' plot(pnest, zlab="OR", xlab="Exposure", ylab="Lag (years)")
+#' plot(pnest, zlab='OR', xlab='Exposure', ylab='Lag (years)')
 #' # lag-response curve for dose 60
-#' plot(pnest, var=50, ylab="OR for exposure 50", xlab="Lag (years)", xlim=c(0,40))
+#' plot(pnest, var=50, ylab='OR for exposure 50', xlab='Lag (years)', xlim=c(0,40))
 #' # exposure-response curve for lag 10
-#' plot(pnest, lag=5, ylab="OR at lag 5", xlab="Exposure", ylim=c(0.95,1.15))
+#' plot(pnest, lag=5, ylab='OR at lag 5', xlab='Exposure', ylim=c(0.95,1.15))
 #' 
-crossbasis <- function(x, lag, argvar=list(), arglag=list(), group=NULL, ...) {
-#
-################################################################################
-# COHERENCE CHECKS
-#
-  # CHECK OLD USAGE
-  checkcrossbasis(argvar,arglag,list(...))
-#
-  #  lag MUST BE A POSITIVE INTEGER VECTOR 
-  lag <- if(missing(lag)) c(0,NCOL(x)-1) else mklag(lag)
-#  
-############################################################################
-# CREATE THE BASIS FOR THE PREDICTOR SPACE
-#
-  # x MUST BE A VECTOR OR MATRIX WITH NUMBER OF COLUMNS COMPATIBLE WITH lag
-  # IF A VECTOR, x  IS TREATED AS A TIME SERIES
-  # OTHERWISE, x IS TREATED AS A MATRIX OF LAGGED OCCURRENCES
+crossbasis <- function(x, lag, argvar = list(), arglag = list(), group = NULL, ...) {
+  # COHERENCE CHECKS CHECK OLD USAGE
+  checkcrossbasis(argvar, arglag, list(...))
+  # lag MUST BE A POSITIVE INTEGER VECTOR
+  lag <- if (missing(lag)) 
+    c(0, NCOL(x) - 1) else mklag(lag)
+  # CREATE THE BASIS FOR THE PREDICTOR SPACE x MUST BE A VECTOR OR MATRIX WITH NUMBER OF COLUMNS COMPATIBLE
+  # WITH lag IF A VECTOR, x IS TREATED AS A TIME SERIES OTHERWISE, x IS TREATED AS A MATRIX OF LAGGED
+  # OCCURRENCES
   x <- as.matrix(x)
   dim <- dim(x)
-  if(!dim[2]%in%c(1L,diff(lag)+1L)) stop("NCOL(x) must be equal to 1 (if x is ",
-    "a time series vector), otherwise to the lag period (for x as a matrix of ",
-    "lagged occurrences)")
-#
-  # THE BASIS TRANSFORMATION CREATES DIFFERENT MATRICES DEPENDING THE DATA :
-  #   IF TIME SERIES, EACH COLUMN CONTAINS THE UNLAGGED TRANSFORMATION
-  #   IF NOT, EACH COLUMN CONTAINS THE TRANFORMATION FOR ALL THE LAGGED VALUES
-  basisvar <- do.call("onebasis",modifyList(argvar,list(x=as.numeric(x))))
-#
-############################################################################
-# CREATE THE BASIS FOR THE LAG SPACE
-#
-  # SET FUN="STRATA" AND DF=1 UNDER SPECIFIC CIRCUMSTANCES
-  if(length(arglag)==0L || diff(lag)==0L) 
-    arglag <- list(fun="strata",df=1,intercept=TRUE)
-#
+  if (!dim[2] %in% c(1L, diff(lag) + 1L)) 
+    stop("NCOL(x) must be equal to 1 (if x is ", "a time series vector), otherwise to the lag period (for x as a matrix of ", 
+      "lagged occurrences)")
+  # THE BASIS TRANSFORMATION CREATES DIFFERENT MATRICES DEPENDING THE DATA : IF TIME SERIES, EACH COLUMN
+  # CONTAINS THE UNLAGGED TRANSFORMATION IF NOT, EACH COLUMN CONTAINS THE TRANFORMATION FOR ALL THE LAGGED
+  # VALUES
+  basisvar <- do.call("onebasis", modifyList(argvar, list(x = as.numeric(x))))
+  # CREATE THE BASIS FOR THE LAG SPACE SET FUN='STRATA' AND DF=1 UNDER SPECIFIC CIRCUMSTANCES
+  if (length(arglag) == 0L || diff(lag) == 0L) 
+    arglag <- list(fun = "strata", df = 1, intercept = TRUE)
   # IF NOT SPECIFIED AND AN ARGUMENT, INCLUDE AN INTERCEPT BY DEFAULT
-  if((is.null(arglag$fun) || "intercept"%in%names(formals(arglag$fun))) && 
-      sum(pmatch(names(arglag),"intercept",nomatch=0))==0)
+  if ((is.null(arglag$fun) || "intercept" %in% names(formals(arglag$fun))) && sum(pmatch(names(arglag), 
+    "intercept", nomatch = 0)) == 0) 
     arglag$intercept <- TRUE
   # FORCE UNCENTERED TRANSFORMATIONS
   arglag$cen <- NULL
-#
-  # THE BASIS TRANSFORMATIONS ARE ONLY APPLIED TO THE LAG VECTOR
-  # DIMENSIONS ACCOUNTED FOR IN CROSS-BASIS COMPUTATIONS BELOW
-  basislag <- do.call("onebasis",modifyList(arglag,list(x=seqlag(lag)))) 
-#
-############################################################################
-# CROSSBASIS COMPUTATION
-#
-  # GROUP
-  if(!is.null(group)) checkgroup(group,x,basisvar,lag)
-#
-  # COMPUTE CROSS-BASIS:
-  #   FOR TIME SERIES DATA, COMPUTE THE MATRIX OF LAGGED OCCURRENCES FIRST
-  #   IF x WAS ALREADY A MATRIX, JUST RECOMPUTE THE APPROPRIATE DIMENSIONS
-  #   NB: ORDER OF TRANSFORMATION IN THE TENSOR CHANGED SINCE VERSION 2.2.4
-  crossbasis <- matrix(0,nrow=dim[1],ncol=ncol(basisvar)*ncol(basislag))
-  for(v in seq(length=ncol(basisvar))) {
-    if(dim[2]==1L) {
-      mat <- as.matrix(Lag(basisvar[, v],seqlag(lag),group=group))
-    } else mat <- matrix(basisvar[,v],ncol=diff(lag)+1)
-    for(l in seq(length=ncol(basislag))) {
-      crossbasis[,ncol(basislag)*(v-1)+l] <- mat%*%(basislag[,l])
+  # THE BASIS TRANSFORMATIONS ARE ONLY APPLIED TO THE LAG VECTOR DIMENSIONS ACCOUNTED FOR IN CROSS-BASIS
+  # COMPUTATIONS BELOW
+  basislag <- do.call("onebasis", modifyList(arglag, list(x = seqlag(lag))))
+  # CROSSBASIS COMPUTATION GROUP
+  if (!is.null(group)) 
+    checkgroup(group, x, basisvar, lag)
+  # COMPUTE CROSS-BASIS: FOR TIME SERIES DATA, COMPUTE THE MATRIX OF LAGGED OCCURRENCES FIRST IF x WAS
+  # ALREADY A MATRIX, JUST RECOMPUTE THE APPROPRIATE DIMENSIONS NB: ORDER OF TRANSFORMATION IN THE TENSOR
+  # CHANGED SINCE VERSION 2.2.4
+  crossbasis <- matrix(0, nrow = dim[1], ncol = ncol(basisvar) * ncol(basislag))
+  for (v in seq(length = ncol(basisvar))) {
+    if (dim[2] == 1L) {
+      mat <- as.matrix(Lag(basisvar[, v], seqlag(lag), group = group))
+    } else mat <- matrix(basisvar[, v], ncol = diff(lag) + 1)
+    for (l in seq(length = ncol(basislag))) {
+      crossbasis[, ncol(basislag) * (v - 1) + l] <- mat %*% (basislag[, l])
     }
   }
-#
-############################################################################
-# ATTRIBUTES AND NAMES
-#
-  # NAMES
-  #   NB: ORDER CHANGED SINCE VERSION 2.2.4
-
-  cn <- paste0("v",rep(seq(ncol(basisvar)),each=ncol(basislag)),".l",
-    rep(seq(ncol(basislag)),ncol(basisvar)))
-  dimnames(crossbasis) <- list(rownames(x),cn)
-#
-  # REDEFINE ARGUMENTS FOR BASES, THEY MIGHT HAVE BEEN CHANGED BY onebasis
-  # FIRST VAR
-  ind <- match(names(formals(attributes(basisvar)$fun)),
-    names(attributes(basisvar)),nomatch=0)
-  argvar <- c(attributes(basisvar)["fun"],attributes(basisvar)[ind])
+  # ATTRIBUTES AND NAMES NAMES NB: ORDER CHANGED SINCE VERSION 2.2.4
+  
+  cn <- paste0("v", rep(seq(ncol(basisvar)), each = ncol(basislag)), ".l", rep(seq(ncol(basislag)), ncol(basisvar)))
+  dimnames(crossbasis) <- list(rownames(x), cn)
+  # REDEFINE ARGUMENTS FOR BASES, THEY MIGHT HAVE BEEN CHANGED BY onebasis FIRST VAR
+  ind <- match(names(formals(attributes(basisvar)$fun)), names(attributes(basisvar)), nomatch = 0)
+  argvar <- c(attributes(basisvar)["fun"], attributes(basisvar)[ind])
   # THEN LAG
-  ind <- match(names(formals(attributes(basislag)$fun)),
-    names(attributes(basislag)),nomatch=0)
-  arglag <- c(attributes(basislag)["fun"],attributes(basislag)[ind])
+  ind <- match(names(formals(attributes(basislag)$fun)), names(attributes(basislag)), nomatch = 0)
+  arglag <- c(attributes(basislag)["fun"], attributes(basislag)[ind])
   # THEN ADD CENTERING FOR VAR, IF PROVIDED (OTHERWISE NULL)
   argvar$cen <- attributes(basisvar)$cen
-#
   # ATTRIBUTES
-  attributes(crossbasis) <- c(attributes(crossbasis),
-    list(df=c(ncol(basisvar),ncol(basislag)),range=range(x,na.rm=T),lag=lag,
-      argvar=argvar,arglag=arglag))
-  if(!is.null(group)) attributes(crossbasis)$group <- length(unique(group))
-#
-  class(crossbasis) <- c("crossbasis","matrix")
-#
+  attributes(crossbasis) <- c(attributes(crossbasis), list(df = c(ncol(basisvar), ncol(basislag)), range = range(x, 
+    na.rm = T), lag = lag, argvar = argvar, arglag = arglag))
+  if (!is.null(group)) 
+    attributes(crossbasis)$group <- length(unique(group))
+  # 
+  class(crossbasis) <- c("crossbasis", "matrix")
+  # 
   return(crossbasis)
 }
 

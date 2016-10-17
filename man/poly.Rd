@@ -18,7 +18,7 @@ poly(x, degree = 1, scale, intercept = FALSE)
 basis matrix. See Details below.}
 }
 \value{
-A matrix object of class \code{"poly"}. It contains the attributes
+A matrix object of class \code{'poly'}. It contains the attributes
 \code{degree}, \code{scale} and \code{intercept}, with values which can be
 different than the arguments provided due to internal reset.
 }
@@ -49,11 +49,11 @@ dlnm:::poly(1:5, degree=3)
 dlnm:::poly(1:5, degree=3, intercept=TRUE)
 
 ### use as an internal function in onebasis
-b <- onebasis(chicagoNMMAPS$pm10, "poly", degree=3)
+b <- onebasis(chicagoNMMAPS$pm10, 'poly', degree=3)
 summary(b)
 model <- glm(death ~ b, family=quasipoisson(), chicagoNMMAPS)
 pred <- crosspred(b, model, at=0:60)
-plot(pred, xlab="PM10", ylab="RR", main="RR for PM10")
+plot(pred, xlab='PM10', ylab='RR', main='RR for PM10')
 
 }
 \author{

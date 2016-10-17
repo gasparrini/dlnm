@@ -1,6 +1,4 @@
-###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2015-2016
-#
 
 
 #' Generate a Basis Matrix for Penalized Cubic Regression Splines
@@ -41,7 +39,7 @@
 #' below.
 #' @param S penalty matrix, usually internally defined if \code{NULL}
 #' (default).
-#' @return A matrix object of class \code{"cr"}. It contains the attributes
+#' @return A matrix object of class \code{'cr'}. It contains the attributes
 #' \code{df}, \code{knots}, \code{intercept}, \code{fx}, and \code{S}, with
 #' values which can be different than the arguments provided due to internal
 #' reset.
@@ -73,61 +71,55 @@
 #' Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and
 #' Hall/CRC Press, 2006.
 #' @keywords smooth
-#' @examples
-#' 
-#' rnorm(1)
+#' @export
 #' @importFrom stats quantile
 #' @importFrom mgcv s smooth.construct.cr.smooth.spec
-cr <-
-function(x, df=10, knots=NULL, intercept=FALSE, fx= FALSE, S=NULL) {
-#
-################################################################################
-#
+cr <- function(x, df = 10, knots = NULL, intercept = FALSE, fx = FALSE, S = NULL) {
+  # 
   nx <- names(x)
   x <- as.vector(x)
   nax <- is.na(x)
-  if(nas <- any(nax)) x <- x[!nax]
-#
+  if (nas <- any(nax)) 
+    x <- x[!nax]
   # DEFINE KNOTS AND DF
-  if(is.null(knots)) {
-    if(df<3) stop("'df' must be >=3")
-    knots <- quantile(unique(x),seq(0,1,length=df+!intercept))
-  } else df <- length(knots)-!intercept
-#
-  # CHECK NUMBER OF UNIQUE x VALUES
-  # (ADD SOME IF NEEDED TO PREVENT ERROR IN smooth.construct.cr.smooth.spec)
-  if(add <- length(unique(x))<length(knots))
-    x <- c(seq(min(knots),max(knots),length=length(knots)),x)
-#
+  if (is.null(knots)) {
+    if (df < 3) 
+      stop("'df' must be >=3")
+    knots <- quantile(unique(x), seq(0, 1, length = df + (!intercept)))
+  } else df <- length(knots) - (!intercept)
+  # CHECK NUMBER OF UNIQUE x VALUES (ADD SOME IF NEEDED TO PREVENT ERROR IN
+  # smooth.construct.cr.smooth.spec)
+  if (add <- length(unique(x)) < length(knots)) 
+    x <- c(seq(min(knots), max(knots), length = length(knots)), x)
   # TRANSFORMATION: CALL FUNCTION FROM MGCV
-  oo <- smooth.construct.cr.smooth.spec(s(x,bs="cr",k=df+!intercept),
-    data=list(x=x),knots=list(x=knots))
+  oo <- smooth.construct.cr.smooth.spec(s(x, bs = "cr", k = df + (!intercept)), data = list(x = x), knots = list(x = knots))
   basis <- oo$X
-  if(!intercept) basis <- basis[,-1L,drop=FALSE]
-#  
+  if (!intercept) 
+    basis <- basis[, -1L, drop = FALSE]
   # REMOVE ADDED VALUES AND RE-INSERT MISSING
-  if(add) basis <- basis[-seq(length(knots)),,drop=FALSE]
-  if(nas) {
-    nmat <- matrix(NA,length(nax),ncol(basis))
-    nmat[!nax,] <- basis
+  if (add) 
+    basis <- basis[-seq(length(knots)), , drop = FALSE]
+  if (nas) {
+    nmat <- matrix(NA, length(nax), ncol(basis))
+    nmat[!nax, ] <- basis
     basis <- nmat
   }
-#
   # RELATED PENALTY MATRIX
-  if(fx) {
+  if (fx) {
     S <- NULL
-  } else if(is.null(S)) {
+  } else if (is.null(S)) {
     S <- oo$S[[1]]
-    S <- (S+t(S))/2
-    if(!intercept) S <- S[-1L,-1L,drop=FALSE]
-  } else if(any(dim(S)!=ncol(basis))) stop("dimensions of 'S' not compatible")
-#
+    S <- (S + t(S))/2
+    if (!intercept) 
+      S <- S[-1L, -1L, drop = FALSE]
+  } else if (any(dim(S) != ncol(basis))) 
+    stop("dimensions of 'S' not compatible")
   # NAMES AND ATTRIBUTES
-  dimnames(basis) <- list(nx,seq(ncol(basis)))
-  attributes(basis) <- c(attributes(basis),list(df=df,knots=knots,
-    intercept=intercept,fx=fx,S=S))
-#
-  class(basis) <- c("cr","matrix")
-#
+  dimnames(basis) <- list(nx, seq(ncol(basis)))
+  attributes(basis) <- c(attributes(basis), list(df = df, knots = knots, intercept = intercept, fx = fx, 
+    S = S))
+  # 
+  class(basis) <- c("cr", "matrix")
+  # 
   return(basis)
 }

@@ -34,7 +34,7 @@ below.}
 \item{diff}{order difference of the penalty.}
 }
 \value{
-A matrix object of class \code{"ps"}. It contains the attributes
+A matrix object of class \code{'ps'}. It contains the attributes
 \code{df}, \code{knots}, \code{degree}, \code{intercept}, \code{fx},
 \code{S}, and \code{diff}, with values which can be different than the
 arguments provided due to internal reset.
@@ -85,11 +85,6 @@ standard unidimensional P-spline models as an alternative to the use of
 specific \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}},
 as it takes advantage of the use of prediction and plotting functions in
 \pkg{dlnm}.
-}
-\examples{
-
-rnorm(1)
-
 }
 \author{
 Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>,

@@ -1,6 +1,4 @@
-###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2016
-#
 
 
 #' Generate a Basis Matrix of Polynomials
@@ -21,7 +19,7 @@
 #' \code{x}.
 #' @param intercept logical. If \code{TRUE}, an intercept is included in the
 #' basis matrix. See Details below.
-#' @return A matrix object of class \code{"poly"}. It contains the attributes
+#' @return A matrix object of class \code{'poly'}. It contains the attributes
 #' \code{degree}, \code{scale} and \code{intercept}, with values which can be
 #' different than the arguments provided due to internal reset.
 #' @note This function is mainly used internally thorugh \code{\link{onebasis}}
@@ -36,6 +34,7 @@
 #' 
 #' See \code{\link{dlnm-package}} for an introduction to the package and for
 #' links to package vignettes providing more detailed information.
+#' @export
 #' @keywords smooth
 #' @examples
 #' 
@@ -44,30 +43,25 @@
 #' dlnm:::poly(1:5, degree=3, intercept=TRUE)
 #' 
 #' ### use as an internal function in onebasis
-#' b <- onebasis(chicagoNMMAPS$pm10, "poly", degree=3)
+#' b <- onebasis(chicagoNMMAPS$pm10, 'poly', degree=3)
 #' summary(b)
 #' model <- glm(death ~ b, family=quasipoisson(), chicagoNMMAPS)
 #' pred <- crosspred(b, model, at=0:60)
-#' plot(pred, xlab="PM10", ylab="RR", main="RR for PM10")
+#' plot(pred, xlab='PM10', ylab='RR', main='RR for PM10')
 #' 
-poly <-
-function(x, degree=1, scale, intercept=FALSE) {
-#
-################################################################################
-#
+poly <- function(x, degree = 1, scale, intercept = FALSE) {
+  # 
   nx <- names(x)
   x <- as.vector(x)
-#
   # TRANSFORMATION
-  if(missing(scale)) scale <- max(abs(x),na.rm=TRUE)
-  basis <- outer(x/scale,(1-intercept):(degree),"^")
-#
+  if (missing(scale)) 
+    scale <- max(abs(x), na.rm = TRUE)
+  basis <- outer(x/scale, (1 - intercept):(degree), "^")
   # NAMES AND ATTRIBUTES
-  dimnames(basis) <- list(nx,seq(ncol(basis)))
-  attributes(basis) <- c(attributes(basis),list(degree=degree,scale=scale,
-    intercept=intercept))
-#
-  class(basis) <- c("poly","matrix")
-#
+  dimnames(basis) <- list(nx, seq(ncol(basis)))
+  attributes(basis) <- c(attributes(basis), list(degree = degree, scale = scale, intercept = intercept))
+  # 
+  class(basis) <- c("poly", "matrix")
+  # 
   return(basis)
 }

@@ -1,6 +1,4 @@
-###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2016
-#
 
 
 #' Generate a Basis Matrix of Indicator Variables for Integer Values
@@ -25,7 +23,7 @@
 #' computed. Used internally, usually to be left as missing.
 #' @param intercept logical. If \code{TRUE}, an intercept is included in the
 #' basis matrix. See Details below.
-#' @return A matrix object of class \code{"integer"}. It contains the
+#' @return A matrix object of class \code{'integer'}. It contains the
 #' attributes \code{values} and \code{intercept}.
 #' @note This function is mainly used internally thorugh \code{\link{onebasis}}
 #' to create basis matrices. It is not exported in the namespace to avoid
@@ -45,32 +43,26 @@
 #' dlnm:::integer(1:5)
 #' dlnm:::integer(1:5, intercept=TRUE)
 #' 
-integer <-
-function(x, values, intercept=FALSE) {
-#
-################################################################################
-#
+integer <- function(x, values, intercept = FALSE) {
+  # 
   nx <- names(x)
   x <- as.vector(x)
-#
   # DEFINE LEVELS AND TRANSFORM INTO A FACTOR
-  levels <- if(!missing(values)) values else sort(unique(x))
-  xfac <- factor(x,levels=levels)
-#
+  levels <- if (!missing(values)) 
+    values else sort(unique(x))
+  xfac <- factor(x, levels = levels)
   # TRANSFORMATION
-  basis <- as.matrix(outer(xfac,levels,"==")+0L)
-#
+  basis <- as.matrix(outer(xfac, levels, "==") + 0L)
   # IF INTERCEPT IS NOT REQUIRED, DROP THE FIRST COLUMN
-  if(ncol(basis)>1L) {
-    if(!intercept) basis <- basis[,-1L,drop=FALSE]
+  if (ncol(basis) > 1L) {
+    if (!intercept) 
+      basis <- basis[, -1L, drop = FALSE]
   } else intercept <- TRUE
-#
   # NAMES AND ATTRIBUTES
-  dimnames(basis) <- list(nx,seq(ncol(basis)))
-  attributes(basis) <- c(attributes(basis),list(values=levels,
-    intercept=intercept))
-#
-  class(basis) <- c("integer","matrix")
-#
+  dimnames(basis) <- list(nx, seq(ncol(basis)))
+  attributes(basis) <- c(attributes(basis), list(values = levels, intercept = intercept))
+  # 
+  class(basis) <- c("integer", "matrix")
+  # 
   return(basis)
 }

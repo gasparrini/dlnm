@@ -25,7 +25,7 @@ Only for time series data.}
 \item{\dots}{additional arguments. See Details below.}
 }
 \value{
-A matrix object of class \code{"crossbasis"} which can be included
+A matrix object of class \code{'crossbasis'} which can be included
 in a model formula in order to fit a DLNM. It contains the attributes
 \code{df} (vector of length 2 with the df for each dimension), \code{range}
 (range of the original vector of observations), \code{lag} (lag range),
@@ -122,13 +122,13 @@ basis for the space of lags.
 }
 \examples{
 
-### example of application in time series analysis - see vignette("dlnmTS")
+### example of application in time series analysis - see vignette('dlnmTS')
 
 # create the crossbasis objects and summarize their contents
-cb1.pm <- crossbasis(chicagoNMMAPS$pm10, lag=15, argvar=list(fun="lin"),
-  arglag=list(fun="poly",degree=4))
+cb1.pm <- crossbasis(chicagoNMMAPS$pm10, lag=15, argvar=list(fun='lin'),
+  arglag=list(fun='poly',degree=4))
 cb1.temp <- crossbasis(chicagoNMMAPS$temp, lag=3, argvar=list(df=5),
-  arglag=list(fun="strata",breaks=1))
+  arglag=list(fun='strata',breaks=1))
 summary(cb1.pm)
 summary(cb1.temp)
 
@@ -139,20 +139,20 @@ model1 <- glm(death ~ cb1.pm + cb1.temp + ns(time, 7*14) + dow,
 pred1.pm <- crosspred(cb1.pm, model1, at=0:20, bylag=0.2, cumul=TRUE)
 
 # plot the lag-response curves for specific and incremental cumulative effects
-plot(pred1.pm, "slices", var=10, col=3, ylab="RR", ci.arg=list(density=15,lwd=2),
-  main="Lag-response curve for a 10-unit increase in PM10")
-plot(pred1.pm, "slices", var=10, col=2, cumul=TRUE, ylab="Cumulative RR",
-  main="Lag-response curve of incremental cumulative effects")
+plot(pred1.pm, 'slices', var=10, col=3, ylab='RR', ci.arg=list(density=15,lwd=2),
+  main='Lag-response curve for a 10-unit increase in PM10')
+plot(pred1.pm, 'slices', var=10, col=2, cumul=TRUE, ylab='Cumulative RR',
+  main='Lag-response curve of incremental cumulative effects')
 
-### example of application beyond time series - see vignette("dlnmExtended")
+### example of application beyond time series - see vignette('dlnmExtended')
 
 # generate the matrix of exposure histories from the 5-year periods
 Qnest <- t(apply(nested, 1, function(sub) exphist(rep(c(0,0,0,sub[5:14]), 
-  each=5), sub["age"], lag=c(3,40))))
+  each=5), sub['age'], lag=c(3,40))))
 
 # define the cross-basis
-cbnest <- crossbasis(Qnest, lag=c(3,40), argvar=list("bs",degree=2,df=3),
-  arglag=list(fun="ns",knots=c(10,30),intercept=FALSE))
+cbnest <- crossbasis(Qnest, lag=c(3,40), argvar=list('bs',degree=2,df=3),
+  arglag=list(fun='ns',knots=c(10,30),intercept=FALSE))
 summary(cbnest)
 
 # run the model and predict
@@ -161,11 +161,11 @@ mnest <- clogit(case~cbnest+strata(riskset), nested)
 pnest <- crosspred(cbnest,mnest, cen=0, at=0:20*5)
 
 # bi-dimensional exposure-lag-response association
-plot(pnest, zlab="OR", xlab="Exposure", ylab="Lag (years)")
+plot(pnest, zlab='OR', xlab='Exposure', ylab='Lag (years)')
 # lag-response curve for dose 60
-plot(pnest, var=50, ylab="OR for exposure 50", xlab="Lag (years)", xlim=c(0,40))
+plot(pnest, var=50, ylab='OR for exposure 50', xlab='Lag (years)', xlim=c(0,40))
 # exposure-response curve for lag 10
-plot(pnest, lag=5, ylab="OR at lag 5", xlab="Exposure", ylim=c(0.95,1.15))
+plot(pnest, lag=5, ylab='OR at lag 5', xlab='Exposure', ylim=c(0.95,1.15))
 
 }
 \author{

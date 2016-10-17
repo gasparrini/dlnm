@@ -1,6 +1,4 @@
-###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2016
-#
 
 
 #' Generate a Basis Matrix with a Variable as Linear
@@ -15,7 +13,7 @@
 #' @param x the predictor variable. Missing values are allowed.
 #' @param intercept logical. If \code{TRUE}, an intercept is included in the
 #' basis matrix, namely a vector of 1's.
-#' @return A matrix object of class \code{"lin"}. It contains the attribute
+#' @return A matrix object of class \code{'lin'}. It contains the attribute
 #' \code{intercept}.
 #' @note This function is mainly used internally thorugh \code{\link{onebasis}}
 #' to create basis matrices. It is not exported in the namespace, and can be
@@ -35,29 +33,25 @@
 #' dlnm:::lin(1:5, intercept=TRUE)
 #' 
 #' ### use as an internal function in onebasis (note the centering)
-#' b <- onebasis(chicagoNMMAPS$pm10, "lin")
+#' b <- onebasis(chicagoNMMAPS$pm10, 'lin')
 #' summary(b)
 #' model <- glm(death ~ b, family=quasipoisson(), chicagoNMMAPS)
 #' pred <- crosspred(b, model, at=0:60)
-#' plot(pred, xlab="PM10", ylab="RR", main="RR for PM10")
+#' plot(pred, xlab='PM10', ylab='RR', main='RR for PM10')
 #' 
-lin <-
-function(x, intercept=FALSE) {
-#
-################################################################################
-#
+lin <- function(x, intercept = FALSE) {
+  # 
   nx <- names(x)
   x <- as.vector(x)
-#
   # TRANSFORMATION
   basis <- as.matrix(x)
-  if(intercept) basis <- cbind(1,basis)
-#
+  if (intercept) 
+    basis <- cbind(1, basis)
   # NAMES AND ATTRIBUTES
-  dimnames(basis) <- list(nx,seq(ncol(basis)))
-  attributes(basis) <- c(attributes(basis),list(intercept=intercept))
-#
-  class(basis) <- c("lin","matrix")
-#
+  dimnames(basis) <- list(nx, seq(ncol(basis)))
+  attributes(basis) <- c(attributes(basis), list(intercept = intercept))
+  # 
+  class(basis) <- c("lin", "matrix")
+  # 
   return(basis)
 }

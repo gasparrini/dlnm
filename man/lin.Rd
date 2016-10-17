@@ -13,7 +13,7 @@ lin(x, intercept = FALSE)
 basis matrix, namely a vector of 1's.}
 }
 \value{
-A matrix object of class \code{"lin"}. It contains the attribute
+A matrix object of class \code{'lin'}. It contains the attribute
 \code{intercept}.
 }
 \description{
@@ -38,11 +38,11 @@ dlnm:::lin(1:5)
 dlnm:::lin(1:5, intercept=TRUE)
 
 ### use as an internal function in onebasis (note the centering)
-b <- onebasis(chicagoNMMAPS$pm10, "lin")
+b <- onebasis(chicagoNMMAPS$pm10, 'lin')
 summary(b)
 model <- glm(death ~ b, family=quasipoisson(), chicagoNMMAPS)
 pred <- crosspred(b, model, at=0:60)
-plot(pred, xlab="PM10", ylab="RR", main="RR for PM10")
+plot(pred, xlab='PM10', ylab='RR', main='RR for PM10')
 
 }
 \author{

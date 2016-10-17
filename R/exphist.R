@@ -1,4 +1,3 @@
-###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2016
 #' Define Exposure Histories from an Exposure Profile
 #' 
@@ -23,7 +22,7 @@
 #' 
 #' @param exp an exposure profile defined at equally-spaced time units, from
 #' time 1 on.
-#' @param time1 either a numeric scalar or vector of positive integer numbers
+#' @param time either a numeric scalar or vector of positive integer numbers
 #' specifying the time points at which each exposure history is evaluated. By
 #' default, all the time points of \code{exp}.
 #' @param lag either an integer scalar or vector of length 2, defining the the
@@ -41,6 +40,7 @@
 #' distributed lag non-linear models. \emph{Statistics in Medicine}. 2014;
 #' \bold{33}(5):881-899. [freely available
 #' \url{http://www.ag-myresearch.com/statmed2014here}]
+#' @export
 #' @keywords smooth
 #' @examples
 #' 
@@ -58,44 +58,38 @@
 #' exphist(exp, lag=12)
 #' 
 #' ### see help(drug) and help(nested) for further examples
-exphistint <-
-function(time1, exp, lag) {
-#
-################################################################################
-#
+exphistint <- function(time, exp, lag) {
   # EXTEND exp
-  exp <- c(exp,rep(0,max(0,time1-length(exp))))
+  exp <- c(exp, rep(0, max(0, time - length(exp))))
   # REVERSE exp
-
-
-  exphist <- rev(exp[seq(time1)])
-#
+  
+  
+  exphist <- rev(exp[seq(time)])
   # DEFINE EXPOSURE HISTORY
-  exphist <- c(exphist,rep(0,lag[2]))[seq(lag[1],lag[2])+1]
-#
+  exphist <- c(exphist, rep(0, lag[2]))[seq(lag[1], lag[2]) + 1]
   # NAMES
-  names(exphist) <- paste("lag",seq(lag[1],lag[2]),sep="")
-#
+  names(exphist) <- paste("lag", seq(lag[1], lag[2]), sep = "")
+  # 
   return(exphist)
 }
-#
-#
-exphist <-
-function(exp, time, lag) {
-#
-################################################################################
-#
+#' @rdname exphistint
+#' @inheritParams exphistint
+#' @export
+exphist <- function(exp, time, lag) {
   # CHECKS
   exp <- as.vector(exp)
-  lag <- if(missing(lag)) c(0,length(exp)-1) else mklag(lag)
-  if(any(lag<0)) stop("only non-negative lags allowed")
-  time <- if(missing(time)) seq(length(exp)) else round(time)
-  if(any(time<1)) stop("time must composed by positive integer numbers")
-#
+  lag <- if (missing(lag)) 
+    c(0, length(exp) - 1) else mklag(lag)
+  if (any(lag < 0)) 
+    stop("only non-negative lags allowed")
+  time <- if (missing(time)) 
+    seq(length(exp)) else round(time)
+  if (any(time < 1)) 
+    stop("time must composed by positive integer numbers")
   # GENERATE EXPOSURE HISTORIES FOR EACH time
-  hist <- do.call(rbind,lapply(time,exphistint,exp,lag))
+  hist <- do.call(rbind, lapply(time, exphistint, exp, lag))
   rownames(hist) <- time
-#
+  # 
   return(hist)
 }
 

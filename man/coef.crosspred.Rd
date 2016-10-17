@@ -10,14 +10,14 @@
 \method{coef}{crosspred}(object, ...)
 }
 \arguments{
-\item{object}{an object of class \code{"crosspred"} or \code{"crossreduce"}.}
+\item{object}{an object of class \code{'crosspred'} or \code{'crossreduce'}.}
 
 \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
 These method functions extract the estimated model coefficients and their
-(co)variance matrix from a DLNM from objects of class \code{"crosspred"} and
-\code{"crossreduce"}.
+(co)variance matrix from a DLNM from objects of class \code{'crosspred'} and
+\code{'crossreduce'}.
 }
 \author{
 Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>

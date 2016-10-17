@@ -1,6 +1,4 @@
-###
 ### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2016
-#
 
 
 #' Reduce the Fit of a DLNM to One-Dimensional Summaries
@@ -22,8 +20,8 @@
 #' Similarly to \code{\link{crosspred}}, the object \code{basis} must be the
 #' same containing the cross-basis matrix included in \code{model}, with its
 #' attributes and class. The function computes predictions for specific values
-#' of predictor (for \code{type} equal to \code{"overall"} and \code{"lag"}) or
-#' lag (for for \code{type} equal to \code{"var"}). Values are set to default
+#' of predictor (for \code{type} equal to \code{'overall'} and \code{'lag'}) or
+#' lag (for for \code{type} equal to \code{'var'}). Values are set to default
 #' or chosen thorugh \code{at}/\code{from}/\code{to}/\code{by} and
 #' \code{lag}/\code{bylag}, respectively.
 #' 
@@ -61,15 +59,15 @@
 #' variables included in \code{basis}.
 #' 
 #' @aliases crossreduce summary.crossreduce
-#' @param basis an object of class \code{"crossbasis"}.
+#' @param basis an object of class \code{'crossbasis'}.
 #' @param model a model object for which the reduction and prediction are
 #' desired. See Details below.
 #' @param coef,vcov,model.link user-provided coefficients, (co)variance matrix
 #' and model link for the reduction and then prediction. See Details below.
-#' @param type type of reduction. Possible options are \code{"overall"}
+#' @param type type of reduction. Possible options are \code{'overall'}
 #' (default) for reduction to the overall cumulative exposure-response
-#' association, \code{"lag"} for reduction to a lag-specific exposure-response
-#' association, or \code{"var"} for reduction to a predictor-specific
+#' association, \code{'lag'} for reduction to a lag-specific exposure-response
+#' association, or \code{'var'} for reduction to a predictor-specific
 #' lag-response association. See Details below.
 #' @param value the single value of predictor or lag at which
 #' predictor-specific or lag-specific associations must be defined,
@@ -86,7 +84,7 @@
 #' @param ci.level confidence level for the computation of confidence
 #' intervals.
 #' @param \dots additional arguments to be passed to \code{summary}.
-#' @return A list object of class \code{"crossreduce"} with the following
+#' @return A list object of class \code{'crossreduce'} with the following
 #' (optional) components: \item{coefficients, vcov }{ reduced parameters of the
 #' original fitted model for the chosen dimension.} \item{basis }{ basis matrix
 #' computed at \code{predvar} or for the sequence of lags defined by
@@ -138,12 +136,13 @@
 #' \url{http://www.ag-myresearch.com/bmcmrm2013}.
 #' @keywords smooth ts
 #' @importFrom stats qnorm
+#' @export
 #' @examples
 #' 
 #' # create the crossbasis object
 #' lagnk <- 3
 #' lagknots <- exp(((1+log(30))/(lagnk+1) * seq(lagnk))-1)
-#' cb4 <- crossbasis(chicagoNMMAPS$temp, lag=30, argvar=list(fun="thr",
+#' cb4 <- crossbasis(chicagoNMMAPS$temp, lag=30, argvar=list(fun='thr',
 #'   thr=c(10,25)), arglag=list(knots=lagknots))
 #' 
 #' # # run the model and get the predictions
@@ -156,9 +155,9 @@
 #' redall <- crossreduce(cb4, model4)
 #' summary(redall)
 #' # reduce to exposure-response association for lag 5
-#' redlag <- crossreduce(cb4, model4, type="lag", value=5)
+#' redlag <- crossreduce(cb4, model4, type='lag', value=5)
 #' # reduce to lag-response association for value 33
-#' redvar <- crossreduce(cb4, model4, type="var", value=33)
+#' redvar <- crossreduce(cb4, model4, type='var', value=33)
 #' 
 #' # compare number of parameters
 #' length(coef(pred4))
@@ -167,181 +166,151 @@
 #' length(coef(redvar))
 #' 
 #' # test
-#' plot(pred4, "overall", xlab="Temperature", ylab="RR",
-#'   ylim=c(0.8,1.6), main="Overall cumulative association")
-#' lines(redall, ci="lines",col=4,lty=2)
-#' legend("top",c("Original","Reduced"),col=c(2,4),lty=1:2,ins=0.1)
+#' plot(pred4, 'overall', xlab='Temperature', ylab='RR',
+#'   ylim=c(0.8,1.6), main='Overall cumulative association')
+#' lines(redall, ci='lines',col=4,lty=2)
+#' legend('top',c('Original','Reduced'),col=c(2,4),lty=1:2,ins=0.1)
 #' 
 #' # reconstruct the fit in terms of uni-dimensional function
 #' b4 <- onebasis(0:30,knots=attributes(cb4)$arglag$knots,int=TRUE)
-#' pred4b <- crosspred(b4,coef=coef(redvar),vcov=vcov(redvar),model.link="log",by=1)
+#' pred4b <- crosspred(b4,coef=coef(redvar),vcov=vcov(redvar),model.link='log',by=1)
 #' 
 #' # test
-#' plot(pred4, "slices", var=33, ylab="RR", ylim=c(0.9,1.2),
-#'   main="Lag-response association at 33C")
-#' lines(redvar, ci="lines", col=4, lty=2)
+#' plot(pred4, 'slices', var=33, ylab='RR', ylim=c(0.9,1.2),
+#'   main='Lag-response association at 33C')
+#' lines(redvar, ci='lines', col=4, lty=2)
 #' points(pred4b, pch=19, cex=0.6)
-#' legend("top",c("Original","Reduced","Reconstructed"),col=c(2,4,1),lty=c(1:2,NA),
+#' legend('top',c('Original','Reduced','Reconstructed'),col=c(2,4,1),lty=c(1:2,NA),
 #'   pch=c(NA,NA,19),pt.cex=0.6,ins=0.1)
 #' 
-crossreduce <-
-function(basis, model=NULL, type="overall", value=NULL, coef=NULL, vcov=NULL,
-  model.link=NULL, at=NULL, from=NULL, to=NULL, by=NULL, lag, bylag=1, cen=NULL,
-  ci.level=0.95) {
-#
-################################################################################
-# CHECK BASIS AND WRITE CONDITION (REGULAR EXPRESSION) TO EXTRACT COEF-VCOV
-#
-  if(all(class(basis)!="crossbasis")) {
+crossreduce <- function(basis, model = NULL, type = "overall", value = NULL, coef = NULL, vcov = NULL, model.link = NULL, 
+  at = NULL, from = NULL, to = NULL, by = NULL, lag, bylag = 1, cen = NULL, ci.level = 0.95) {
+  # CHECK BASIS AND WRITE CONDITION (REGULAR EXPRESSION) TO EXTRACT COEF-VCOV
+  if (all(class(basis) != "crossbasis")) {
     stop("the first argument must be an object of class 'crossbasis'")
   }
   name <- deparse(substitute(basis))
   attr <- attributes(basis)
-  if(ncol(basis)==1) cond <- name
-#
-###########################################################################
-# COHERENCE CHECKS (SEE CROSSPRED)
-#
-  if(is.null(model)&&(is.null(coef)||is.null(vcov))) {
+  if (ncol(basis) == 1) 
+    cond <- name
+  # COHERENCE CHECKS (SEE CROSSPRED)
+  if (is.null(model) && (is.null(coef) || is.null(vcov))) {
     stop("At least 'model' or 'coef'-'vcov' must be provided")
   }
-  type <- match.arg(type,c("overall","var","lag"))
-  if(type!="overall") {
-    if(is.null(value)) stop("'value' must be provided for type 'var' or 'lag'")
-    else if(!is.numeric(value)||length(value)>1) {
+  type <- match.arg(type, c("overall", "var", "lag"))
+  if (type != "overall") {
+    if (is.null(value)) 
+      stop("'value' must be provided for type 'var' or 'lag'") else if (!is.numeric(value) || length(value) > 1) {
       stop("'value' must be a numeric scalar")
     }
-    if(type=="lag" && (any(value<attr$lag[1]) ||any(value>attr$lag[2]))) {
+    if (type == "lag" && (any(value < attr$lag[1]) || any(value > attr$lag[2]))) {
       stop("'value' of lag-specific effects must be within the lag range")
     }
   } else value <- NULL
-#
-  #  lag MUST BE A POSITIVE INTEGER VECTOR, BY DEFAULT THAT USED FOR ESTIMATION
-  lag <- if(missing(lag)) attr$lag else mklag(lag)
-  if(lag!=attr$lag && attr$arglag$fun=="integer")
-      stop("prediction for lag sub-period not allowed for type 'integer'")
-#
-  if(!is.numeric(ci.level)||ci.level>=1||ci.level<=0) {
+  # lag MUST BE A POSITIVE INTEGER VECTOR, BY DEFAULT THAT USED FOR ESTIMATION
+  lag <- if (missing(lag)) 
+    attr$lag else mklag(lag)
+  if (lag != attr$lag && attr$arglag$fun == "integer") 
+    stop("prediction for lag sub-period not allowed for type 'integer'")
+  # 
+  if (!is.numeric(ci.level) || ci.level >= 1 || ci.level <= 0) {
     stop("'ci.level' must be numeric and between 0 and 1")
   }
-#
-###########################################################################
-# SET COEF, VCOV CLASS AND LINK FOR EVERY TYPE OF MODELS
-#
-  # WRITE CONDITIONS (DEPENDENT ON TYPE AND IF MATRIX/VECTOR)
-  cond <- if(ncol(basis)==1L) name else 
-    paste(name,"[[:print:]]*v[0-9]{1,2}\\.l[0-9]{1,2}",sep="")
-#
+  # SET COEF, VCOV CLASS AND LINK FOR EVERY TYPE OF MODELS WRITE CONDITIONS (DEPENDENT ON TYPE AND IF
+  # MATRIX/VECTOR)
+  cond <- if (ncol(basis) == 1L) 
+    name else paste(name, "[[:print:]]*v[0-9]{1,2}\\.l[0-9]{1,2}", sep = "")
   # IF MODEL PROVIDED, EXTRACT FROM HERE, OTHERWISE DIRECTLY FROM COEF AND VCOV
-  if(!is.null(model)) {
+  if (!is.null(model)) {
     model.class <- class(model)
-    coef <- getcoef(model,model.class)
-    ind <- grep(cond,names(coef))
+    coef <- getcoef(model, model.class)
+    ind <- grep(cond, names(coef))
     coef <- coef[ind]
-    vcov <- getvcov(model,model.class)[ind,ind,drop=FALSE]
-    model.link <- getlink(model,model.class)
+    vcov <- getvcov(model, model.class)[ind, ind, drop = FALSE]
+    model.link <- getlink(model, model.class)
   } else model.class <- NA
-#
   # CHECK COEF AND VCOV
-  npar <- if(type=="gam") length(ind) else ncol(basis)
-  npar <- if(type=="gam") length(ind) else ncol(basis)
-  if(length(coef)!=npar || length(coef)!=dim(vcov)[1] || any(is.na(coef)) ||
-      any(is.na(vcov)))
+  npar <- if (type == "gam") 
+    length(ind) else ncol(basis)
+  npar <- if (type == "gam") 
+    length(ind) else ncol(basis)
+  if (length(coef) != npar || length(coef) != dim(vcov)[1] || any(is.na(coef)) || any(is.na(vcov))) 
     stop("coef/vcov do not consistent with basis matrix. See help(crossreduce)")
-#
-##########################################################################
-# AT AND CENTERING
-#
-  # SET at
-  if(is.matrix(at)) stop("argument 'at' must be a vector")
+  # AT AND CENTERING SET at
+  if (is.matrix(at)) 
+    stop("argument 'at' must be a vector")
   range <- attr$range
-  at <- mkat(at,from,to,by,range,lag,bylag)
-#
+  at <- mkat(at, from, to, by, range, lag, bylag)
   # DEFINE CENTERING VALUE (NULL IF UNCENTERED), AND REMOVE INFO FROM BASIS
-  cen <- mkcen(cen,type="cb",basis,range)
+  cen <- mkcen(cen, type = "cb", basis, range)
   attributes(basis)$argvar$cen <- attr$argvar$cen <- NULL
-#
-##########################################################################
-# REDUCTION
-#
-  # CREATE (CENTERED) TRANSFORMATION MATRIX AND BASIS
-  # NB: ORDER OF THE TENSOR REVERSED SINCE VERSION 2.2.4
-  # NOW ORDER COMPATIBLE WITH crossbasis BUT REVERSE OF GASPARRINI BMCmrm 2013
-  if(type=="overall") {
-    lagbasis <- do.call("onebasis",c(list(x=seqlag(lag)),attr$arglag))
-    M <- diag(ncol(basis)/ncol(lagbasis)) %x%
-      (t(rep(1,diff(lag)+1)) %*% lagbasis)  
-    newbasis <- do.call("onebasis",c(list(x=at),attr$argvar))
-    if(!is.null(cen)) {
-      basiscen <- do.call("onebasis",c(list(x=cen),attr$argvar))
-      newbasis <- scale(newbasis,center=basiscen,scale=FALSE)
+  # REDUCTION CREATE (CENTERED) TRANSFORMATION MATRIX AND BASIS NB: ORDER OF THE TENSOR REVERSED SINCE
+  # VERSION 2.2.4 NOW ORDER COMPATIBLE WITH crossbasis BUT REVERSE OF GASPARRINI BMCmrm 2013
+  if (type == "overall") {
+    lagbasis <- do.call("onebasis", c(list(x = seqlag(lag)), attr$arglag))
+    M <- diag(ncol(basis)/ncol(lagbasis)) %x% (t(rep(1, diff(lag) + 1)) %*% lagbasis)
+    newbasis <- do.call("onebasis", c(list(x = at), attr$argvar))
+    if (!is.null(cen)) {
+      basiscen <- do.call("onebasis", c(list(x = cen), attr$argvar))
+      newbasis <- scale(newbasis, center = basiscen, scale = FALSE)
     }
-  } else if(type=="lag") {
-    lagbasis <- do.call("onebasis",c(list(x=value),attr$arglag))
+  } else if (type == "lag") {
+    lagbasis <- do.call("onebasis", c(list(x = value), attr$arglag))
     M <- diag(ncol(basis)/ncol(lagbasis)) %x% lagbasis
-    newbasis <- do.call("onebasis",c(list(x=at),attr$argvar))
-    if(!is.null(cen)) {
-      basiscen <- do.call("onebasis",c(list(x=cen),attr$argvar))
-      newbasis <- scale(newbasis,center=basiscen,scale=FALSE)
+    newbasis <- do.call("onebasis", c(list(x = at), attr$argvar))
+    if (!is.null(cen)) {
+      basiscen <- do.call("onebasis", c(list(x = cen), attr$argvar))
+      newbasis <- scale(newbasis, center = basiscen, scale = FALSE)
     }
-  } else if(type=="var") {
-    varbasis <- do.call("onebasis",c(list(x=value),attr$argvar))
-    if(!is.null(cen)) {
-      basiscen <- do.call("onebasis",c(list(x=cen),attr$argvar))
-      varbasis <- scale(varbasis,center=basiscen,scale=FALSE)
+  } else if (type == "var") {
+    varbasis <- do.call("onebasis", c(list(x = value), attr$argvar))
+    if (!is.null(cen)) {
+      basiscen <- do.call("onebasis", c(list(x = cen), attr$argvar))
+      varbasis <- scale(varbasis, center = basiscen, scale = FALSE)
     }
     M <- varbasis %x% diag(ncol(basis)/ncol(varbasis))
-    newbasis <- do.call("onebasis",c(list(x=seqlag(lag,bylag)),attr$arglag))
+    newbasis <- do.call("onebasis", c(list(x = seqlag(lag, bylag)), attr$arglag))
   }
-#
   # NAMES
-  dimnames(newbasis) <- list(seq(nrow(newbasis)),paste0("b",seq(ncol(newbasis))))
-#
+  dimnames(newbasis) <- list(seq(nrow(newbasis)), paste0("b", seq(ncol(newbasis))))
   # CREATE NEW SET OF COEF AND VCOV
-  newcoef <- as.vector(M%*%coef)
+  newcoef <- as.vector(M %*% coef)
   names(newcoef) <- colnames(newbasis)
-  newvcov <- M%*%vcov%*%t(M)
-  dimnames(newvcov) <- list(colnames(newbasis),colnames(newbasis))
-#
-##########################################################################
-# PREDICTION
-#
-  fit <- as.vector(newbasis%*%newcoef)
-  se <- sqrt(pmax(0,rowSums((newbasis%*%newvcov)*newbasis)))
-  if(type=="var") {
-    names(fit) <- names(se) <- outer("lag",seqlag(lag,bylag),paste,sep="")
-  }else names(fit) <- names(se) <- at
-#
-###########################################################################
-# CREATE THE OBJECT
-#
-  # INITIAL LIST
-  list <- list(coefficients=newcoef,vcov=newvcov,basis=newbasis,type=type,
-    value=value)
-  if(type!="var") list$predvar <- at
-  if(!is.null(cen)) list$cen <- cen
-  list <- c(list,list(lag=lag,bylag=bylag,fit=fit,se=se))
-#
+  newvcov <- M %*% vcov %*% t(M)
+  dimnames(newvcov) <- list(colnames(newbasis), colnames(newbasis))
+  # PREDICTION
+  fit <- as.vector(newbasis %*% newcoef)
+  se <- sqrt(pmax(0, rowSums((newbasis %*% newvcov) * newbasis)))
+  if (type == "var") {
+    names(fit) <- names(se) <- outer("lag", seqlag(lag, bylag), paste, sep = "")
+  } else names(fit) <- names(se) <- at
+  # CREATE THE OBJECT INITIAL LIST
+  list <- list(coefficients = newcoef, vcov = newvcov, basis = newbasis, type = type, value = value)
+  if (type != "var") 
+    list$predvar <- at
+  if (!is.null(cen)) 
+    list$cen <- cen
+  list <- c(list, list(lag = lag, bylag = bylag, fit = fit, se = se))
   # VECTORS WITH EXPONENTIATED EFFECTS AND CONFIDENCE INTERVALS
-  z <- qnorm(1-(1-ci.level)/2)
-  if(model.link %in% c("log","logit")) {
+  z <- qnorm(1 - (1 - ci.level)/2)
+  if (model.link %in% c("log", "logit")) {
     list$RRfit <- exp(fit)
-    list$RRlow <- exp(fit-z*se)
+    list$RRlow <- exp(fit - z * se)
     names(list$RRlow) <- names(fit)
-    list$RRhigh <- exp(fit+z*se)
+    list$RRhigh <- exp(fit + z * se)
     names(list$RRhigh) <- names(fit)
   } else {
-    list$low <- fit-z*se
+    list$low <- fit - z * se
     names(list$low) <- names(fit)
-    list$high <- fit+z*se
+    list$high <- fit + z * se
     names(list$high) <- names(fit)
   }
-#
+  # 
   list$ci.level <- ci.level
   list$model.class <- model.class
   list$model.link <- model.link
-#
+  # 
   class(list) <- "crossreduce"
-#
+  # 
   return(list)
 }

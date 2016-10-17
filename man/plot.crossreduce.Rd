@@ -10,11 +10,11 @@
   exp = NULL, ...)
 }
 \arguments{
-\item{x}{an object of class \code{"crossreduce"}.}
+\item{x}{an object of class \code{'crossreduce'}.}
 
-\item{ci}{type of confidence intervals representation: one of \code{"area"},
-\code{"bars"}, \code{"lines"} or \code{"n"}. Default to \code{"area"} in
-high level functions, \code{"n"} for low-level functions.}
+\item{ci}{type of confidence intervals representation: one of \code{'area'},
+\code{'bars'}, \code{'lines'} or \code{'n'}. Default to \code{'area'} in
+high level functions, \code{'n'} for low-level functions.}
 
 \item{ci.arg}{list of arguments to be passed to low-level plotting functions
 to draw the confidence intervals. See Details.}
@@ -34,7 +34,7 @@ distributed lag non-linear models (DLNM).
 \details{
 Differently than for plotting functions for \code{crosspred} objects (see
 the method function \code{\link[=plot.crosspred]{plot}} for objects of class
-\code{"crosspred"}), the type of the plot is automatically chosen by the
+\code{'crosspred'}), the type of the plot is automatically chosen by the
 dimension and value at which the model has been reduced. Namely, the
 lag-specific association at the chosen lag value, the predictor-specific
 association at the chosen predictor value, or the overall cumulative
@@ -47,22 +47,22 @@ See \code{\link[graphics]{plot.default}}, \code{\link[graphics]{lines}} and
 arguments. Some arguments, if not specified, are set to different default
 values than the original functions.
 
-Confidence intervals are plotted for \code{ptype} equal to \code{"overall"}
-or \code{"slices"}. Their type is determined by \code{ci}, with options
-\code{"area"} (default for \code{plot}), \code{"bars"}, \code{"lines"} or
-\code{"n"} (no confidence intervals, default for \code{points} and
+Confidence intervals are plotted for \code{ptype} equal to \code{'overall'}
+or \code{'slices'}. Their type is determined by \code{ci}, with options
+\code{'area'} (default for \code{plot}), \code{'bars'}, \code{'lines'} or
+\code{'n'} (no confidence intervals, default for \code{points} and
 \code{lines}). Their appearance may be modified through \code{ci.arg}, a
 list of arguments passed to to low-level plotting functions:
-\code{\link[graphics]{polygon}} for \code{"area"},
-\code{\link[graphics]{segments}} for \code{"bars"} and
-\code{\link[graphics]{lines}} for \code{"lines"}. See the original functions
+\code{\link[graphics]{polygon}} for \code{'area'},
+\code{\link[graphics]{segments}} for \code{'bars'} and
+\code{\link[graphics]{lines}} for \code{'lines'}. See the original functions
 for a complete list of the arguments. This option offers flexibility in the
 choice of confidence intervals display. As above, some unspecified arguments
 are set to different default values.
 
 For a detailed illustration of the use of the functions, see:
 
-\code{vignette("dlnmOverview")}
+\code{vignette('dlnmOverview')}
 }
 \note{
 All the predictions are plotted using a reference value corresponding
@@ -77,7 +77,7 @@ are returned by default if \code{x$model.link} is equal to \code{log} or
 # create the crossbasis object
 lagnk <- 3
 lagknots <- exp(((1+log(30))/(lagnk+1) * seq(lagnk))-1)
-cb4 <- crossbasis(chicagoNMMAPS$temp, lag=30, argvar=list(fun="thr",
+cb4 <- crossbasis(chicagoNMMAPS$temp, lag=30, argvar=list(fun='thr',
   thr=c(10,25)), arglag=list(knots=lagknots))
 
 # # run the model and get the predictions
@@ -90,9 +90,9 @@ pred4 <- crosspred(cb4, model4, by=1)
 redall <- crossreduce(cb4, model4)
 summary(redall)
 # reduce to exposure-response association for lag 5
-redlag <- crossreduce(cb4, model4, type="lag", value=5)
+redlag <- crossreduce(cb4, model4, type='lag', value=5)
 # reduce to lag-response association for value 33
-redvar <- crossreduce(cb4, model4, type="var", value=33)
+redvar <- crossreduce(cb4, model4, type='var', value=33)
 
 # compare number of parameters
 length(coef(pred4))
@@ -101,21 +101,21 @@ length(coef(redlag))
 length(coef(redvar))
 
 # test
-plot(pred4, "overall", xlab="Temperature", ylab="RR",
-  ylim=c(0.8,1.6), main="Overall cumulative association")
-lines(redall, ci="lines",col=4,lty=2)
-legend("top",c("Original","Reduced"),col=c(2,4),lty=1:2,ins=0.1)
+plot(pred4, 'overall', xlab='Temperature', ylab='RR',
+  ylim=c(0.8,1.6), main='Overall cumulative association')
+lines(redall, ci='lines',col=4,lty=2)
+legend('top',c('Original','Reduced'),col=c(2,4),lty=1:2,ins=0.1)
 
 # reconstruct the fit in terms of uni-dimensional function
 b4 <- onebasis(0:30,knots=attributes(cb4)$arglag$knots,intercept=TRUE)
-pred4b <- crosspred(b4,coef=coef(redvar),vcov=vcov(redvar),model.link="log",by=1)
+pred4b <- crosspred(b4,coef=coef(redvar),vcov=vcov(redvar),model.link='log',by=1)
 
 # test
-plot(pred4, "slices", var=33, ylab="RR", ylim=c(0.9,1.2),
-  main="Lag-response association at 33C")
-lines(redvar, ci="lines", col=4, lty=2)
+plot(pred4, 'slices', var=33, ylab='RR', ylim=c(0.9,1.2),
+  main='Lag-response association at 33C')
+lines(redvar, ci='lines', col=4, lty=2)
 points(pred4b, pch=19, cex=0.6)
-legend("top",c("Original","Reduced","Reconstructed"),col=c(2,4,1),lty=c(1:2,NA),
+legend('top',c('Original','Reduced','Reconstructed'),col=c(2,4,1),lty=c(1:2,NA),
   pch=c(NA,NA,19),pt.cex=0.6,ins=0.1)
 
 }

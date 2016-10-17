@@ -10,15 +10,15 @@ crossreduce(basis, model = NULL, type = "overall", value = NULL,
   to = NULL, by = NULL, lag, bylag = 1, cen = NULL, ci.level = 0.95)
 }
 \arguments{
-\item{basis}{an object of class \code{"crossbasis"}.}
+\item{basis}{an object of class \code{'crossbasis'}.}
 
 \item{model}{a model object for which the reduction and prediction are
 desired. See Details below.}
 
-\item{type}{type of reduction. Possible options are \code{"overall"}
+\item{type}{type of reduction. Possible options are \code{'overall'}
 (default) for reduction to the overall cumulative exposure-response
-association, \code{"lag"} for reduction to a lag-specific exposure-response
-association, or \code{"var"} for reduction to a predictor-specific
+association, \code{'lag'} for reduction to a lag-specific exposure-response
+association, or \code{'var'} for reduction to a predictor-specific
 lag-response association. See Details below.}
 
 \item{value}{the single value of predictor or lag at which
@@ -48,7 +48,7 @@ intervals.}
 \item{\dots}{additional arguments to be passed to \code{summary}.}
 }
 \value{
-A list object of class \code{"crossreduce"} with the following
+A list object of class \code{'crossreduce'} with the following
 (optional) components: \item{coefficients, vcov }{ reduced parameters of the
 original fitted model for the chosen dimension.} \item{basis }{ basis matrix
 computed at \code{predvar} or for the sequence of lags defined by
@@ -85,8 +85,8 @@ smaller) set of modified parameters.
 Similarly to \code{\link{crosspred}}, the object \code{basis} must be the
 same containing the cross-basis matrix included in \code{model}, with its
 attributes and class. The function computes predictions for specific values
-of predictor (for \code{type} equal to \code{"overall"} and \code{"lag"}) or
-lag (for for \code{type} equal to \code{"var"}). Values are set to default
+of predictor (for \code{type} equal to \code{'overall'} and \code{'lag'}) or
+lag (for for \code{type} equal to \code{'var'}). Values are set to default
 or chosen thorugh \code{at}/\code{from}/\code{to}/\code{by} and
 \code{lag}/\code{bylag}, respectively.
 
@@ -153,7 +153,7 @@ be specified.
 # create the crossbasis object
 lagnk <- 3
 lagknots <- exp(((1+log(30))/(lagnk+1) * seq(lagnk))-1)
-cb4 <- crossbasis(chicagoNMMAPS$temp, lag=30, argvar=list(fun="thr",
+cb4 <- crossbasis(chicagoNMMAPS$temp, lag=30, argvar=list(fun='thr',
   thr=c(10,25)), arglag=list(knots=lagknots))
 
 # # run the model and get the predictions
@@ -166,9 +166,9 @@ pred4 <- crosspred(cb4, model4, by=1)
 redall <- crossreduce(cb4, model4)
 summary(redall)
 # reduce to exposure-response association for lag 5
-redlag <- crossreduce(cb4, model4, type="lag", value=5)
+redlag <- crossreduce(cb4, model4, type='lag', value=5)
 # reduce to lag-response association for value 33
-redvar <- crossreduce(cb4, model4, type="var", value=33)
+redvar <- crossreduce(cb4, model4, type='var', value=33)
 
 # compare number of parameters
 length(coef(pred4))
@@ -177,21 +177,21 @@ length(coef(redlag))
 length(coef(redvar))
 
 # test
-plot(pred4, "overall", xlab="Temperature", ylab="RR",
-  ylim=c(0.8,1.6), main="Overall cumulative association")
-lines(redall, ci="lines",col=4,lty=2)
-legend("top",c("Original","Reduced"),col=c(2,4),lty=1:2,ins=0.1)
+plot(pred4, 'overall', xlab='Temperature', ylab='RR',
+  ylim=c(0.8,1.6), main='Overall cumulative association')
+lines(redall, ci='lines',col=4,lty=2)
+legend('top',c('Original','Reduced'),col=c(2,4),lty=1:2,ins=0.1)
 
 # reconstruct the fit in terms of uni-dimensional function
 b4 <- onebasis(0:30,knots=attributes(cb4)$arglag$knots,int=TRUE)
-pred4b <- crosspred(b4,coef=coef(redvar),vcov=vcov(redvar),model.link="log",by=1)
+pred4b <- crosspred(b4,coef=coef(redvar),vcov=vcov(redvar),model.link='log',by=1)
 
 # test
-plot(pred4, "slices", var=33, ylab="RR", ylim=c(0.9,1.2),
-  main="Lag-response association at 33C")
-lines(redvar, ci="lines", col=4, lty=2)
+plot(pred4, 'slices', var=33, ylab='RR', ylim=c(0.9,1.2),
+  main='Lag-response association at 33C')
+lines(redvar, ci='lines', col=4, lty=2)
 points(pred4b, pch=19, cex=0.6)
-legend("top",c("Original","Reduced","Reconstructed"),col=c(2,4,1),lty=c(1:2,NA),
+legend('top',c('Original','Reduced','Reconstructed'),col=c(2,4,1),lty=c(1:2,NA),
   pch=c(NA,NA,19),pt.cex=0.6,ins=0.1)
 
 }

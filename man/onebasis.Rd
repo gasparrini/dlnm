@@ -19,7 +19,7 @@ Details below.}
 \code{fun} or to \code{summary}.}
 }
 \value{
-A matrix object of class \code{"onebasis"} which can be included in
+A matrix object of class \code{'onebasis'} which can be included in
 a model formula in order to estimate the association. It contains the
 attributes \code{fun}, \code{range} (range of the original vector of
 observations) and additional attributes specific to the chosen function. The
@@ -44,40 +44,40 @@ modelling and plotting of uni-dimensional exposure-response relationships.
 The function to be called is chosen through the argument \code{fun}.
 Standard choices are:
 
-\itemize{ \item \bold{\code{"ns"}} and \bold{\code{"bs"}}: natural cubic
+\itemize{ \item \bold{\code{'ns'}} and \bold{\code{'bs'}}: natural cubic
 B-splines or B-splines of various degree. Performed through a call to
 functions \code{\link[splines]{ns}} or \code{\link[splines]{bs}} from
 package \pkg{splines}. Arguments passed through \code{\dots{}} may include
 \code{df}, \code{knots}, \code{intercept}, and \code{Boundary.knots}.
 
-\item \bold{\code{"poly"}}: polynomials functions. Performed through a call
+\item \bold{\code{'poly'}}: polynomials functions. Performed through a call
 to the internal function \code{\link{poly}} (be aware that this is different
 from \code{\link[stats]{poly}} in the package \pkg{stats}). Arguments passed
 through \code{\dots{}} may include \code{degree}, \code{scale} and
 \code{intercept}.
 
-\item \bold{\code{"strata"}}: indicator variables defining strata. Performed
+\item \bold{\code{'strata'}}: indicator variables defining strata. Performed
 through a call to the function \code{\link{strata}}. Arguments passed
 through \code{\dots{}} may include \code{df}, \code{breaks}, \code{ref} and
 \code{intercept}.
 
-\item \bold{\code{"thr"}}: high, low or double linear threshold functions.
+\item \bold{\code{'thr'}}: high, low or double linear threshold functions.
 Performed through a call to the function \code{\link{thr}}. Arguments passed
 through \code{\dots{}} may include \code{thr.value}, \code{side} and
 \code{intercept}.
 
-\item \bold{\code{"integer"}}: indicator variables for each integer value.
+\item \bold{\code{'integer'}}: indicator variables for each integer value.
 Performed through a call to the internal function \code{\link{integer}} (be
 aware that this is different from the function \code{\link[base]{integer}}
 in the package \pkg{base}). Arguments passed through \code{\dots{}} may
 include \code{intercept}.
 
-\item \bold{\code{"lin"}}: linear functions. Performed through a call to the
+\item \bold{\code{'lin'}}: linear functions. Performed through a call to the
 internal function \code{\link{lin}}. Arguments passed through \code{\dots{}}
 may include \code{intercept}. }
 
 The help pages of the called functions provides additional information. In
-particular, the option \code{"lin"} and \code{"integer"} are usually applied
+particular, the option \code{'lin'} and \code{'integer'} are usually applied
 for defining constrained and unconstrained distributed lag models.
 
 In addition, any other existing or user-defined function can be potentially
@@ -90,7 +90,7 @@ arguments of the function itself which exactly define the transformations.
 This function offers a wide range of options about modelling the shape
 of the exposure-response relationships, also simplifying or extending the
 use of existing functions. The function \code{\link{crosspred}} can be
-called on objects of class \code{"onebasis"} in order to obtain predictions
+called on objects of class \code{'onebasis'} in order to obtain predictions
 and plotting of such unidimensional associations. If more than one variable
 is transformed through \code{onebasis} in the same model, different names
 must be specified.
@@ -114,38 +114,38 @@ provided. The user is expected to provide valid arguments.
 \examples{
 
 ### a polynomial transformation of a simple vector
-onebasis(1:5, "poly", degree=3)
+onebasis(1:5, 'poly', degree=3)
 
 ### a low linear threshold parameterization, with and without intercept
-onebasis(1:5, "thr", thr=3, side="l")
-onebasis(1:5, "thr", thr=3, side="l", intercept=TRUE)
+onebasis(1:5, 'thr', thr=3, side='l')
+onebasis(1:5, 'thr', thr=3, side='l', intercept=TRUE)
 
 ### relationship between PM10 and mortality estimated by a step function
-b <- onebasis(chicagoNMMAPS$pm10, "strata", breaks=c(20,40))
+b <- onebasis(chicagoNMMAPS$pm10, 'strata', breaks=c(20,40))
 summary(b)
 model <- glm(death ~ b, family=quasipoisson(), chicagoNMMAPS)
 pred <- crosspred(b, model, at=0:60)
-plot(pred, xlab="PM10", ylab="RR", main="RR for PM10")
+plot(pred, xlab='PM10', ylab='RR', main='RR for PM10')
 
 ### changing the reference in prediction (alternative to argument ref in strata)
 pred <- crosspred(b, model, cen=30, at=0:60)
-plot(pred, xlab="PM10", ylab="RR", main="RR for PM10, alternative reference")
+plot(pred, xlab='PM10', ylab='RR', main='RR for PM10, alternative reference')
 
 ### relationship between temperature and mortality: double threshold
-b <- onebasis(chicagoNMMAPS$temp, "thr", thr=c(10,25))
+b <- onebasis(chicagoNMMAPS$temp, 'thr', thr=c(10,25))
 summary(b)
 model <- glm(death ~ b, family=quasipoisson(), chicagoNMMAPS)
 pred <- crosspred(b, model, by=1)
-plot(pred, xlab="Temperature (C)", ylab="RR", main="RR for temperature")
+plot(pred, xlab='Temperature (C)', ylab='RR', main='RR for temperature')
 
 ### extending the example for the 'ns' function in package splines
 b <- onebasis(women$height, df=5)
 summary(b)
 model <- lm(weight ~ b, data=women)
 pred <- crosspred(b, model, cen=65)
-plot(pred, xlab="Height (in)", ylab="Weight (lb) difference",
-  main="Association between weight and height")
-  
+plot(pred, xlab='Height (in)', ylab='Weight (lb) difference',
+  main='Association between weight and height')
+\dontrun{  
 ### use with a user-defined function with proper attributes
 mylog <- function(x,scale=min(x,na.rm=TRUE)) {
   basis <- log(x-scale+1)
@@ -153,8 +153,8 @@ mylog <- function(x,scale=min(x,na.rm=TRUE)) {
   return(basis)
 }
 mylog(-2:5)
-onebasis(-2:5,"mylog")
-
+onebasis(-2:5,'mylog')
+}
 }
 \author{
 Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>
