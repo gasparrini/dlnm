@@ -1,0 +1,17 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+r:
+  - oldrel
+  - release
+  - devel
+sudo: false
+cache: packages
+
+notifications:
+  email:
+    recipients:
+      - fabian.scheipl@stat.uni-muenchen.de
+      - antonio.gasparrini@lshtm.ac.uk
+    on_success: change
+    on_failure: always
