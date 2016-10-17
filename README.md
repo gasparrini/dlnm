@@ -1,4 +1,4 @@
-[![Travis-CI Build Status](https://travis-ci.org/fabian-s/dlnm.svg?branch=master)](https://travis-ci.org/fabian-s/dlnm)
+[![Travis-CI Build Status](https://travis-ci.org/fabian-s/dlnm.svg?branch=cran-ready)](https://travis-ci.org/fabian-s/dlnm)
 
 # Distributed Lag Non-linear Models (DLNM)
 
