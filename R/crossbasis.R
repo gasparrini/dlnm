@@ -59,7 +59,6 @@
 #' and lags, respectively. See Details below.
 #' @param group a factor or a list of factors defining groups of observations.
 #' Only for time series data.
-#' @param object a object of class \code{"crossbasis"}.
 #' @param \dots additional arguments. See Details below.
 #' @return A matrix object of class \code{"crossbasis"} which can be included
 #' in a model formula in order to fit a DLNM. It contains the attributes
@@ -177,8 +176,7 @@
 #' # exposure-response curve for lag 10
 #' plot(pnest, lag=5, ylab="OR at lag 5", xlab="Exposure", ylim=c(0.95,1.15))
 #' 
-crossbasis <-
-function(x, lag, argvar=list(), arglag=list(), group=NULL, ...) {         
+crossbasis <- function(x, lag, argvar=list(), arglag=list(), group=NULL, ...) {
 #
 ################################################################################
 # COHERENCE CHECKS

@@ -22,8 +22,6 @@ and lags, respectively. See Details below.}
 \item{group}{a factor or a list of factors defining groups of observations.
 Only for time series data.}
 
-\item{object}{a object of class \code{"crossbasis"}.}
-
 \item{\dots}{additional arguments. See Details below.}
 }
 \value{
