@@ -6,7 +6,7 @@
 \title{ Plot Predictions for a Reduced DLNM }
 
 \description{
-High and low-level method functions for graphs of predictions from reduced distributed lag non-linear models (DLNM).
+High and low-level method functions for graphs of predictions from reduced distributed lag linear (DLMs) and non-linear (DLNMs) models.
 }
 
 \usage{
@@ -39,7 +39,7 @@ For a detailed illustration of the use of the functions, see:
 }
 
 \references{
-Gasparrini A., Armstrong, B., Kenward M. G. Reducing and meta-analyzing estimates from distributed lag non-linear models.\emph{BMC Medical Research Methodology}. 2013; \bold{13}(1):1. [freely available \href{http://www.ag-myresearch.com/bmcmrm2013}{here}].
+Gasparrini A., Armstrong, B., Kenward M. G. Reducing and meta-analyzing estimates from distributed lag non-linear models.\emph{BMC Medical Research Methodology}. 2013; \bold{13}(1):1. [freely available \href{http://www.ag-myresearch.com/2013_gasparrini_bmcmrm.html}{here}].
 }
 
 \author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}

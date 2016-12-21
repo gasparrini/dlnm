@@ -18,7 +18,7 @@ integer(x, values, intercept=FALSE)
 }
 
 \details{
-The function returns indicator variables for intervals defined by the integer values within the range of \code{x}. It is expressly created to specify an unconstrained function in the space of lags for distributed lag linear or non-linear models, and probably of no use beyond that.
+The function returns indicator variables for intervals defined by the integer values within the range of \code{x}. It is expressly created to specify an unconstrained function in the space of lags for distributed lag linear (DLMs) or non-linear (DLNMs) models, and probably of no use beyond that.
 
 The argument \code{intercept} determines the presence of an intercept. If \code{FALSE}, the interval corresponding to the first value in \code{values} is excluded, and the parameterization is indentical to dummy variables with the first group as a reference.
 }

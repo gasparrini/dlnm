@@ -29,15 +29,15 @@ The argument \code{knots} defines a vector of knots or (if of length 2) the lowe
 
 The penalization is defined on the difference of adjacent coefficients during fitting procedure through a penalty matrix \code{S}. The argument \code{diff} selects the order difference (with the default 2 determining a second order difference, and 0 producing a ridge penalty), while setting \code{fx=TRUE} removes the penalization. 
 
-Similarly to \code{\link{bs}} and \code{\link{ns}}, setting \code{intercept=FALSE} (default) determines the exclusion of the first transformed variables, and the corresponding first row and column in \code{S}, thus avoiding identifiability issues during the model fitting. Note how the procedure of imposing identifiability constraints is different from that adopted by \code{\link{smoothCon}} in the package \pkg{mgcv}, where a more complex reparameterization is produced. 
+Similarly to \code{\link{bs}} and \code{\link{ns}}, setting \code{intercept=FALSE} (default) determines the exclusion of the first transformed variables, and the corresponding first row and column in \code{S}, thus avoiding identifiability issues during the model fitting. Note how the procedure of imposing identifiability constraints is different from that adopted by \code{\link[mgcv]{smoothCon}} in the package \pkg{mgcv}, where a more complex reparameterization is produced. 
 }
 
 \value{
-A matrix object of class \code{"ps"}. It contains the attributes \code{df}, \code{knots}, \code{degree}, \code{intercept}, \code{fx}, \code{S}, and \code{diff}, with values which can be different than the arguments provided due to internal reset.
+A matrix object of class \code{"ps"}. It contains the attributes \code{df}, \code{knots}, \code{degree}, \code{intercept}, \code{fx}, \code{S}, and \code{diff}, with values that can be different than the arguments provided due to internal reset.
 }
 
 \references{
-Gasparrini A. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2016; in press.
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2017; in press. [freely available here]
 
 Eilers P. H. C. and Marx B. D. Flexible smoothing with B-splines and penalties. \emph{Statistical Science}. 1996; \bold{11}(2):89-121.
 
@@ -47,11 +47,11 @@ Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and Hall
 \author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>, adapting code available from functions included in the package \pkg{mgcv} by Simon N. Wood.}
 
 \note{
-The function is primarily added here to specify penalized DLMs and DLNMs using the so-called \emph{external} method, \emph{i.e.} by including the penalty matrix in the argument \code{paraPen} of the \code{\link[mgcv]{gam}} regression function in \pkg{mgcv}  (see \code{\link{cbPen}}). However, this approach can be also used to fit standard unidimensional P-spline models as an alternative to the use of specific \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}}, as it takes advantage of the use of prediction and plotting functions in \pkg{dlnm}.
+The function is primarily added here to specify penalized DLMs and DLNMs using the so-called \emph{external} method, \emph{i.e.} by including the penalty matrix in the argument \code{paraPen} of the \code{\link[mgcv]{gam}} regression function in \pkg{mgcv}  (see \code{\link{cbPen}}). However, this approach can be also used to fit standard uni-dimensional P-spline models as an alternative to the use of specific \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}}, as it takes advantage of the use of prediction and plotting functions in \pkg{dlnm}.
 }
 
 \seealso{
-\code{\link{cr}} for penalized cubic regression splines. \code{\link{bs}} and \code{\link{ns}} for B-splines and natural cubic splines, respectively. \code{\link{cbPen}} for defining tensor-type bi-dimensional penalties in DLNMs. The related \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}} for P-spline smooths in \pkg{mgcv}. The \code{\link[=smooth.construct.cb.smooth.spec]{smooth constructor}} for cross-basis spline smooths.
+\code{\link{cr}} for penalized cubic regression splines. \code{\link{bs}} and \code{\link{ns}} for B-splines and natural cubic splines, respectively. \code{\link{cbPen}} for defining tensor-type bi-dimensional penalties in DLNMs. The related \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}} for P-spline smooths in \pkg{mgcv}. The \code{\link[=smooth.construct.cb.smooth.spec]{cb smooth constructor}} for cross-basis penalized spline smooths.
 
 See \code{\link{dlnm-package}} for an introduction to the package and for links to package vignettes providing more detailed information.
 }

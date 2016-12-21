@@ -5,7 +5,7 @@
 \title{ Cross-Basis Spline Smooths for a DLNM }
 
 \description{
-These functions define a smooth class for bi-dimensional cross-basis splines for penalized DLMs and DLNMs. The functions are not supposed to be called directly, and the class is usually specified via terms like \code{s(X,L,bs="cb",...)} in the formula of the \code{\link[mgcv]{gam}} function of the package \pkg{mgcv}.
+These functions define a smooth class for bi-dimensional cross-basis splines for penalized distributed lag linear (DLMs) and non-linear (DLNMs) models. The functions are not supposed to be called directly, and the class is usually specified via terms like \code{s(X,L,bs="cb",...)} in the formula of the \code{\link[mgcv]{gam}} function of the package \pkg{mgcv}.
 }
 
 \usage{
@@ -21,7 +21,7 @@ Predict.matrix.cb.smooth(object, data)
 }
 
 \details{
-These functions embed tools available in the packages \pkg{dlnm} and \pkg{mgcv} to perform penalized DLMs and DLNMs. This represent the \emph{internal} method to perform such models (see Notes below). Specifically, the models are fitted by including a term \code{s(X,L,bs="cb",...)}, defining a class \code{"cb"} for bi-dimensional cross-basis splines, in the formula of the \code{\link[mgcv]{gam}} function. The smooth constructor function for this class turns this smooth terms into a smooth specification object, which includes the cross-basis matrix (see \code{\link{crossbasis}}) and the penalty matrices for the two spaces of predictor and lags used in model fitting. Then, \code{\link{crosspred}} uses the predict matrix function for the \code{"cb"} class to obtain predictions, and a graphical representation can be obtained by standard \code{\link[=plot.crosspred]{plotting functions}}, similary to unpenalized models.
+These functions embed tools available in the packages \pkg{dlnm} and \pkg{mgcv} to perform penalized DLMs and DLNMs. This represent the \emph{internal} method to perform such models (see Notes below). Specifically, the models are fitted by including a term \code{s(X,L,bs="cb",...)}, defining a class \code{"cb"} for bi-dimensional cross-basis splines, in the formula of the \code{\link[mgcv]{gam}} function. The constructor function for this class turns this smooth terms into a smooth specification object, which includes the cross-basis matrix (see \code{\link{crossbasis}}) and the penalty matrices for the two spaces of predictor and lags used in model fitting. Then, \code{\link{crosspred}} uses the predict matrix function for the \code{"cb"} class to obtain predictions, and a graphical representation can be obtained by standard \code{\link[=plot.crosspred]{plotting functions}}, similary to unpenalized models.
 
 The first two arguments \code{X} and \code{L} in \code{\link[mgcv]{s}} represent a matrix of exposure histories and a matrix of lags. The former, also used in \code{\link{crossbasis}}, needs to be defined directly even with time series data by lagging the exposure series. The matrix \code{L} must have the same dimensions of \code{X}, with identical rows representing the sequence of lags. The other arguments of \code{\link[mgcv]{s}} have the same meaning: in particular, \code{k} (default to 10), \code{fx} (default to \code{FALSE}) and \code{sp} (default to \code{NULL}) can be provided for each marginal basis as vectors of length 2, and similarly \code{m} can be provided as a list (see also \code{\link[mgcv]{te}}). No \code{by} argument is allowed.
 
@@ -35,7 +35,7 @@ The predict matrix function return a cross-basis matrix evaluated at specific va
 }
 
 \references{
-Gasparrini A. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2016; in press.
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2017; in press. [freely available here]
 
 Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and Hall/CRC Press, 2006.
 }
