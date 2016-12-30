@@ -46,7 +46,7 @@ A list of changes included in the current and previous versions can be found by 
 
 \code{file.show(system.file("ChangeLog",package="dlnm"))}
 
-General information on the development and applications of the DLM/DLNM modelling framework, together with an updated version of the \R{} scripts for running the examples in published papers, can be found at the personal web page (\bold{\href{http://www.ag-myresearch.com}{www.ag-myresearch.com}}) and or GitHub page (\bold{\href{https://github.com/gasparrini}{github.com/gasparrini}}) of the maintainer.
+General information on the development and applications of the DLM/DLNM modelling framework, together with an updated version of the \R{} scripts for running the examples in published papers, can be found at the GitHub page (\bold{\href{https://github.com/gasparrini}{github.com/gasparrini}}) or personal web page (\bold{\href{http://www.ag-myresearch.com}{www.ag-myresearch.com}})  of the maintainer.
 
 Please use \code{citation("dlnm")} to cite this package.
 }
