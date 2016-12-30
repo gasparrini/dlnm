@@ -42,7 +42,7 @@ mkcen <- function(cen, type, basis, range) {
 #
   # MESSAGE
   if(nocen && !is.null(cen))
-    message("centering value unspecified. Automatically set to mid-range of predictor")
+    message("centering value unspecified. Automatically set to ",cen)
 #
   return(cen)
 }

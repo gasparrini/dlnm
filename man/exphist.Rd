@@ -59,7 +59,7 @@ exphist(exp, lag=12)
 ### fill with NA's
 exphist(exp, lag=12, fill=NA)
 
-### see help(drug) and help(nested) for further examples
+### see the vignette dlnmExtended for further examples
 }
 
 \keyword{smooth}

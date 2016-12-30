@@ -112,7 +112,7 @@ plot(pred, xlab="Height (in)", ylab="Weight (lb) difference",
   main="Association between weight and height")
   
 ### use with a user-defined function with proper attributes
-mylog <- function(x,scale=min(x,na.rm=TRUE)) {
+mylog <- function(x, scale=min(x, na.rm=TRUE)) {
   basis <- log(x-scale+1)
   attributes(basis)$scale <- scale
   return(basis)

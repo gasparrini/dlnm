@@ -37,7 +37,7 @@ These nested case-control data were extracted from a simulated cohort with 300 c
 \seealso{
 \code{\link{drug}} for an example of randomized controlled trial data. \code{\link{chicagoNMMAPS}} for an example of time series data.
 
-The application of DLNMs to these data with detailed examples are given in vignette \strong{dlnmExtended}.
+The application of DLNMs to these data with detailed examples are provided in the vignette \strong{dlnmExtended}.
 
 See \code{\link{dlnm-package}} for an introduction to the package and for links to package vignettes providing more detailed information.
 }
