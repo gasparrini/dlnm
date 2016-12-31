@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini and Fabian Scheipl 2016
+### R routines for the R package dlnm (c) Antonio Gasparrini and Fabian Scheipl 2016-2017
 #
 smooth.construct.cb.smooth.spec <- function(object, data, knots) {
 #

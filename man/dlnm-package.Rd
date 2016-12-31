@@ -44,9 +44,9 @@ A vignette is available by typing:
 
 A list of changes included in the current and previous versions can be found by typing:
 
-\code{file.show(system.file("ChangeLog",package="dlnm"))}
+\code{news(package="dlnm")}
 
-General information on the development and applications of the DLM/DLNM modelling framework, together with an updated version of the \R{} scripts for running the examples in published papers, can be found at the GitHub page (\bold{\href{https://github.com/gasparrini}{github.com/gasparrini}}) or personal web page (\bold{\href{http://www.ag-myresearch.com}{www.ag-myresearch.com}})  of the maintainer.
+The \pkg{dlnm} package is available on the Comprehensive R Archive Network (CRAN), with info at the related web page (\href{https://CRAN.R-project.org/package=dlnm}{CRAN.R-project.org/package=dlnm}). A development website is available on GitHub (\href{https://github.com/gasparrini/dlnm}{github.com/gasparrini/dlnm}). General information on the development and applications of the DLM/DLNM modelling framework, together with an updated version of the \R{} scripts for running the examples in published papers, can be found on GitHub (\href{https://github.com/gasparrini}{github.com/gasparrini}) or at the personal web page of the package maintainer (\href{http://www.ag-myresearch.com}{www.ag-myresearch.com}).
 
 Please use \code{citation("dlnm")} to cite this package.
 }

@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2015-2016
+### R routines for the R package dlnm (c) Antonio Gasparrini 2015-2017
 #
 cbPen <-
 function(cb, sp=-1, addSlag=NULL) {

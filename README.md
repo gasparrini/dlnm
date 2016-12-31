@@ -1,26 +1,46 @@
 [![Travis-CI Build Status](https://travis-ci.org/fabian-s/dlnm.svg?branch=cran-ready)](https://travis-ci.org/fabian-s/dlnm)
 
-# Distributed Lag Non-linear Models (DLNM)
+-----------------------------------
 
-The package `dlnm` contains functions to specify and run distributed lag
-linear and non-linear models. 
+## Distributed Lag Non-linear Models (DLNM)
 
-Distributed lag non-linear models (DLNM) 
-represent a modelling framework to describe simultaneously non-linear and
-delayed dependencies, termed as *exposure-lag-response associations*.
-The methodology of DLNMs was originally developed for time series data, and
-has been recently extended to other study designs and data structures,
-compatible with cohort, case-control or longitudinal studies, amongst
-others. A thorough methodological overview is given in the references and
-the package vignettes, type `vignette(dlnmOverview)` for starters after loading 
-the package.
+The package `dlnm` contains functions to specify and interpret distributed lag linear (DLMs) and non-linear (DLNMs) models. The DLM/DLNM methodology is illustrated in detail in a series of articles referenced at the end of this document.
 
+### Info on the `dlnm` package
+
+The package is available on the Comprehensive R Archive Network (CRAN), with info at the related web page (https://cran.r-project.org/package=dlnm). A development website is available on GitHub (https://github.com/gasparrini/dlnm).
+
+For a short summary of the functionalities of this package, refer to the main help page by typing:
+
+```r
+help(dlnm)
+```
+
+in R after installation (see below). For a more comprehensive overview, refer to the main vignette of the package that can be opened with:
+
+```r
+vignette("dlnmOverview")
+```
+
+### Installation
+
+The last version officially released on CRAN can be installed directly within R by typing:
+
+```r
+install.packages("dlnm")
+```
+
+### R code in published articles
+
+Several peer-reviewed articles and documents provide R code illustrating methodological developments or replicating substantive results. An updated version of the code can be found at the GitHub (https://github.com/gasparrini) or personal web page (http://www.ag-myresearch.com) of the package maintainer.
 
 ### References:
 
 Gasparrini A. Distributed lag linear and non-linear models in R:
 the package dlnm. *Journal of Statistical Software*. 2011;
 **43**(8):1-20, freely available [here](http://www.ag-myresearch.com/jss2011).
+
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available here]
 
 Gasparrini A. Modeling exposure-lag-response associations with distributed
 lag non-linear models. *Statistics in Medicine*. 2014;
