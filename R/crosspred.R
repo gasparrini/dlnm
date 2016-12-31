@@ -16,13 +16,13 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   # CHECKS ON TYPE, AND SET name, basis AND RESET type
   errormes <- "arguments 'basis' and 'model' not consistent. See help(crosspred)"
   if(type=="gam") {
-    if(!is.character(basis)||length(basis)>1L) stop(errormes)
-    if(is.null(model)||!any(class(model)%in%"gam")) stop(errormes)
+    if(!is.character(basis) || length(basis)>1L) stop(errormes)
+    if(is.null(model) || !any(class(model)%in%"gam")) stop(errormes)
     name <- basis
-    sterms <- sapply(model$smooth,function(x) x$term[1])
+    sterms <- sapply(model$smooth, function(x) x$term[1])
     if(name%in%sterms) basis <- model$smooth[[which(sterms==name)[1]]] else 
       stop(errormes)
-    if(length(which(sterms==name))>1)
+    if(length(which(sterms==name)) > 1)
       warning(paste(name,"included in multiple smoothers, only the first one taken"))
     if(!"cb.smooth"%in%class(basis) && basis$dim>1L)
       stop("predictions not provided for multi-dimensional smoothers other than 'cb'")
@@ -38,9 +38,9 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
     stop("prediction for lag sub-period not allowed for type 'integer'")
 #
   # OTHER COHERENCE CHECKS
-  if(is.null(model)&&(is.null(coef)||is.null(vcov)))
+  if(is.null(model) && (is.null(coef) || is.null(vcov)))
     stop("At least 'model' or 'coef'-'vcov' must be provided")
-  if(!is.numeric(ci.level)||ci.level>=1||ci.level<=0)
+  if(!is.numeric(ci.level) || ci.level>=1 || ci.level<=0)
     stop("'ci.level' must be numeric and between 0 and 1")
 #
   # CUMULATIVE EFFECTS ONLY WITH LAGGED EFFECTS AND lag[1]==0
@@ -62,10 +62,10 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   if(!is.null(model)) {
     model.class <- class(model)
     coef <- getcoef(model,model.class)
-    ind <- if(type=="gam") cond else grep(cond,names(coef))
+    ind <- if(type=="gam") cond else grep(cond, names(coef))
     coef <- coef[ind]
-    vcov <- getvcov(model,model.class)[ind,ind,drop=FALSE]
-    model.link <- getlink(model,model.class)
+    vcov <- getvcov(model, model.class)[ind,ind,drop=FALSE]
+    model.link <- getlink(model, model.class)
   } else model.class <- NA
 #
   # CHECK
@@ -82,7 +82,7 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
     attr(basis,"range")
 #
   # SET at, predvar AND predlag
-  at <- mkat(at,from,to,by,range,lag,bylag)
+  at <- mkat(at, from, to, by, range, lag, bylag)
   predvar <- if(is.matrix(at)) rownames(at) else at
   predlag <- seqlag(lag,bylag)
 #
