@@ -14,7 +14,7 @@ function(x, ptype, var=NULL, lag=NULL, ci="area", ci.arg,
   if(missing(ptype)) {
     if(!is.null(var)||!is.null(lag)) {
       ptype <- "slices"
-    }else if(diff(x$lag)==0) {
+    } else if(diff(x$lag)==0) {
       ptype <- "overall"
     } else ptype <- "3d"
   }

@@ -28,8 +28,8 @@ function(x, fun="ns", ...) {
 ##########################################################################
 #
   # NAMES AND ATTRIBUTES (KEEP cen IF PROVIDED, TO BE USED LATER FOR CENTERING)
-  attributes(basis) <- c(list(fun=fun),attr,list(range=range,cen=cen))
-  dimnames(basis) <- list(nx,paste("b",seq(ncol(basis)),sep=""))
+  attributes(basis) <- c(list(fun=fun), attr, list(range=range,cen=cen))
+  dimnames(basis) <- list(nx, paste("b",seq(ncol(basis)),sep=""))
 #
   class(basis) <- c("onebasis","matrix")
 #

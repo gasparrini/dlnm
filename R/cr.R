@@ -14,7 +14,7 @@ function(x, df=10, knots=NULL, intercept=FALSE, fx= FALSE, S=NULL) {
   # DEFINE KNOTS AND DF
   if(is.null(knots)) {
     if(df<3) stop("'df' must be >=3")
-    knots <- quantile(unique(x), seq(0, 1, length=df+!intercept))
+    knots <- quantile(unique(x), seq(0,1,length=df+!intercept))
   } else df <- length(knots) - !intercept
 #
   # CHECK NUMBER OF UNIQUE x VALUES

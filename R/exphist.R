@@ -27,7 +27,7 @@ function(exp, times, lag, fill=0) {
   }
 #
   # GENERATE EXPOSURE HISTORIES FOR EACH OF times
-  hist <- do.call(rbind,lapply(times,fexphist1,exp,lag,fill))
+  hist <- do.call(rbind, lapply(times, fexphist1, exp, lag, fill))
   rownames(hist) <- times
 #
   return(hist)

@@ -62,7 +62,7 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   if(!is.null(model)) {
     model.class <- class(model)
     coef <- getcoef(model,model.class)
-    ind <- if(type=="gam") cond else grep(cond, names(coef))
+    ind <- if(type=="gam") cond else grep(cond,names(coef))
     coef <- coef[ind]
     vcov <- getvcov(model, model.class)[ind,ind,drop=FALSE]
     model.link <- getlink(model, model.class)
@@ -82,12 +82,12 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
     attr(basis,"range")
 #
   # SET at, predvar AND predlag
-  at <- mkat(at, from, to, by, range, lag, bylag)
+  at <- mkat(at,from,to,by,range,lag,bylag)
   predvar <- if(is.matrix(at)) rownames(at) else at
   predlag <- seqlag(lag,bylag)
 #
   # DEFINE CENTERING VALUE (NULL IF UNCENTERED), AND REMOVE INFO FROM BASIS
-  cen <- mkcen(cen,type,basis,range)
+  cen <- mkcen(cen, type, basis, range)
   if(type=="one") attributes(basis)$cen <- NULL
   if(type=="cb") attributes(basis)$argvar$cen <- NULL
 #
@@ -98,8 +98,8 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   Xpred <- mkXpred(type,basis,at,predvar,predlag,cen)
 #
   # CREATE LAG-SPECIFIC EFFECTS AND SE
-  matfit <- matrix(Xpred%*%coef,length(predvar),length(predlag)) 
-  matse <- matrix(sqrt(pmax(0,rowSums((Xpred%*%vcov)*Xpred))),length(predvar),
+  matfit <- matrix(Xpred%*%coef, length(predvar), length(predlag)) 
+  matse <- matrix(sqrt(pmax(0,rowSums((Xpred%*%vcov)*Xpred))), length(predvar),
     length(predlag)) 
 #
   # NAMES
@@ -121,7 +121,7 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
     cumfit <- cumse <- matrix(0,length(predvar),length(predlag))
   }
   for (i in seq(length(predlag))) {
-    ind <- seq(length(predvar))+length(predvar)*(i-1)
+    ind <- seq(length(predvar)) + length(predvar)*(i-1)
     Xpredall <- Xpredall + Xpred[ind,,drop=FALSE]
     if(cumul) {
       cumfit[, i] <- Xpredall %*% coef
@@ -144,9 +144,9 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   # INITIAL LIST, THEN ADD COMPONENTS
   list <- list(predvar=predvar)
   if(!is.null(cen)) list$cen <- cen
-  list <- c(list,list(lag=lag,bylag=bylag,coefficients=coef,vcov=vcov,
-    matfit=matfit,matse=matse,allfit=allfit,allse=allse))
-  if(cumul) list <- c(list,list(cumfit=cumfit,cumse=cumse))
+  list <- c(list, list(lag=lag, bylag=bylag, coefficients=coef, vcov=vcov,
+    matfit=matfit, matse=matse, allfit=allfit, allse=allse))
+  if(cumul) list <- c(list, list(cumfit=cumfit, cumse=cumse))
 #
   # MATRICES AND VECTORS WITH EXPONENTIATED EFFECTS AND CONFIDENCE INTERVALS
   z <- qnorm(1-(1-ci.level)/2)
