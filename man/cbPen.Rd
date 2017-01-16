@@ -34,7 +34,7 @@ A list including penalty matrices plus two vectors \code{rank} and \code{sp} def
 }
 
 \references{
-Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available [here](http://www.ag-myresearch.com/2017_gasparrini_biomet.html)]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
 
 Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and Hall/CRC Press, 2006.
 }
@@ -48,7 +48,7 @@ See \code{\link{dlnm-package}} for an introduction to the package and for links 
 }
 
 \examples{
-rnorm(1)
+# to be added soon
 }
 
 \keyword{utilities}

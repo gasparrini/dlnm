@@ -37,7 +37,7 @@ A matrix object of class \code{"ps"}. It contains the attributes \code{df}, \cod
 }
 
 \references{
-Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available [here](http://www.ag-myresearch.com/2017_gasparrini_biomet.html)]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
 
 Eilers P. H. C. and Marx B. D. Flexible smoothing with B-splines and penalties. \emph{Statistical Science}. 1996; \bold{11}(2):89-121.
 
@@ -57,7 +57,7 @@ See \code{\link{dlnm-package}} for an introduction to the package and for links 
 }
 
 \examples{
-rnorm(1)
+# to be added soon
 }
 
 \keyword{smooth}

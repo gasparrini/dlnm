@@ -57,7 +57,7 @@ See \code{\link{dlnm-package}} for an introduction to the package and for links 
 }
 
 \examples{
-rnorm(1)
+# to be added soon
 }
 
 \keyword{smooth} \keyword{models} \keyword{regression}

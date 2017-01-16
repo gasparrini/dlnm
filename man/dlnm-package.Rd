@@ -60,7 +60,7 @@ Maintainer: Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>
 \references{
 Gasparrini A. Distributed lag linear and non-linear models in R: the package dlnm. \emph{Journal of Statistical Software}. 2011; \bold{43}(8):1-20. [freely available \href{http://www.ag-myresearch.com/2011_gasparrini_jss.html}{here}].
 
-Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available [here](http://www.ag-myresearch.com/2017_gasparrini_biomet.html)]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
 
 Gasparrini A. Modelling lagged associations in environmental time series data: a simulation study. \emph{Epidemiology}. 2016; \bold{27}(6):835-842. [freely available \href{http://www.ag-myresearch.com/2016_gasparrini_epidem.html}{here}]
 

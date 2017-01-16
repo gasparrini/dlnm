@@ -40,7 +40,7 @@ A matrix object of class \code{"crossbasis"} which can be included in a model fo
 \references{
 Gasparrini A. Distributed lag linear and non-linear models in R: the package dlnm. \emph{Journal of Statistical Software}. 2011; \bold{43}(8):1-20. [freely available \href{http://www.ag-myresearch.com/2011_gasparrini_jss.html}{here}].
 
-Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available [here](http://www.ag-myresearch.com/2017_gasparrini_biomet.html)]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
 
 Gasparrini A. Modeling exposure-lag-response associations with distributed lag non-linear models. \emph{Statistics in Medicine}. 2014; \bold{33}(5):881-899. [freely available \href{http://www.ag-myresearch.com/2014_gasparrini_statmed.html}{here}]
   
@@ -149,6 +149,8 @@ plot(pnest2, lag=5, ylab="OR at lag 5", xlab="Exposure", ylim=c(0.95,1.15))
 lines(pnest, lag=5, lty=2)
 
 ### example of penalized models - see vignette("dlnmPenalized")
+
+# to be added soon
 
 }
 

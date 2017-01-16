@@ -1,14 +1,30 @@
 -----------------------------------
 
-### Changes in dlnm 2.3.2 (03 Jan 2017)
+### Changes in dlnm 2.3.2 (16 Jan 2017)
 
 #### Major changes
 
-  * ...
+  * Extension to penalized DLMs and DLNMs implemented with the inclusion of new functions and modification of existing ones.
+  
+  * Revision of the package vignettes, with improved overview of the various developments, and addition of the new vignette dlnmPenalized.
+  
+  * The package has now a development webpage in GitHub (https://github.com/gasparrini/dlnm).
+  
+  * Addition of a NEWS file that replaces the changeLog, also with HTML version included in the new GitHub page.
+  
+  * Extension and improvements of Examples section of help files, in particular for main functions.
+  
+  * Argument 'fill=0' added to exphist() to allow exposure histories with undefined values to be padded with different values that 0 (the default), in particuar NA.
+  
+  * Former internal function exphistint() now included within exphist().
+  
+  * mkcen() now centers at only approximately the mid-value, and return a message with info on the centering value if this is not defined.
   
 #### Minor changes
 
-  * ...
+  * Improved Description files, with links to GitHub page.
+  
+  * Fixed links, in particular to article in www.ag-myresearch.com.
 
 -----------------------------------
 
