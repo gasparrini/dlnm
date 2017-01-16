@@ -40,7 +40,7 @@ Gasparrini A. Distributed lag linear and non-linear models in R:
 the package dlnm. *Journal of Statistical Software*. 2011;
 **43**(8):1-20. [freely available [here](http://www.ag-myresearch.com/2011_gasparrini_jss.html)]
 
-Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available here]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available [here](http://www.ag-myresearch.com/2017_gasparrini_biomet.html)]
 
 Gasparrini A. Modelling lagged associations in environmental time series data: a simulation study. *Epidemiology*. 2016; **27**(6):835-842. [freely available [here](http://www.ag-myresearch.com/2016_gasparrini_epidem.html)]
 
