@@ -31,11 +31,11 @@ Extra information can be included in the argument \code{xt} of \code{\link[mgcv]
 \value{
 The smooth constructor function returns an object of classes \code{"cb.smooth"} and \code{"tensor.smooth"}. Specifically, a list with a similar structure of that returned by the smooth constructor for \code{\link[=smooth.construct.tensor.smooth.spec]{tensor product smooths}} (see also \code{\link[mgcv]{te}}).
 
-The predict matrix function return a cross-basis matrix evaluated at specific values used for prediction.
+The \code{Predict.matrix} function return a cross-basis matrix evaluated at specific values used for prediction.
 }
 
 \references{
-Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available [here](http://www.ag-myresearch.com/2017_gasparrini_biomet.html)]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
 
 Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and Hall/CRC Press, 2006.
 }

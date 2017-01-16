@@ -21,7 +21,7 @@ cr(x, df=10, knots=NULL, intercept=FALSE, fx= FALSE, S=NULL)
 }
 
 \details{
-The function has a usage similar to \code{\link{bs}} and \code{\link{ns}} in the \pkg{splines} package. It produces spline transformations, however using a parameterization that represents the splines in terms of values at the knots. A penalty matrix is also defined. The same results are returned by the related \code{\link[=smooth.construct.cr.smooth.spec]{smooth constructor}} in the package \pkg{mgcv}, which is in fact called internally.
+The function has a usage similar to \code{\link{bs}} and \code{\link{ns}} in the \pkg{splines} package. It produces spline transformations, however using a parameterization that represents the splines fit in terms of values at the knots. A penalty matrix is also defined. The same results are returned by the related \code{\link[=smooth.construct.cr.smooth.spec]{smooth constructor}} in the package \pkg{mgcv}, which is in fact called internally.
 
 The argument \code{knots} defines a vector of knots within the range of the predictor \code{x}, by default at equally-spaced quantiles. The penalization is defined on the second derivative of the function through a penalty matrix \code{S}.
 
@@ -33,7 +33,7 @@ A matrix object of class \code{"cr"}. It contains the attributes \code{df}, \cod
 }
 
 \references{
-Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. *Biometrics*. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
 
 Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and Hall/CRC Press, 2006.
 }
