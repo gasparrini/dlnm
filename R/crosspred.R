@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2016
+### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2017
 #
 crosspred <-
 function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
@@ -16,16 +16,16 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   # CHECKS ON TYPE, AND SET name, basis AND RESET type
   errormes <- "arguments 'basis' and 'model' not consistent. See help(crosspred)"
   if(type=="gam") {
-    if(!is.character(basis)||length(basis)>1L) stop(errormes)
-    if(is.null(model)||!any(class(model)%in%"gam")) stop(errormes)
+    if(!is.character(basis) || length(basis)>1L) stop(errormes)
+    if(is.null(model) || !any(class(model)%in%"gam")) stop(errormes)
     name <- basis
-    sterms <- sapply(model$smooth,function(x) x$term[1])
+    sterms <- sapply(model$smooth, function(x) x$term[1])
     if(name%in%sterms) basis <- model$smooth[[which(sterms==name)[1]]] else 
       stop(errormes)
-    if(length(which(sterms==name))>1)
+    if(length(which(sterms==name)) > 1)
       warning(paste(name,"included in multiple smoothers, only the first one taken"))
     if(!"cb.smooth"%in%class(basis) && basis$dim>1L)
-      stop("predictions not provided for multidimensional smoothers")
+      stop("predictions not provided for multi-dimensional smoothers other than 'cb'")
   } else name <- deparse(substitute(basis))
 #
   #  EXTRACT lag (DEPENDENT ON TYPE)
@@ -38,9 +38,9 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
     stop("prediction for lag sub-period not allowed for type 'integer'")
 #
   # OTHER COHERENCE CHECKS
-  if(is.null(model)&&(is.null(coef)||is.null(vcov)))
+  if(is.null(model) && (is.null(coef) || is.null(vcov)))
     stop("At least 'model' or 'coef'-'vcov' must be provided")
-  if(!is.numeric(ci.level)||ci.level>=1||ci.level<=0)
+  if(!is.numeric(ci.level) || ci.level>=1 || ci.level<=0)
     stop("'ci.level' must be numeric and between 0 and 1")
 #
   # CUMULATIVE EFFECTS ONLY WITH LAGGED EFFECTS AND lag[1]==0
@@ -64,8 +64,8 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
     coef <- getcoef(model,model.class)
     ind <- if(type=="gam") cond else grep(cond,names(coef))
     coef <- coef[ind]
-    vcov <- getvcov(model,model.class)[ind,ind,drop=FALSE]
-    model.link <- getlink(model,model.class)
+    vcov <- getvcov(model, model.class)[ind,ind,drop=FALSE]
+    model.link <- getlink(model, model.class)
   } else model.class <- NA
 #
   # CHECK
@@ -87,7 +87,7 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   predlag <- seqlag(lag,bylag)
 #
   # DEFINE CENTERING VALUE (NULL IF UNCENTERED), AND REMOVE INFO FROM BASIS
-  cen <- mkcen(cen,type,basis,range)
+  cen <- mkcen(cen, type, basis, range)
   if(type=="one") attributes(basis)$cen <- NULL
   if(type=="cb") attributes(basis)$argvar$cen <- NULL
 #
@@ -98,8 +98,8 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   Xpred <- mkXpred(type,basis,at,predvar,predlag,cen)
 #
   # CREATE LAG-SPECIFIC EFFECTS AND SE
-  matfit <- matrix(Xpred%*%coef,length(predvar),length(predlag)) 
-  matse <- matrix(sqrt(pmax(0,rowSums((Xpred%*%vcov)*Xpred))),length(predvar),
+  matfit <- matrix(Xpred%*%coef, length(predvar), length(predlag)) 
+  matse <- matrix(sqrt(pmax(0,rowSums((Xpred%*%vcov)*Xpred))), length(predvar),
     length(predlag)) 
 #
   # NAMES
@@ -121,7 +121,7 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
     cumfit <- cumse <- matrix(0,length(predvar),length(predlag))
   }
   for (i in seq(length(predlag))) {
-    ind <- seq(length(predvar))+length(predvar)*(i-1)
+    ind <- seq(length(predvar)) + length(predvar)*(i-1)
     Xpredall <- Xpredall + Xpred[ind,,drop=FALSE]
     if(cumul) {
       cumfit[, i] <- Xpredall %*% coef
@@ -144,9 +144,9 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   # INITIAL LIST, THEN ADD COMPONENTS
   list <- list(predvar=predvar)
   if(!is.null(cen)) list$cen <- cen
-  list <- c(list,list(lag=lag,bylag=bylag,coefficients=coef,vcov=vcov,
-    matfit=matfit,matse=matse,allfit=allfit,allse=allse))
-  if(cumul) list <- c(list,list(cumfit=cumfit,cumse=cumse))
+  list <- c(list, list(lag=lag, bylag=bylag, coefficients=coef, vcov=vcov,
+    matfit=matfit, matse=matse, allfit=allfit, allse=allse))
+  if(cumul) list <- c(list, list(cumfit=cumfit, cumse=cumse))
 #
   # MATRICES AND VECTORS WITH EXPONENTIATED EFFECTS AND CONFIDENCE INTERVALS
   z <- qnorm(1-(1-ci.level)/2)

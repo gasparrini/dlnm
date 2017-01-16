@@ -2,7 +2,7 @@
 \setlength{\parindent}{0pt}	% Eliminate the indent at the beginning of a new paragraph
 %\setcounter{secnumdepth}{0}	% Elimate the section numbering starting from a specific depth (see WikiBook)
 
-\usepackage[round,sort]{natbib}	% Bibliography
+\usepackage[sort]{natbib}	% Bibliography
 \usepackage{fixltx2e}	% Fix some errors
 \usepackage{graphicx}	% To manage external pictures
 \usepackage{float}	% Improves float environment and force the placement figures
@@ -38,6 +38,8 @@
 \newcommand{\Rarg}[1]{{\texttt{#1}}}
 \newcommand{\R}{{\textsf{R}}}
 
+\newcommand{\vign}[1]{{\textsc{#1}}}
+
 \newcommand{\PM}{{PM\textsubscript{10}}}
 \newcommand{\ozone}{{O\textsubscript{3}}}
 \newcommand{\microg}{{$\mu$gr/m\textsuperscript{3}}}
@@ -50,12 +52,13 @@
 
 <<echo=false>>=
 options(continue="  ")
+set.seed(13041975)
 @
 @% TO ELIMINATE THE "+" IN CONSECUTIVE SCRIPT LINES
 
 \title{Distributed lag linear and non-linear models for time series data}
 \author{Antonio Gasparrini\\
-\emph{London School of Hygiene and Tropical Medicine, UK}
+\emph{London School of Hygiene \& Tropical Medicine, UK}
 }
 \date{\Rpkg{dlnm} version \Sexpr{packageDescription("dlnm")[["Version"]]} , \Sexpr{Sys.Date()} }
 \maketitle
@@ -70,13 +73,11 @@ options(continue="  ")
 \section{Preamble}
 \label{sec:preamble}
 
-This vignette \textbf{\textsf{dlnmTS}} illustrates the use of the \R{} package \Rpkg{dlnm} for the application of distributed lag linear and non-linear models (DLMs and DLNMs) in time series analysis. The development of DLMs and DLNMs and the original software implementation for time series data are illustrated in \citet{gasparrini2010statmed} and \citet{gasparrini2011jss}.
+This vignette \vign{dlnmTS} illustrates the use of the \R{} package \Rpkg{dlnm} for the application of distributed lag linear and non-linear models (DLMs and DLNMs) in time series analysis. The development of DLMs and DLNMs and the original software implementation for time series data are illustrated in \citet{gasparrini2010statmed} and \citet{gasparrini2011jss}.
 
 The examples described in the next sections cover most of the standard applications of the DLNM methodology for time series data, and explore the capabilities of the \Rpkg{dlnm} package for specifying, summarizing and plotting this class of models. In spite of the specific application on the health effects of air pollution and temperature, these examples are easily generalized to different topics, and form a basis for the analysis of this data set or other time series data sources. The results included in this document are not meant to represent scientific findings, but are reported with the only purpose of illustrating the capabilities of the \Rpkg{dlnm} package.
 
-An overview of functions included in the package, with information on its installation and a brief summary of the DLNM methodology are included in the vignette \textbf{\textsf{dlnmOverview}}, which represents the main documentation of \Rpkg{dlnm}. The user can refer to that vignette for a general introduction to the usage and structure of the functions.
-
-Type \Rcomm{citation("dlnm")} in \R{} to cite the \Rpkg{dlnm} package after installation (see the related section the vignette \textbf{\textsf{dlnmOverview}}). General information on the development and applications of the DLNM modelling framework, together with an updated version of the \R{} scripts for running the examples in published papers, can be found at \href{http://www.ag-myresearch.com}{www.ag-myresearch.com}.
+A general overview of functions included in the package, with information on its installation and a brief summary of the DLNM methodology are included in the vignette \vign{dlnmOverview}, which represents the main documentation of \Rpkg{dlnm}. The user can refer to that vignette for a general introduction to the package.
 
 Please send comments or suggestions and report bugs to \href{mailto:antonio.gasparrini@lshtm.ac.uk}{\texttt{antonio.gasparrini@lshtm.ac.uk}}.
 
@@ -84,7 +85,7 @@ Please send comments or suggestions and report bugs to \href{mailto:antonio.gasp
 \section{Data}
 \label{sec:data}
 
-The examples included in this and the following sections explore the associations between air pollution and temperature with mortality, using a time series data set with daily observations for the city of Chicago in the period 1987--2000. This data set is included in the package as the data frame \Robj{chicagoNMMAPS}, and is described in the related help page (see \Rcomm{help(chicagoNMMAPS)} and the vignette \textbf{\textsf{dlnmOverview}}).
+The examples included in vignette explore the associations between air pollution and temperature with mortality, using a time series data set with daily observations for the city of Chicago in the period 1987--2000. This data set is included in the package as the data frame \Robj{chicagoNMMAPS}, and is described in the related help page (see \Rcomm{help(chicagoNMMAPS)} and the vignette \vign{dlnmOverview}).
 
 After loading the package in the \R{} session, let's have a look at the first three observations:
 

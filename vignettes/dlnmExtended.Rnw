@@ -2,7 +2,7 @@
 \setlength{\parindent}{0pt}  % Eliminate the indent at the beginning of a new paragraph
 %\setcounter{secnumdepth}{0}	% Elimate the section numbering starting from a specific depth (see WikiBook)
 
-\usepackage[round,sort]{natbib}	% Bibliography
+\usepackage[sort]{natbib}	% Bibliography
 \usepackage{fixltx2e}	% Fix some errors
 \usepackage{graphicx}	% To manage external pictures
 \usepackage{float}	% Improves float environment and force the placement figures
@@ -38,6 +38,8 @@
 \newcommand{\Rarg}[1]{{\texttt{#1}}}
 \newcommand{\R}{{\textsf{R}}}
 
+\newcommand{\vign}[1]{{\textsc{#1}}}
+
 \newcommand{\PM}{{PM\textsubscript{10}}}
 \newcommand{\ozone}{{O\textsubscript{3}}}
 \newcommand{\microg}{{$\mu$gr/m\textsuperscript{3}}}
@@ -50,12 +52,13 @@
 
 <<echo=false>>=
 options(continue="  ")
+set.seed(13041975)
 @
 @% TO ELIMINATE THE "+" IN CONSECUTIVE SCRIPT LINES
 
-\title{Extension of the \Rpkg{dlnm} package}
+\title{Extensions of the \Rpkg{dlnm} package}
 \author{Antonio Gasparrini\\
-\emph{London School of Hygiene and Tropical Medicine, UK}
+\emph{London School of Hygiene \& Tropical Medicine, UK}
 }
 \date{\Rpkg{dlnm} version \Sexpr{packageDescription("dlnm")[["Version"]]} , \Sexpr{Sys.Date()} }
 \maketitle
@@ -70,13 +73,9 @@ options(continue="  ")
 \section{Preamble}
 \label{sec:preamble}
 
-This vignette \textbf{\textsf{dlnmExtended}} illustrates the extensions to the \R{} package  \Rpkg{dlnm} implementing the recent developments of the framework of distributed lag linear and non-linear models (DLMs and DLNMs). In particular, this document describes the generalization of the modelling framework beyond time series data, and its use as a statistical tool applicable in different study designs and data structures. Also, the vignette shows the extension of the \Rpkg{dlnm} package through user-defined functions. These extensions are implemented since the version 2.0.0 of the package.
+This vignette \vign{dlnmExtended} illustrates recent extensions to the \R{} package  \Rpkg{dlnm}, some of them implementing development of the modelling framework of distributed lag linear and non-linear models (DLMs and DLNMs). Primarily, this document describes the generalization of the DLM/DLNM methodology beyond time series data, described in more detail in \citet{gasparrini2014statmed}. In addition, this vignette illustrates other developments, specifically the definition of extended prediction summaries, the flexible application of existing or user-defined functions, and a more general use of the functions for regression analysis. The results included in this document are not meant to represent scientific findings, but are reported with the only purpose of illustrating the capabilities of the \Rpkg{dlnm} package.
 
-A detailed overview of these methodological developments, together with other examples and \R{} code, is provided in \citet{gasparrini2014statmed}. The original development of DLMs and DLNMs and the initial software implementation for time series data are illustrated in \citet{gasparrini2010statmed} and \citet{gasparrini2011jss}. The results included in this document are not meant to represent scientific findings, but are reported with the only purpose of illustrating the capabilities of the \Rpkg{dlnm} package.
-
-An overview of functions included in the package, with information on its installation and a brief summary of the DLNM methodology are included in the vignette \textbf{\textsf{dlnmOverview}}, which represents the main documentation of \Rpkg{dlnm}. The user can refer to that vignette for a general introduction to the usage and structure of the functions.
-
-Type \Rcomm{citation("dlnm")} in \R{} to cite the \Rpkg{dlnm} package after installation (see the related section the vignette \textbf{\textsf{dlnmOverview}}). General information on the development and applications of the DLNM modelling framework, together with an updated version of the \R{} scripts for running the examples in published papers, can be found at \href{http://www.ag-myresearch.com}{www.ag-myresearch.com}.
+A general overview of functions included in the package, with information on its installation and a brief summary of the DLNM methodology are included in the vignette \vign{dlnmOverview}, which represents the main documentation of \Rpkg{dlnm}. The user can refer to that vignette for a general introduction to the package.
 
 Please send comments or suggestions and report bugs to \href{mailto:antonio.gasparrini@lshtm.ac.uk}{\texttt{antonio.gasparrini@lshtm.ac.uk}}.
 
@@ -84,7 +83,9 @@ Please send comments or suggestions and report bugs to \href{mailto:antonio.gasp
 \section{Data}
 \label{sec:data}
 
-The extension of the software beyond its original use in time series data is illustrated through two examples, using the data sets \Robj{drug} and \Robj{nested} included as data frames objects in the package. These data sets contain simulated data from an hypothetical trial on a drug and a nested case-control study, respectively, both including measures of time-varying exposures. They are described in the related help pages, available by typing  \Rcomm{help(drug)} or \Rcomm{help(nested}), and in the main vignette \textbf{\textsf{dlnmOverview}}.
+These extensions of the software are illustrated mainly through two examples, using the data sets \Robj{drug} and \Robj{nested} included as data frames objects in the package. In particular, these data are ideal for illustrating the main development presented in this vignette, namely the extension of the modelling framework beyond time series.
+
+These data sets contain simulated data from an hypothetical trial on a drug and a nested case-control study, respectively, both including measures of time-varying exposures. They are described in the related help pages, available by typing  \Rcomm{help(drug)} or \Rcomm{help(nested}), and in the main vignette \vign{dlnmOverview}.
 
 After loading the package in the \R{} session, let's have a look at the first three observations of the data frame \Robj{drug}:
 
@@ -133,14 +134,18 @@ The exposure histories for lag 0--10 are reported above for the first three subj
 
 An example of computation of the matrix of exposure histories for time-to-event analysis using cohort data is illustrated in the code provided as supplementary material in \citet{gasparrini2014statmed}. In that case, multiple exposure histories are computed for each subject at the times he/she contributed to different risk sets, using the same exposure profile.
 
-In general, the computation of this matrix depends on study design, information on exposure, lag unit and desired level of approximation. This prevents the definition of functions in the \Rpkg{dlnm} package applicable for this purpose. Nonetheless this issue represents the only additional computational step for using the extended DLNM methodology beyond time series analysis. As shown in the next sections, the use of the functions and interpretation of the results are mostly identical to the standard applications in time series data illustrated in the vignette \textbf{\textsf{dlnmTS}}.
+In general, the computation of this matrix depends on study design, information on exposure, lag unit and desired level of approximation. This prevents the definition of functions in the \Rpkg{dlnm} package applicable for this purpose. Nonetheless this issue represents the only additional computational step for using the extended DLNM methodology beyond time series analysis. As shown in the next sections, the use of the functions and interpretation of the results are mostly identical to the standard applications in time series data illustrated in the vignette \vign{dlnmTS}.
 
 
 %-------------------------%%-------------------------%%-------------------------%
-\section{A first example}
-\label{sec:firstexample}
+\section{Applications beyond time series}
+\label{sec:beyondts}
 
-In this first example, I analyse the temporal dependency between the intake of a drug and the level of an health outcome, applying the functions in the \Rpkg{dlnm} package to the data set \Robj{drug}. Specific information on the use of the functions is provided in the related help pages and the vignette \textbf{\textsf{dlnmOverview}}.
+%-------------------------%%-------------------------%
+\subsection{A simple DLM}
+\label{sec:dlm}
+
+In this first example, I analyse the temporal dependency between the daily doses of a drug and an unspecified health outcome, applying the functions in the \Rpkg{dlnm} package to the data set \Robj{drug}. Specific information on the use of the functions is provided in the related help pages and the vignette \vign{dlnmOverview}.
 
 The first step is the definition of a cross-basis function and the derivation of a cross-basis matrix. This is obtained through the function \Rfun{crossbasis}:
 
@@ -149,7 +154,7 @@ cbdrug <- crossbasis(Qdrug, lag=27, argvar=list("lin"),
   arglag=list(fun="ns",knots=c(9,18)))
 @
 
-The results is stored in the object \Robj{cbdrug}, namely a matrix of transformed variables with special attributes. The first unnamed argument \Rarg{x}, differently from the original applications in time series described in the vignette \textbf{\textsf{dlnmTS}}, is the matrix of exposure histories. However, the rest of the syntax is identical. The argument \Rarg{lag} specifies the lag period, with minimum lag placed by default at 0. The lag period must be consistent with the dimension (\emph{i.e.} number of columns) of the matrix \Robj{Qdrug}. The arguments \Rarg{argvar} and \Rarg{arglag} define the exposure-response and lag-response functions, respectively, chosen here as a simple linear function and a natural cubic spline with knots at lag 9 and 18. An intercept is included by default in the lag-response function if not otherwise stated. Given the linearity assumption, this can be technically defined as a DLM. See \Rcomm{?crossbasis} for a complete list of options and additional details.
+The results is stored in the object \Robj{cbdrug}, namely a matrix of transformed variables with special attributes. The first unnamed argument \Rarg{x}, differently from the original applications in time series described in the vignette \vign{dlnmTS}, is the matrix of exposure histories. However, the rest of the syntax is identical. The argument \Rarg{lag} specifies the lag period, with minimum lag placed by default at 0. The lag period must be consistent with the dimension (\emph{i.e.} number of columns) of the matrix \Robj{Qdrug}. The arguments \Rarg{argvar} and \Rarg{arglag} define the exposure-response and lag-response functions, respectively, chosen here as a simple linear function and a natural cubic spline with knots at lag 9 and 18. An intercept is included by default in the lag-response function if not otherwise stated. Given the linearity assumption, this can be technically defined as a DLM. See \Rcomm{?crossbasis} for a complete list of options and additional details.
 
 A summary of the transformation can be obtained by the method function \Rfun{summary} for objects of class \Rclass{crossbasis}:
 
@@ -224,11 +229,11 @@ The first line of code produces the graph in Figure~\ref{fig:plotdrug3d}, namely
 
 The second and third lines of code produce the graphs in Figures~\ref{fig:plotdruglag}--\ref{fig:plotdrugvar}, respectively, showing the lag-response curve specific to exposure 60 and the exposure-response curve specific to lag 10. The shape of these curves depends on the specific choices for the basis functions selected for producing the cross-basis \Robj{cbdrug}. In particular, the lag-response curve in Figure~\ref{fig:plotdruglag} indicates an exponential decay in the effects. This type of graphs represents slices cut in the 3-D surface of Figure~\ref{fig:plotdrug3d}, with the argument \Rarg{ptype} set by default to \Rcode{"slices"} if one of the argument \Rarg{var} or \Rarg{lag} is specified. Additional argument such as \Rarg{xlab} and \Rarg{ylim} are internally passed to \Rarg{plot.default} to control the graphical parameters. See \Rarg{?plot.default} and \Rcomm{?par} for a complete list, and generally \Rarg{?plot.crosspred} for using plotting functions.
 
-%-------------------------%%-------------------------%%-------------------------%
-\section{A second example}
-\label{sec:secondexample}
+%-------------------------%%-------------------------%
+\subsection{A more complex DLNM}
+\label{sec:dlnm}
 
-In a second example, I assess how protracted exposures to an occupational agent affect the risk of occurrence of cancer, using the data set \Robj{nested}. The steps of the analysis are the same illustrated in Section~\ref{sec:firstexample}.
+In a second example, I assess how protracted exposures to an occupational agent affect the risk of occurrence of cancer, using the data set \Robj{nested}. The steps of the analysis are the same illustrated in Section~\ref{sec:dlm}.
 
 An initial assumption is that the exposures sustained in the last three years, corresponding to lag 0--2, are not affecting the risk of occurrence of cancer. Consistently with this assumption, the matrix of exposure history \Robj{Qnest} has been derived for lag period 3--40. The cross-basis matrix can therefore be created by:
 
@@ -244,7 +249,7 @@ The cross-basis objects can be included again in the formula of a regression mod
 <<pnest>>=
 library(survival)
 mnest <- clogit(case~cbnest+strata(riskset), nested)
-pnest <- crosspred(cbnest,mnest, cen=0, at=0:20*5)
+pnest <- crosspred(cbnest, mnest, cen=0, at=0:20*5)
 @
 
 Note how in this case the centering value must be selected directly through the argument \Rarg{cen}, as no straightforward reference exist for non-linear functions such as \Rfun{bs}. Similarly to the previous example, estimates of the effect summaries can be extracted from the object \Robj{pnest}, although this time using the objects with prefix \Rcode{allRR-} and \Rcode{matRR-} which store the exponentiated predictions in the scale of OR (see \Rcomm{?crosspred}). The same types of graphs displayed in Figure~\ref{fig:plotdrug} are obtained by:
@@ -297,6 +302,73 @@ The slice graphs in Figures~\ref{fig:plotnestlag}--\ref{fig:plotnestvar} provide
 
 
 %-------------------------%%-------------------------%%-------------------------%
+\section{Extended prediction summaries}
+\label{sec:extpred}
+
+The usual effect summaries obtained by \Rfun{crosspred} are computed over a grid of exposure and lag values, specified directly or through default selection. In particular, a vector of exposure values is usually passed through the argument \Rarg{at}, while the lag period is selected through \Rarg{lag}. The function then computes \emph{overall cumulative} summaries, stored in vectors with prefix \Rcode{all-}, and \emph{specific} summaries associated to combinations of exposure and lag values, stored in matrices with prefix \Rcode{mat-}. The former refer either to effects associated to a constant exposure throughout the lag period backward in time, or to the total effect contribution of an exposure event within the lag period forward in time. The latter can be used to display exposure-response and lag-response curves.
+
+However, in the extended setting described in this vignette it is useful to define alternative and complementary effect summaries. In particular, it may be of interest to predict what is the overall cumulative effect associated to a specific exposure history, possibly characterized by time-varying exposures. These new effect summaries can be easily computed using the function \Rfun{exphist} used in Section~\ref{sec:Qmatrix}, which produces a matrix of exposure histories given an exposure profile. This matrix can be directly passed as the argument \Rarg{at} of \Rfun{crosspred}, rather than a vector of exposure values.
+
+As an example, we can use the nested case-control analysis in Section~\ref{sec:dlnm} for computing the overall cumulative OR for an hypothetical subject exposed to exposure 10 for five years, then unexposed for five more years, then exposed to 13 for ten years. From this exposure profile, we can compute the exposure history at the end of the exposure period, looking backward in time. Specifically:
+
+<<hist>>=
+expnested <- rep(c(10,0,13), c(5,5,10))
+hist <- exphist(expnested, time=length(expnested), lag=c(3,40))
+hist
+@
+
+The function \Rfun{exphist} produces the exposure history at time 20 over lag 3--40. The specific time is set through the argument \Rarg{time} and in this case corresponds to the end of the exposure period in \Robj{expnested}. The last 21 exposures to 0 are included to complete the exposure history up to 40 years. Now we can predict the overall cumulative effect by using \Robj{hist} as the argument \Rarg{at} of \Rfun{crosspred}. Note that the lag period must be consistent with that used in estimation. This is the code:
+
+<<predhist>>=
+pnesthist <- crosspred(cbnest, mnest, cen=0, at=hist)
+with(pnesthist, c(allRRfit,allRRlow,allRRhigh))
+@
+
+The estimated OR is \Sexpr{round(pnesthist$allRRfit,1)} (95\%CI: \Sexpr{round(pnesthist$allRRlow,1)}--\Sexpr{round(pnesthist$allRRhigh,1)}) compared to a subject with no exposure throughout the whole lag period.
+
+The same approach can be used to obtain \emph{dynamic predictions} along time for a specific exposure profile. The idea behind this more complex effect summary is that the risk can be predicted dynamically in time given time-varying exposure histories, based on an assumed exposure-lag-response association. In practice, for each given time, moving forward, the exposure history changes as specific exposure events refer to different lag periods.
+
+As an example, I show how the dynamic predicted effect following a specific drug prescription can be estimated using the analysis of the trial data illustrated in Section~\ref{sec:dlm}. Let's assume that a patient is treated with a dose 10 for two weeks, then he/she increases to 50 for one week, then stops for 1 week and starts again with a dose 20 for two weeks. First, I create the daily exposure profile:
+
+<<exp>>=
+expdrug <- rep(c(10,50,0,20),c(2,1,1,2)*7)
+@
+
+The function \Rfun{exphist} can now be used sequentially along the exposure profile to create the matrix of exposure histories for all the time points:
+
+<<fexphist2>>=
+dynhist <- exphist(expdrug, lag=27)
+@
+
+The argument \Rarg{time} of \Rfun{exphist} by default takes the values of all the time points of \Robj{expdrug}, creating the matrix of exposure histories for all of them. This matrix can now be used in \Rfun{crosspred} to obtain the dynamic predictions:
+
+<<pdynnest>>=
+pdyndrug <- crosspred(cbdrug, mdrug, at=dynhist)
+@
+
+The object can now be used to plot the dynamic prediction:
+
+<<plotdynnest,fig=T>>=
+plot(pdyndrug,"overall", ylab="Effect", xlab="Time (days)", ylim=c(-10,27), 
+  xlim=c(1,50), yaxt="n")
+axis(2, at=-1:5*5)
+par(new=TRUE)
+plot(expdrug, type="h", xlim=c(1,50), ylim=c(0,300), axes=F, ann=F)
+axis(4, at=0:6*10, cex.axis=0.8)
+mtext("Dose", 4, line=-1.5, at=30, cex=0.8)
+@
+
+The unnamed argument \Rarg{ptype} in \Rfun{plot} is set to \Rcode{"overall"}, thus plotting this extended version of overall cumulative association in Figure~\ref{fig:pdynnest}. This graph displays the variation from the baseline outcome associated with the drug prescription profile detailed above, represented as histogram-like vertical lines. As expected, the effect changes dynamically in time, depending on the doses but with a delay determined by the lag structure.
+
+\begin{figure}
+  \centering
+  \caption{}
+  \includegraphics[width=0.40\textwidth]{fig-plotdynnest.pdf}
+  \label{fig:pdynnest}
+\end{figure}
+
+
+%-------------------------%%-------------------------%%-------------------------%
 \section{Applying user-defined functions}
 \label{sec:userdeffun}
 
@@ -305,7 +377,7 @@ Since version 2.0.0 of the \Rpkg{dlnm} package, important changes have also been
 
 However, this flexible approach offers the possibility of using different functions available in other \R{} packages, or functions directly defined by the user. The called function must have \Rarg{x} as its first argument, and it must return a vector or matrix of transformed variables with attributes storing the arguments which exactly define the transformation. This information will be used later by \Rfun{crosspred} to produce the predictions. Also, the function must be defined as a closure containing formal arguments, meaning that primitive functions such as \Rfun{exp}, \Rfun{sin} or \Rfun{log} cannot be used directly (see the example below).
 
-As a first example of applying user-defined functions within the DLNM framework, we can revise the previous analysis illustrated in Section~\ref{sec:secondexample}. Figure~\ref{fig:plotnestvar} suggested a possible attenuation of the effect at high exposures. This fact and the skewness of the exposure distribution can be addressed through a logarithmic transformation. As shown in \citet{gasparrini2014statmed}, this is equivalent to apply a logarithm as exposure-response function in the cross-basis transformation. First, let's define a new log function:
+As a first example of applying user-defined functions within the DLNM framework, we can revise the previous analysis illustrated in Section~\ref{sec:dlnm}. Figure~\ref{fig:plotnestvar} suggested a possible attenuation of the effect at high exposures. This fact and the skewness of the exposure distribution can be addressed through a logarithmic transformation. As shown in \citet{gasparrini2014statmed}, this is equivalent to apply a logarithm as exposure-response function in the cross-basis transformation. First, let's define a new log function:
 
 <<mylog>>=
 mylog <- function(x) log(x+1)
@@ -369,9 +441,9 @@ lines(pnest, lag=5, lty=2)
   \label{fig:plotnest2}
 \end{figure}
 
-The results presented in Figure~\ref{fig:plotnest2} can be compared with those originally displayed in Figure~\ref{fig:plotnest} of Section~\ref{sec:secondexample}. The method function \Rfun{lines} are used to add the original curves to the new plots. The comparison also indicates how the assumption of a logarithmic shape produces a substantial increase in precision.
+The results presented in Figure~\ref{fig:plotnest2} can be compared with those originally displayed in Figure~\ref{fig:plotnest} of Section~\ref{sec:dlnm}. The method function \Rfun{lines} are used to add the original curves to the new plots. The comparison also indicates how the assumption of a logarithmic shape produces a substantial increase in precision.
 
-Another example of application of user-defined functions is provided by extending the analysis illustrated in Section~\ref{sec:firstexample}. The inspection of Figure~\ref{fig:plotdruglag} suggested that the lag-response curve follows an exponential decay trajectory. It may be reasonable to apply a function modelling this shape instead than a natural cubic spline. This decay function can be defined as:
+Another example of application of user-defined functions is provided by extending the analysis illustrated in Section~\ref{sec:dlm}. The inspection of Figure~\ref{fig:plotdruglag} suggested that the lag-response curve follows an exponential decay trajectory. It may be reasonable to apply a function modelling this shape instead than a natural cubic spline. This decay function can be defined as:
 
 <<fdecay>>=
 fdecay <- function(x,scale=5) {
@@ -389,7 +461,7 @@ cbdrug2 <- crossbasis(Qdrug, lag=27, argvar=list("lin"),
 summary(cbdrug2)
 @
 
-Again, the computational step used in Section~\ref{sec:firstexample} can be repeated to perform the modified analysis:
+Again, the computational step used in Section~\ref{sec:dlm} can be repeated to perform the modified analysis:
 
 <<pdrug2>>=
 mdrug2 <- lm(out~cbdrug2+sex, drug)
@@ -439,77 +511,84 @@ lines(pdrug, lag=10, lty=2)
   \label{fig:plotdrug2}
 \end{figure}
 
-The results are reported in Figure~\ref{fig:plotdrug2}. The comparison with results in Figure~\ref{fig:plotdrug} of Section~\ref{sec:firstexample}, included again as dashed lines, shows a dramatic increase in precision, as a strict structure is assumed for the exposure-lag-response surface, which is entirely estimated with only 1 \emph{df}. Note how the argument \Rarg{scale} is selected a priori to 6 and not estimated here, as the function \Rfun{fdecay} is non-linear for this parameter. However, the DLNM framework can also be used with non-linear regression functions such as \Rfun{nls} for estimating the scale parameter. More generally, a critical discussion and some guidance on inference and model selection in the DLNM framework are offered in \citet{gasparrini2014statmed}.
+The results are reported in Figure~\ref{fig:plotdrug2}. The comparison with results in Figure~\ref{fig:plotdrug} of Section~\ref{sec:dlm}, included again as dashed lines, shows a dramatic increase in precision, as a strict structure is assumed for the exposure-lag-response surface, which is entirely estimated with only 1 \emph{df}. Note how the argument \Rarg{scale} is selected a priori to 6 and not estimated here, as the function \Rfun{fdecay} is non-linear for this parameter. However, the DLNM framework can also be used with non-linear regression functions such as \Rfun{nls} for estimating the scale parameter. More generally, a critical discussion and some guidance on inference and model selection in the DLNM framework are offered in \citet{gasparrini2014statmed}.
 
 
 %-------------------------%%-------------------------%%-------------------------%
-\section{Extended prediction summaries}
-\label{sec:extpred}
+\section{A general tool for regression analysis}
+\label{sec:generaltool}
 
-The usual effect summaries obtained by \Rfun{crosspred} are computed over a grid of exposure and lag values, specified directly or through default selection. In particular, a vector of exposure values is usually passed through the argument \Rarg{at}, while the lag period is selected through \Rarg{lag}. The function then computes \emph{overall cumulative} summaries, stored in vectors with prefix \Rcode{all-}, and \emph{specific} summaries associated to combinations of exposure and lag values, stored in matrices with prefix \Rcode{mat-}. The former refer either to effects associated to a constant exposure throughout the lag period backward in time, or to the total effect contribution of an exposure event within the lag period forward in time. The latter can be used to display exposure-response and lag-response curves.
+The functions in the package \Rpkg{dlnm} can also be used as a general tool for regression analysis. In particular, the facilities for prediction and graphical representation, developed for assessing bi-dimensional exposure-lag-response associations, can be more generally applied for unlagged exposure-response relationships.
 
-However, in the extended setting described in this vignette it is useful to define alternative and complementary effect summaries. In particular, it may be of interest to predict what is the overall cumulative effect associated to a specific exposure history, possibly characterized by time-varying exposures. These new effect summaries can be easily computed using the function \Rfun{exphist} used in Section~\ref{sec:Qmatrix}, which produces a matrix of exposure histories given an exposure profile. This matrix can be directly passed as the argument \Rarg{at} of \Rfun{crosspred}, rather than a vector of exposure values.
+Standard method for estimating these uni-dimensional associations include the use of regression splines in unpenalized models, such as generalized linear models (GLMs) and Cox proportional hazard models, or penalized splines in generalized additive models (GAMs). The user can extract predictions in the usual way using the function \Rfun{crosspred}, which can be applied with unpenalized models in conjunction with the function \Rfun{onebasis}, or directly with regression outputs of penalized models fitted using the function \Rfun{gam} in the \Rpkg{mgcv} package.
 
-As an example, we can use the modified model for the nested case-control analysis in Section~\ref{sec:userdeffun} for computing the overall cumulative OR for an hypothetical subject exposed to exposure 10 for five years, then unexposed for five more years, then exposed to 13 for ten years. From this exposure profile, we can compute the exposure history at the end of the exposure period, looking backward in time. Specifically:
+In order to illustrate these options, I replicate examples illustrated in the help pages of the functions \Rfun{ns} in the package \Rpkg{splines} and \Rfun{gam} in the package \Rfun{mgcv}.
 
-<<hist>>=
-expnested <- rep(c(10,0,13), c(5,5,10))
-hist <- exphist(expnested, time=length(expnested), lag=c(3,40))
-hist
+The first example deomonstrates the use of regression splines with the regression function \Rfun{lm} to assess the relationship between average height (in inches) and weight (in pounds) in a sample of American women aged 30--39. The code is reported in the Examples section of the help page of \Rfun{ns} (see \Rcode{help(ns)}). The same transformation can be obtained by applying the wrapper function \Rfun{onebasis}:
+
+<<onewomen>>=
+library(splines)
+oneheight <- onebasis(women$height, "ns", df=5)
+mwomen <- lm(weight ~ oneheight, data=women)
 @
 
-The function \Rfun{exphist} produces the exposure history at time 20 over lag 3--40. The specific time is set through the argument \Rarg{time} and in this case corresponds to the end of the exposure period in \Robj{expnested}. The last 21 exposures to 0 are included to complete the exposure history up to 40 years. Now we can predict the overall cumulative effect by using \Robj{hist} as the argument \Rarg{at} of \Rfun{crosspred}. Note that the lag period must be consistent with that used in estimation. This is the code:
+The use of \Rfun{onebasis} allows the use of other functions in \Rpkg{dlnm} for obtaining predictions and plots, using a simple code:
 
-<<predhist>>=
-pnesthist <- crosspred(cbnest2, mnest2, at=hist)
-with(pnesthist, c(allRRfit,allRRlow,allRRhigh))
+<<plotwomen,fig=T>>=
+pwomen <- crosspred(oneheight, mwomen, cen=65, at=58:72)
+with(pwomen, cbind(allfit, alllow, allhigh)["70",])
+plot(pwomen, ci="l", ylab="Weight (lb) difference", xlab="Height (in)", col=4)
 @
 
-The estimated OR is \Sexpr{round(pnesthist$allRRfit,1)} (95\%CI: \Sexpr{round(pnesthist$allRRlow,1)}--\Sexpr{round(pnesthist$allRRhigh,1)}) compared to a subject with no exposure throughout the whole lag period.
+The function \Rfun{crosspred} can be applied as usual, just including the object of class \Rclass{onebasis} as its first argument. The results are reported using a height of 65 inches as references. The estimated association, with confidence intervals, can be retrieved simply by accessing the \Rcode{all-} components. Note that, as no lagged effect is allowed, these are identical to the \Rcode{mat-} components, which are however reported as 1-column matrices. The association can be plotted in the usual way with the method function \Rfun{plot}, with the graph shown in Figure~\ref{fig:plotwomen}. Note how it is not important to select the type of the plot with the argument \Rarg{ptype}, as only uni-dimensional graphs can be created.
 
-The same approach can be used to obtain \emph{dynamic predictions} along time for a specific exposure profile. The idea behind this more complex effect summary is that the risk can be predicted dynamically in time given time-varying exposure histories, based on an assumed exposure-lag-response association. In practice, for each given time, moving forward, the exposure history changes as specific exposure events refer to different lag periods.
-
-As an example, I show how the dynamic predicted effect following a specific drug prescription can be estimated using the modified model for the analysis of the trial data illustrated in Section~\ref{sec:userdeffun}. Let's assume that a patient is treated with a dose 10 for two weeks, then he/she increases to 50 for one week, then stops for 1 week and starts again with a dose 20 for two weeks. First, I create the daily exposure profile:
-
-<<exp>>=
-expdrug <- rep(c(10,50,0,20),c(2,1,1,2)*7)
-@
-
-The function \Rfun{exphist} can now be used sequentially along the exposure profile to create the matrix of exposure histories for all the time points:
-
-<<fexphist2>>=
-dynhist <- exphist(expdrug, lag=27)
-@
-
-The argument \Rarg{time} of \Rfun{exphist} by default takes the values of all the time points of \Robj{expdrug}, creating the matrix of exposure histories for all of them. This matrix can now be used in \Rfun{crosspred} to obtain the dynamic predictions:
-
-<<pdynnest>>=
-pdyndrug <- crosspred(cbdrug2, mdrug2, at=dynhist)
-@
-
-The object can now be used to plot the dynamic prediction:
-
-<<plotdynnest,fig=T>>=
-plot(pdyndrug,"overall", ylab="Effect", xlab="Time (days)", ylim=c(-10,27), 
-  xlim=c(1,50), yaxt="n")
-axis(2, at=-1:5*5)
-par(new=TRUE)
-plot(expdrug, type="h", xlim=c(1,50), ylim=c(0,300), axes=F, ann=F)
-axis(4, at=0:6*10, cex.axis=0.8)
-mtext("Dose", 4, line=-1.5, at=30, cex=0.8)
-@
-
-The unnamed argument \Rarg{ptype} in \Rfun{plot} is set to \Rcode{"overall"}, thus plotting this extended version of overall cumulative association in Figure~\ref{fig:pdynnest}. This graph displays the variation from the baseline outcome associated with the drug prescription profile detailed above, represented as histogram-like vertical lines. As expected, the effect changes dynamically in time, depending on the doses but with a delay determined by the lag structure.
-
-\begin{figure}
+\begin{figure}[h]
   \centering
   \caption{}
-  \includegraphics[width=0.40\textwidth]{fig-plotdynnest.pdf}
-  \label{fig:pdynnest}
+  \begin{subfigure}{0.32\textwidth}
+    \centering
+    \caption{}
+    \includegraphics[width=\textwidth]{fig-plotwomen.pdf}
+    \label{fig:plotwomen}
+  \end{subfigure}
+  \begin{subfigure}{0.32\textwidth}
+    \centering
+    \caption{}
+    \includegraphics[width=\textwidth]{fig-plotgam.pdf}
+    \label{fig:plotgam}
+  \end{subfigure}
+  \begin{subfigure}{0.32\textwidth}
+    \centering
+    \caption{}
+    \includegraphics[width=\textwidth]{fig-plotgam2.pdf}
+    \label{fig:plotgam2}
+  \end{subfigure}
+  \label{fig:plotgentool}
 \end{figure}
 
+The second example illustrates the application of functions in the package \Rpkg{dlnm} to facilitate the analysis of smooth associations using penalized splines. The (slightly modified) original code, reported in the Examples section of the help page of \Rfun{gam} (see \Rcode{help(gam)}), is:
 
+<<gamsim>>=
+library(mgcv)
+dat <- gamSim(1,n=200,dist="poisson",scale=.1)
+b2 <- gam(y ~ s(x0,bs="cr") + s(x1,bs="cr") + s(x2,bs="cr") + s(x3,bs="cr"),
+  family=poisson, data=dat, method="REML")
+plot(b2, select=3)
+@
 
+<<plotgam,echo=F,fig=T>>=
+plot(b2, select=3)
+@
+
+The code performs a GAM estimating smoothed relationships in simulated data with several variables using penalized cubic regression splines through the function \Rfun{s}, and generates the graph for the variable \Robj{x2}, displayed in Figure~\ref{fig:plotgam}. Predictions and plots can also be obtained using \Rpkg{dlnm} functions, with:
+
+<<plotgam2,fig=T>>=
+pgam <- crosspred("x2", b2, cen=0, at=0:100/100)
+with(pgam, cbind(allRRfit, allRRlow, allRRhigh)["0.7",])
+plot(pgam, ylim=c(0,3), ylab="RR", xlab="x2", col=2)
+@
+
+As shown above, the \Rfun{crosspred} function also works directly with associations defined through the function \Rfun{s} within \Rfun{gam}, simply including the character string with the name of the variable as its first argument. This usage is similar to the more complex cross-basis parameterization obtained using the related smooth \Rcode{cb} smooth constructor (see the vignette \vign{dlnmPenalized}). This step simplifies the computations of estimated assocations, together with measures of uncertainty. In addition, it is possible to plot the smoothed relationship in the response scale or relative risk (RR), and using a reference value that makes easier to interpret the association, as shown in Figure~\ref{fig:plotgam2}.
 
 %-------------------------%%-------------------------%%-------------------------%
 

@@ -24,12 +24,14 @@ onebasis(x, fun="ns", ...)
 }
 
 \details{
-The function \code{onebasis} is a wrapper to existing functions which are called internally to produce different types of basis matrices in a pre-defined format. Its main use in the package \pkg{dlnm} is to be called by \code{\link{crossbasis}} to generate cross-basis matrices for modelling bi-dimensional exposure-lag-response associations thorugh distributed lag non-linear models. However, it can be used also for simplifying the modelling and plotting of uni-dimensional exposure-response relationships.
+The function \code{onebasis} is a wrapper to existing functions which are called internally to produce different types of basis matrices in a pre-defined format. Its main use in the package \pkg{dlnm} is to be called by \code{\link{crossbasis}} to generate cross-basis matrices for modelling bi-dimensional exposure-lag-response associations in distributed lag linear (DLMs) and non-linear (DLNMs) models. However, it can be used also for simplifying the modelling and plotting of uni-dimensional exposure-response relationships.
 
 The function to be called is chosen through the argument \code{fun}. Standard choices are:
 
 \itemize{
   \item \bold{\code{"ns"}} and \bold{\code{"bs"}}: natural cubic B-splines or B-splines of various degree. Performed through a call to functions \code{\link[splines]{ns}} or \code{\link[splines]{bs}} from package \pkg{splines}. Arguments passed through \code{\dots} may include \code{df}, \code{knots}, \code{intercept}, and \code{Boundary.knots}.
+  
+  \item \bold{\code{"ps"}} and \bold{\code{"cr"}}: penalized splines with different parameterizations and penalties. Performed through a call to functions \code{\link{ps}} or \code{\link{cr}}. Arguments passed through \code{\dots} may include \code{df}, \code{knots}, \code{degree}, \code{intercept}, \code{fx}, \code{S}, and \code{diff}.
   
   \item \bold{\code{"poly"}}: polynomials functions. Performed through a call to the internal function \code{\link{poly}} (be aware that this is different from \code{\link[stats]{poly}} in the package \pkg{stats}). Arguments passed through \code{\dots} may include \code{degree}, \code{scale} and \code{intercept}.
   
@@ -42,19 +44,23 @@ The function to be called is chosen through the argument \code{fun}. Standard ch
   \item \bold{\code{"lin"}}: linear functions. Performed through a call to the internal function \code{\link{lin}}. Arguments passed through \code{\dots} may include \code{intercept}.
 }
 
-The help pages of the called functions provides additional information. In particular, the option \code{"lin"} and \code{"integer"} are usually applied for defining constrained and unconstrained distributed lag models.
+The help pages of the called functions provides additional information. In particular, the option \code{"lin"} and \code{"integer"} are usually applied for defining constrained and unconstrained DLMs.
 
-In addition, any other existing or user-defined function can be potentially called through \code{onebasis}. The function should have a first argument \code{x} defining the vector to be transformed. It also should return a vector or matrix of transformed variables, with attributes including the arguments of the function itself which exactly define the transformations.
+In addition, any other existing or user-defined function can be potentially called through \code{onebasis}. The function should have a first argument \code{x} defining the vector to be transformed. It also should return a vector or matrix of transformed variables, with attributes including the arguments of the function itself which define the transformations univocally.
 }
 
 \value{
 A matrix object of class \code{"onebasis"} which can be included in a model formula in order to estimate the association. It contains the attributes \code{fun}, \code{range} (range of the original vector of observations) and additional attributes specific to the chosen function. The method \code{summary.onebasis} returns a summary of the basis matrix and the related attributes.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\references{
+Gasparrini A. Distributed lag linear and non-linear models in R: the package dlnm. \emph{Journal of Statistical Software}. 2011; \bold{43}(8):1-20. [freely available \href{http://www.ag-myresearch.com/2011_gasparrini_jss.html}{here}].
+}
+
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
-This function offers a wide range of options about modelling the shape of the exposure-response relationships, also simplifying or extending the use of existing functions. The function \code{\link{crosspred}} can be called on objects of class \code{"onebasis"} in order to obtain predictions and plotting of such unidimensional associations. If more than one variable is transformed through \code{onebasis} in the same model, different names must be specified. 
+This function offers a wide range of options about modelling the shape of the exposure-response relationships, also simplifying or extending the use of existing functions. The function \code{\link{crosspred}} can be called on objects of class \code{"onebasis"} in order to obtain predictions and plotting of such uni-dimensional associations. If more than one variable is transformed through \code{onebasis} in the same model, different names must be specified. 
 
 Before version 2.2.0 of \pkg{dlnm}, \code{onebasis} could include a \code{cen} argument for centering the basis. This step is now moved to the prediction stage, with a \code{cen} argument in \code{\link{crosspred}} or \code{\link{crossreduce}} (see the related help pages). For backward compatibility, the use of \code{cen} in \code{onebasis} is still allowed (with a warning), but may be discontinued in the future.
 
@@ -106,7 +112,7 @@ plot(pred, xlab="Height (in)", ylab="Weight (lb) difference",
   main="Association between weight and height")
   
 ### use with a user-defined function with proper attributes
-mylog <- function(x,scale=min(x,na.rm=TRUE)) {
+mylog <- function(x, scale=min(x, na.rm=TRUE)) {
   basis <- log(x-scale+1)
   attributes(basis)$scale <- scale
   return(basis)

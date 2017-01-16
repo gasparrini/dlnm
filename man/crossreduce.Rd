@@ -5,7 +5,7 @@
 \title{ Reduce the Fit of a DLNM to One-Dimensional Summaries }
 
 \description{
-The function reduces the fit of a bi-dimensional DLNM to summaries defined in the the dimension of predictor or lags only, and re-expresses it in terms of modified parameters of the one-dimensional basis functions chosen for that space.
+The function reduces the fit of bi-dimensional distributed lag linear (DLMs) or non-linear (DLNMs) models to summaries defined in the the dimension of predictor or lags only, and re-expresses it in terms of modified parameters of the one-dimensional basis functions chosen for that space.
 }
 
 \usage{
@@ -63,13 +63,13 @@ A list object of class \code{"crossreduce"} with the following (optional) compon
 }
 
 \references{
-Gasparrini A., Armstrong, B., Kenward M. G. Reducing and meta-analyzing estimates from distributed lag non-linear models.\emph{BMC Medical Research Methodology}. 2013; \bold{13}(1):1. [freely available \href{http://www.ag-myresearch.com/bmcmrm2013}{here}].
+Gasparrini A., Armstrong, B., Kenward M. G. Reducing and meta-analyzing estimates from distributed lag non-linear models.\emph{BMC Medical Research Methodology}. 2013; \bold{13}(1):1. [freely available \href{http://www.ag-myresearch.com/2013_gasparrini_bmcmrm.html}{here}].
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
-All the predictions are generated using a reference value, which if not directly specific by \code{cen} is given default values corresponding to the mid-range point for continuous functions. Before version 2.2.0 of \pkg{dlnm}, centering was produced in \code{\link{crossbasis}} (see the related help page), and for backward compatibility this information is kept (with a warning) and used in \code{crossreduce} unless \code{cen} is directly defined as an argument.
+All the predictions are generated using a reference value, which if not directly specific by \code{cen} is given default values corresponding to (approximately) the mid-range point for continuous functions. Before version 2.2.0 of \pkg{dlnm}, centering was produced in \code{\link{crossbasis}} (see the related help page), and for backward compatibility this information is kept (with a warning) and used in \code{crossreduce} unless \code{cen} is directly defined as an argument.
 
 Exponentiated predictions are included if \code{model.link} (specified automatically by \code{model} or selected by the user) is equal to \code{log} or \code{logit}.
 }

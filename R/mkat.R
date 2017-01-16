@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2016
+### R routines for the R package dlnm (c) Antonio Gasparrini 2017
 #
 mkat <-
 function(at, from, to, by, range, lag, bylag) {

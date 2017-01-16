@@ -31,7 +31,7 @@ If \code{intercept=TRUE}, an intercept is included in the model. The default (wh
 \value{
 A matrix object of class \code{"strata"}. It contains the attributes \code{df}, \code{breaks}, \code{ref} and \code{intercept}, with values which can be different than the arguments provided due to internal reset.}
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 This function is mainly used internally thorugh \code{\link{onebasis}} and \code{\link{crossbasis}} to create basis and cross-basis matrices, respectively. It is not exported in the namespace to avoid conflicts with the function with the same name in the package \pkg{survival}, and can be accessed through the triple colon operator '\code{:::}' (see Examples below). 

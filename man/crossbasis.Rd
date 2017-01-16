@@ -5,7 +5,7 @@
 \title{ Generate a Cross-Basis Matrix for a DLNM }
 
 \description{
-The function generates the basis matrices for the two dimensions of predictor and lags, given the functions selected to model the relationship in each space. Then, these one-dimensions basis matrices are combined in order to create the related cross-basis matrix, which can be included in a model formula to fit a distributed lag non-linear model (DLNM).
+The function generates the basis matrices for the two dimensions of predictor and lags, given the functions selected to model the relationship in each space. Then, these one-dimensions basis matrices are combined in order to create the related cross-basis matrix, which can be included in a model formula to fit distributed lag linear (DLMs) and non-linear models (DLNMs).
 }
 
 \usage{
@@ -24,28 +24,30 @@ crossbasis(x, lag, argvar=list(), arglag=list(), group=NULL, ...)
 }
 
 \details{
-The argument \code{x} defines the type of data. If a \eqn{n}-dimensional vector, the data are interpreted as a time series of equally-spaced and complete observations. If a \eqn{n \times (L-\ell_0+1)}{n x (L-L0+1)} matrix, the data are interpreted as a set of complete exposure histories at equally-spaced lags over the same lag period from \eqn{\ell_0}{L0} to \eqn{L} for each observation. The latter is general and can be used for applying distributed lag linear and non-linear models in different study designs. Lags are usually positive integers: if not provided, by default the minimum lag \eqn{L0} is set to 0, and the maximum lag \eqn{L} is set to 0 if \code{x} is a vector or to \code{ncol(x)-1} otherwise. Negative lags are rarely needed but allowed.
+The argument \code{x} defines the type of data. If a \eqn{n}-dimensional vector, the data are interpreted as a time series of equally-spaced and complete observations. If a \eqn{n \times (L-\ell_0+1)}{n x (L-L0+1)} matrix, the data are interpreted as a set of complete exposure histories at equally-spaced lags over the same lag period from \eqn{\ell_0}{L0} to \eqn{L} for each observation. The latter is general and can be used for applying DLMs and DLNMs beyond time series data. Lags are usually positive integers: if not provided, by default the minimum lag \eqn{L0} is set to 0, and the maximum lag \eqn{L} is set to 0 if \code{x} is a vector or to \code{ncol(x)-1} otherwise. Negative lags are rarely needed but allowed.
 
 The lists in \code{argvar} and \code{arglag} are passed to \code{\link{onebasis}}, which calls existing or user-defined functions to build the related basis matrices. The two lists should contain the argument \code{fun} defining the chosen function, and a set of additional arguments of the function. The \code{argvar} list is applied to \code{x}, in order to generate the matrix for the space of the predictor. The \code{arglag} list is applied to a new vector given by the sequence obtained by \code{lag}, in order to generate the matrix for the space of lags. By default, the basis functions for lags are defined with an intercept (if not otherwise stated). Some arguments can be automatically re-set by \code{\link{onebasis}}. Then, the two set of basis matrices are combined in order to create the related cross-basis matrix.
 
-Common choices for \code{fun} are represented by \code{\link[splines]{ns}} and \code{\link[splines]{bs}} from package \pkg{splines} or by the internal functions of the package \pkg{dlnm}, namely \code{\link{poly}}, \code{\link{strata}}, \code{\link{thr}}, \code{\link{integer}} and \code{\link{lin}}. See \code{help(onebasis)} and the help pages of these functions for information on the additional arguments to be specified. Also, other existing or user-defined functions can be applied.
+Common choices for \code{fun} are represented by \code{\link[splines]{ns}} and \code{\link[splines]{bs}} from package \pkg{splines} or by the internal functions of the package \pkg{dlnm}, namely \code{\link{poly}}, \code{\link{strata}}, \code{\link{thr}}, \code{\link{integer}} and \code{\link{lin}}. In particular, DLMs can be considered a special case of DLNMs with a linear function in \code{argvar}. Functions \code{\link{ps}} and \code{\link{cr}} are used to specify penalized models with an external method (see \code{\link{cbPen}}). See \code{help(onebasis)} and the help pages of these functions for information on the additional arguments to be specified. Also, other existing or user-defined functions can be applied.
 
 The argument \code{group}, only used for time series data, defines groups of observations representing independent series. Each series must be consecutive, complete and ordered.
 }
 
 \value{
-A matrix object of class \code{"crossbasis"} which can be included in a model formula in order to fit a DLNM. It contains the attributes \code{df} (vector of length 2 with the df for each dimension), \code{range} (range of the original vector of observations), \code{lag} (lag range), \code{argvar} and \code{arglag} (lists of arguments defining the basis functions in each space, which can be modified if compared to lists used in the call). The method summary.crossbasis returns a summary of the cross-basis matrix and the related attributes, and can be used to check the options for the basis functions chosen for the two dimensions.
+A matrix object of class \code{"crossbasis"} which can be included in a model formula in order to fit a DLM or DLNM. It contains the attributes \code{df} (vector of length 2 with the df for each dimension), \code{range} (range of the original vector of observations), \code{lag} (lag range), \code{argvar} and \code{arglag} (lists of arguments defining the basis functions in each space, which can be modified if compared to lists used in the call). The method \code{summary.crossbasis} returns a summary of the cross-basis matrix and the related attributes, and can be used to check the options for the basis functions chosen for the two dimensions.
 }
 
 \references{
-Gasparrini A. Distributed lag linear and non-linear models in R: the package dlnm. \emph{Journal of Statistical Software}. 2011; \bold{43}(8):1-20. [freely available \href{http://www.ag-myresearch.com/jss2011}{here}].
+Gasparrini A. Distributed lag linear and non-linear models in R: the package dlnm. \emph{Journal of Statistical Software}. 2011; \bold{43}(8):1-20. [freely available \href{http://www.ag-myresearch.com/2011_gasparrini_jss.html}{here}].
 
-Gasparrini A. Modeling exposure-lag-response associations with distributed lag non-linear models. \emph{Statistics in Medicine}. 2014; \bold{33}(5):881-899. [freely available \href{http://www.ag-myresearch.com/statmed2014}{here}]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
+
+Gasparrini A. Modeling exposure-lag-response associations with distributed lag non-linear models. \emph{Statistics in Medicine}. 2014; \bold{33}(5):881-899. [freely available \href{http://www.ag-myresearch.com/2014_gasparrini_statmed.html}{here}]
   
-Gasparrini A., Armstrong, B.,Kenward M. G. Distributed lag non-linear models. \emph{Statistics in Medicine}. 2010; \bold{29}(21):2224-2234. [freely available \href{http://www.ag-myresearch.com/statmed2010}{here}]
+Gasparrini A., Armstrong, B.,Kenward M. G. Distributed lag non-linear models. \emph{Statistics in Medicine}. 2010; \bold{29}(21):2224-2234. [freely available \href{http://www.ag-myresearch.com/2010_gasparrini_statmed.html}{here}]
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 Missing values in \code{x} are allowed, but this causes the observation (for non-time series data with \code{x} as a matrix) or the following observations corresponding to the lag period (for time series data with \code{x} as a vector series) to be set to \code{NA}. Although correct, this could generate computational problems in the presence of a high number of missing observations.
@@ -64,7 +66,7 @@ It is strongly recommended to avoid the inclusion of an intercept in the basis f
 }
 
 \seealso{
-\code{\link{onebasis}} to generate one-dimensional basis matrices. \code{\link{crosspred}} to obtain predictions after model fitting. The method function \code{\link[=plot.crosspred]{plot}} to plot several type of graphs.
+\code{\link{onebasis}} to generate one-dimensional basis matrices. The \code{\link[=smooth.construct.cb.smooth.spec]{cb smooth constructor}} for cross-basis penalized spline smooths. \code{\link{crosspred}} to obtain predictions after model fitting. The method function \code{\link[=plot.crosspred]{plot}} to plot several type of graphs.
 
 See \code{\link{dlnm-package}} for an introduction to the package and for links to package vignettes providing more detailed information.
 }
@@ -114,6 +116,42 @@ plot(pnest, zlab="OR", xlab="Exposure", ylab="Lag (years)")
 plot(pnest, var=50, ylab="OR for exposure 50", xlab="Lag (years)", xlim=c(0,40))
 # exposure-response curve for lag 10
 plot(pnest, lag=5, ylab="OR at lag 5", xlab="Exposure", ylim=c(0.95,1.15))
+
+### example of extended predictions - see vignette("dlnmExtended")
+
+# compute exposure profiles and exposure history
+expnested <- rep(c(10,0,13), c(5,5,10))
+hist <- exphist(expnested, time=length(expnested), lag=c(3,40))
+
+# predict association with a specific exposure history
+pnesthist <- crosspred(cbnest, mnest, cen=0, at=hist)
+with(pnesthist, c(allRRfit,allRRlow,allRRhigh))
+
+### example of user-defined functions - see vignette("dlnmExtended")
+
+# define a log function
+mylog <- function(x) log(x+1)
+
+# define the cross-basis
+cbnest2 <- crossbasis(Qnest, lag=c(3,40), argvar=list("mylog"),
+  arglag=list(fun="ns",knots=c(10,30),intercept=FALSE))
+summary(cbnest2)
+
+# run the model and predict
+mnest2 <- clogit(case~cbnest2+strata(riskset), nested)
+pnest2 <- crosspred(cbnest2, mnest2, cen=0, at=0:20*5)
+
+# plot and compare with previous fit
+plot(pnest2, zlab="OR", xlab="Exposure", ylab="Lag (years)")
+plot(pnest2, var=50, ylab="OR for exposure 50", xlab="Lag (years)", xlim=c(0,40))
+lines(pnest, var=50, lty=2)
+plot(pnest2, lag=5, ylab="OR at lag 5", xlab="Exposure", ylim=c(0.95,1.15))
+lines(pnest, lag=5, lty=2)
+
+### example of penalized models - see vignette("dlnmPenalized")
+
+# to be added soon
+
 }
 
 \keyword{smooth}

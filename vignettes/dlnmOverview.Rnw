@@ -39,6 +39,8 @@
 \newcommand{\Rarg}[1]{{\texttt{#1}}}
 \newcommand{\R}{{\textsf{R}}}
 
+\newcommand{\vign}[1]{{\textsc{#1}}}
+
 \newcommand{\PM}{{PM\textsubscript{10}}}
 \newcommand{\ozone}{{O\textsubscript{3}}}
 \newcommand{\microg}{{$\mu$gr/m\textsuperscript{3}}}
@@ -51,12 +53,13 @@
 
 <<options,echo=false>>=
 options(continue="  ")
+set.seed(13041975)
 @
-@% TO ELIMINATE THE "+" IN CONSECUTIVE SCRIPT LINES
+% TO ELIMINATE THE "+" IN CONSECUTIVE SCRIPT LINES
 
 \title{Distributed lag linear and non-linear models:\\ the \R{} the package \Rpkg{dlnm}}
 \author{Antonio Gasparrini\\
-\emph{London School of Hygiene and Tropical Medicine, UK}
+\emph{London School of Hygiene \& Tropical Medicine, UK}
 }
 \date{\Rpkg{dlnm} version \Sexpr{packageDescription("dlnm")[["Version"]]} , \Sexpr{Sys.Date()} }
 \maketitle
@@ -72,23 +75,27 @@ options(continue="  ")
 \section{Preamble}
 \label{sec:preamble}
 
-The \R{} package \Rpkg{dlnm} offers some facilities to run \emph{distributed lag non-linear models}, a modelling framework to describe simultaneously non-linear and delayed effects between predictors and an outcome, a dependency defined as \textit{exposure-lag-response association}. This document complements the description of the package provided in \citet{gasparrini2011jss} (freely available at \url{http://www.jstatsoft.org/v43/i08/}), which represents the main reference to the package. The DLNM's methodology has been previously described in \citet{gasparrini2010statmed, gasparrini2013bmcmrm, gasparrini2014statmed}, together with a detailed algebraical development. This framework was originally conceived and proposed to investigate the health effect of temperature by \citet{armstrong2006}.
+The \R{} package \Rpkg{dlnm} offers some facilities to run \emph{distributed lag non-linear models} (DLNMs), a modelling framework to describe simultaneously non-linear and delayed effects between predictors and an outcome, a dependency defined as \textit{exposure-lag-response association}. These include previously described \emph{distributed lag models} (DLMs) for linear relationships as special cases. This document complements the description of the package provided in \citet{gasparrini2011jss} (freely available at \url{http://www.jstatsoft.org/v43/i08/}), which represents the main reference to the package. The DLMs/DLNMs methodology has been previously described in \citet{gasparrini2010statmed, gasparrini2013bmcmrm, gasparrini2014statmed, gasparrini2017biomet}, together with a detailed algebraical development. This framework was originally conceived and proposed to investigate the health effects of temperature by \citet{armstrong2006}.
 
-This document \textbf{\textsf{dlnmOverview}} is the main of three vignettes documenting the package. Its aim is to describe the methodology and to provide an overview of the main functions. Two other vignettes offer more specific examples. Specifically, the vignette \textbf{\textsf{dlnmTS}} illustrates the application of the package \Rpkg{dlnm} for time series analysis, where distributed lag linear and non-linear models (DLMs and DLNMs) where originally conceived, as described in \citet{gasparrini2010statmed}. The vignette \textbf{\textsf{dlnmExtended}} demonstrates how the same functions in \Rpkg{dlnm} can be applied to extend the DLNM methodology beyond time series, for example to study exposure-lag-response associations in cohort or case-control designs. This extension is illustrated in \citet{gasparrini2014statmed}. Each vignette, included in the package installation, can be opened in \R{} by typing \Rcomm{vignette("namevignette")}.
+This document \vign{dlnmOverview} is the main of four vignettes documenting the package. Its aim is to describe the methodology and to provide an overview of the main functions. Three other vignettes offer more specific examples, as detailed below. Each vignette, included in the package installation, can be opened in \R{} by typing \Rcomm{vignette("namevignette")}.
 
-Type \Rcomm{citation("dlnm")} in \R{} to cite the \Rpkg{dlnm} package after installation (see Section~\ref{sec:installdata}). General information on the development and applications of the DLNM modelling framework, together with an updated version of the \R{} scripts for running the examples in published papers, can be found at \href{http://www.ag-myresearch.com}{www.ag-myresearch.com}.
+The \Rpkg{dlnm} package is available on the Comprehensive R Archive Network (CRAN), with info at the related web page (\href{https://CRAN.R-project.org/package=dlnm}{CRAN.R-project.org/package=dlnm}). A development website is available on GitHub (\href{https://github.com/gasparrini/dlnm}{github.com/gasparrini/dlnm}). General information on the development and applications of the DLM/DLNM modelling framework, together with an updated version of the \R{} scripts for running the examples in published papers, can be found on GitHub (\href{https://github.com/gasparrini}{github.com/gasparrini}) or at the personal web page of the package maintainer (\href{http://www.ag-myresearch.com}{www.ag-myresearch.com}).
+
+Type \Rcomm{citation("dlnm")} in \R{} to cite the \Rpkg{dlnm} package after installation (see Section~\ref{sec:install}). 
 
 Please send comments or suggestions and report bugs to \href{mailto:antonio.gasparrini@lshtm.ac.uk}{\texttt{antonio.gasparrini@lshtm.ac.uk}}.
 
 %-------------------------%%-------------------------%%-------------------------%
-\section{Installation and data}
-\label{sec:installdata}
+\section{Installation}
+\label{sec:install}
 
-%-------------------------%%-------------------------%
-\subsection{Installing and loading the package \Rpkg{dlnm}}
-\label{sec:installing}
+The last version of the \Rpkg{dlnm} package officially released on CRAN can be downloaded and installed following standard procedures, for example by typing:
 
-The \Rpkg{dlnm} package is installed in the standard way for CRAN packages from \R{} version 2.9.0 onwards, for example typing \Rcomm{install.packages("dlnm")} or directly through the \R{} menu in Windows. The package can be alternatively installed using the source code (.tar.gz) or binaries for Windows or MacOS, available at \href{http://cran.r-project.org/web/packages/dlnm/index.html}{http://cran.r-project.org/web/packages/dlnm/index.html}.
+<<install,eval=F>>=
+install.packages("dlnm")
+@
+
+or directly through the \R{} or RStudio menu. The package can be alternatively installed from its webpage within CRAN (\href{https://CRAN.R-project.org/package=dlnm}{https://CRAN.R-project.org/package=dlnm}), using the source code (.tar.gz) or binaries for Windows or MacOS. In this case, also the other packages which functions in \Rpkg{dlnm} are dependent from, defined by the fields \emph{Imports} and \emph{Suggests} of \texttt{description}, must be installed.
 
 The package is loaded in the \R{} session by:
 
@@ -96,345 +103,161 @@ The package is loaded in the \R{} session by:
 library(dlnm)
 @
 
-
 A list of changes included in the current and previous versions can be found typing:
 
-<<changelog,eval=F>>=
-file.show(system.file("ChangeLog", package="dlnm"))
+<<news,eval=F>>=
+news(package="dlnm")
 @
 
-The functionalities of \Rpkg{dlnm} depend on other packages whose commands are called to specify the \Rpkg{dlnm} functions. This hierarchy is ruled by the field \emph{Imports} of the file \texttt{description} included in the package. In this version, the functions imported from contributed packages are \Rfun{ns} and \Rfun{bs} from \Rpkg{splines}, \Rfun{Lag} from \Rpkg{tsModel}, and \Rfun{fixef} from \Rpkg{nlme}, three of the recommended packages included in the main distribution of \R{}.
-
-%-------------------------%%-------------------------%
-\subsection{Data}
-\label{sec:data}
-
-This version the package includes the three data sets \Rdata{chicagoNMMAPS}, \Rdata{nested} and \Rdata{drug}. The former is used in the vignette \textbf{\textsf{dlnmTS}} as an example of use in time series analysis. The other two are used in the vignette \textbf{\textsf{dlnmExtended}} as an example of the extension of the methodology and package in other study designs.
-
-The data set \Rdata{chicagoNMMAPS} contains daily mortality (all causes, CVD, respiratory), weather (temperature, dew point temperature, relative humidity) and pollution data (PM10 and ozone) for Chicago in the period 1987-2000. The data were assembled from publicly available data sources as part of the National Morbidity, Mortality, and Air Pollution Study (NMMAPS) sponsored by the Health Effects Institute \citep{samet2000b,samet2000a}. They used to be downloadable from the package \Rpkg{NMMAPSlite} (now archived) and from  Internet-based Health and Air Pollution Surveillance System (iHAPSS) website (\href{http://www.ihapss.jhsph.edu}{www.ihapss.jhsph.edu}).
-
-The data set \Rdata{nested} contains simulated data from an hypothetical nested case-control study on the association between a time-varying occupational exposure and a cancer outcome. The study includes 250 risk sets, each with a case and a control matched by age year. The data on the exposure is collected on 5-year age intervals between 15 and 65 years.
-
-The data set \Rdata{drug} contains simulated data from an hypothetical randomized controlled trial on the effect of time-varying doses of a drug. The study includes 200 randomized subject, each receiving daily doses of drug for 28 days, varying each week. The exposure level is reported on 7-day intervals.
 
 %-------------------------%%-------------------------%%-------------------------%
-\section{The DLNM methodology}
-\label{sec:dlnm}
+\section{Methodology and applications}
+\label{sec:applications}
 
-The conceptual and methodological development of distributed lag linear and non-linear models (DLMs and DLNMs) is thoroughly described in a series of publications. Here I provide a brief summary to introduce concepts and definitions. The user can refer to the articles provided below for a more detailed description.
-
-%-------------------------%%-------------------------%
-\subsection{Exposure-lag-response associations}
-\label{sec:explagresp}
-
-The modelling class of DLNMs is applied to describe associations in which the dependency between an exposure and an outcome is delayed in time. This process can be described using two different and complementary perspectives. Using a \textit{forward perspective}, we can may say that an exposure event at time $t$ determines the risk in the future at times $t+\ell$. Using a \textit{backward perspective}, the risk at time $t$ is determined by a series of exposures experienced in the past at times $t-\ell$. Here $\ell$ is the \textit{lag}, expressing the delay between exposure and measured outcome.
-
-The lag dimension represents a new space over which the association is defined, by describing a \textit{lag-response relationship} in addition to the usual \textit{exposure-response relationship} over the space of the predictor. The dependency, characterized in the bi-dimensional space of predictor and lag, is defined here as \textit{exposure-lag-response} association, revising a terminology previously proposed by \citet{thomas1988arph}.
-
-Exposure-lag-response associations are modelled through an extended version of DLNM. \citet{gasparrini2014statmed} provides the methodological development and the definitions above.
+The conceptual and methodological development of distributed lag linear and non-linear models (DLMs and DLNMs) is thoroughly described in a series of publications. Here I provide a brief summary, focusing also on specific extensions and applications of the methodology and software. The user can refer to the articles and vignettes provided below for a more detailed description.
 
 %-------------------------%%-------------------------%
-\subsection{A statistical model for DLNMs}
-\label{sec:statmodel}
+\subsection{The DLM and DLNM framework}
+\label{sec:framework}
 
-The DLNM class provides a conceptual and analytical framework for the description and estimation of exposure-lag-response associations. A statistical development of DLNMs is based on the choice of a \textit{basis} for each dimension of predictor and lag \citep{wood2006book}, to describe an exposure-lag-response associations through known transformations of predictor and lag vectors, combining the usual \textit{exposure-response function} with the additional \textit{lag-response} function.
+The modelling class of DLMs and DLNMs is applied to describe associations in which the dependency between an exposure and an outcome is lagged in time. This lag dimension represents a new space over which the association is defined, by describing a \textit{lag-response} relationship in addition to the usual \textit{exposure-response} relationship over the space of the predictor. The dependency, characterized in the bi-dimensional space of predictor and lag, is defined here as \textit{exposure-lag-response} association \citep{gasparrini2014statmed}, revising a terminology previously proposed by \citet{thomas1988arph}.
 
-A simple case of exposure-lag-response associations is when the relationship in the space of the predictor, namely the exposure-response relationship, is linear. This type of relationship can be modelled through a DLM. In this case, the association only depends on the lag-response function, which models how the linear risk changes along lags. When such function is applied to the data, it provides a \textit{lag-basis function} and related matrix. Different choices for the lag-response function (splines, polynomials, strata, threshold, among others) lead to the specification of different DLMs, and imply
-alternative assumptions on the lag-response relationship.
+A statistical development of DLMs and DLNMs is based on the application of \emph{basis} functions for parameterizing the \emph{exposure history}, namely the set of lagged exposures. Specifically, two set of basis functions are chosen independently for modelling the exposure and lag-response relationships. These are then combined through a special tensor product defined by bi-dimensional \textit{cross-basis} functions \citep{gasparrini2010statmed, gasparrini2014statmed}. The choice of the two sets of functions determines the shape of the relationship in each dimension. DLMs can be considered special cases of the more general DLNMs, when the exposure-response is assumed linear.
 
-The DLNM class for full exposure-lag-response associations is based on an intuitive extension of DLMs, with the definition of a non-linear exposure-response function. Similarly, this step is provided by the independent choice of another basis for the space of the predictor. The simultaneous application of the two sets of basis functions and their combination through a special tensor product provides \textit{cross-basis functions} and related matrix. A lag-basis function is a special case of cross-basis function with a linear exposure-response function. Again, the choice of the bases for exposure-response and lag-response functions implies alternative assumptions on how the risk changes along the two dimensions.
-
-The lag or cross-basis matrix can be included in the design matrix of a regression model in order to estimate the related parameters. The algebraic definitions of the models above are provided in \citet{gasparrini2010statmed} and \citet{gasparrini2014statmed}.
+Estimation is performed using standard regression models and \R{} functions, simply including the matrix storing the cross-basis variables in a model formula. Result can be interpreted by building a grid of predictions for each lag and for suitable values of the predictor, using 3-D plots to provide an overall picture of the association varying along the two dimensions \citep{gasparrini2010statmed}. Also, \textit{summaries} of the bi-dimensional association can be derived, namely exposure-reponses at specific lags, lag-responses at specific predictor values, and the overall cumulative exposure-response as the net effect across the whole lag period \citep{gasparrini2013bmcmrm}. These summaries can be interpreted using either a forward or backward interpretation, as explained in \citet{gasparrini2014bmcmrm}.
 
 %-------------------------%%-------------------------%
-\subsection{Interpretation of DLNMs}
-\label{sec:interpretation}
+\subsection{Standard application in time series analysis}
+\label{sec:standard}
 
-The result of a DLNM can be interpreted by building a grid of predictions for each lag and for suitable values of the predictor, using 3-D plots to provide an overall picture of the association varying along the two dimensions. Also, three \textit{summaries} of the bi-dimensional association are of interest, each of which can be interpreted using the forward and backward perspective defined in Section~\textbf{\ref{sec:explagresp}}.
+Simpler DLMs were firstly conceived in econometric time series analysis long ago \citep{almon1965}, and then re-proposed in  time series data within environmental epidemiology \cite{schwartz2000epi1}. The full extension to DLNMs was conceived by \citet{armstrong2006}. A conceptual and methodological re-evaluation of this modelling framework for time series data is given in \cite{gasparrini2010statmed}. DLMs and DLNMs are now commonly used in time series analysis, and the functions in the package \Rpkg{dlnm} offer a simple way for deriving the complex parameterization and for producing predictions and plots, as illustrated in \cite{gasparrini2011jss}.
 
-The first is the \textit{lag-response curve} associated with a specific exposure value, defined as a \textit{predictor-specific association}. Using a forward perspective, this is interpreted as the series of contribution to risk at times $t+\ell$ associated to a specific exposure at time $t$. Using a backward perspective, this is interpreted as the contribution to the risk at time $t$ associated to the exposures experiences at times $t-\ell$.
-
-The second is the \textit{exposure-response curve} associated with a specific lag value, defined as a \textit{lag-specific association}. Using a forward perspective, this is interpreted as the exposure-response relationship at time $t+\ell$ associated to exposure values occurring at time $t$. Using a backward perspective, this is interpreted as the exposure-response relationship at time $t$ associated to exposure values experienced at time $t-\ell$.
-
-The third and most important is the \textit{exposure-response curve} associated to the whole \textit{exposure history} experienced within the lag period considered, defined as a \textit{overall cumulative association}. Using a forward perspective, this is interpreted as the exposure-response relationship representing the net risk experienced over the period $[t,t+L]$ for a given exposure that occurred at time $t$. Using a backward perspective, this is interpreted as the exposure-response relationship at time $t$ for a constant exposure experiences during the period $[t-L,t]$.
-
-Again, the algebraic definitions of the models above are provided in \citet{gasparrini2010statmed} and \citet{gasparrini2014statmed}.
-
-A fitted DLNM can be re-expressed in terms of such summaries (predictor-specific, lag-specific or overall cumulative association) by \textit{reducing} its parameters to those of the uni-dimensional lag-response or exposure-response function only. This step is described in \citet{gasparrini2013bmcmrm}.
+The vignette \vign{dlnmTS} provides a thorough overview of the use of the \Rpkg{dlnm} package for performing DLMs and DLNMs in time series analysis.
 
 %-------------------------%%-------------------------%
 \subsection{Generalization beyond time series design}
 \label{sec:extension}
 
-Distributed lag models were firstly conceived in econometric time series analysis long ago \citep{almon1965}, and then re-proposed in  time series data within environmental epidemiology \cite{schwartz2000epi1}. The extension to DLNMs were conceived by \citet{armstrong2006}. A re-evaluation of this modelling framework for time series data is given in \cite{gasparrini2010statmed}.
+Interestingly, models for such exposure-lag-response associations have been proposed in different research fields. The general idea is to \textit{weight} past exposures through specific functions whose parameters are estimated by the data. Models for linear-exposure-response relationships similar to DLMs were illustrated in cancer epidemiology \citep{thomas1983sjweh, langholz1999ajim, vacek1997statmed, hauptmann2000biom, richardson2009epidemiol} and pharmaco-epidemiology \citep{sylvestre2009statmed, abrahamowicz2012statmed}. Extensions to non-linear exposure-responses have also been proposed \citep{vacek1997statmed, abrahamowicz2007statmed, berhane2008statmed}. A general unifying framework based on DLMs and DLNMs is described in \citet{gasparrini2014statmed}.
 
-Interestingly, models for such exposure-lag-response associations have been proposed in different research fields. The general idea is to \textit{weight} past exposures through specific functions whose parameters are estimated by the data. Models for linear-exposure-response relationships similar to DLMs were illustrated in cancer epidemiology \citep{thomas1983sjweh, langholz1999ajim, vacek1997statmed, hauptmann2000biom, richardson2009epidemiol} and pharmaco-epidemiology \citep{sylvestre2009statmed, abrahamowicz2012statmed}. Extensions to non-linear exposure-responses were also proposed \citep{vacek1997statmed, abrahamowicz2007statmed, berhane2008statmed}
+The vignette \vign{dlnmExtended} illustrates this extension and the application of the \Rpkg{dlnm} software in study designs and data structures beyond time series.
 
-The extension of DLNM beyond time series data and the implementation in the package \Rpkg{dlnm} provide a general conceptual and modelling framework which generalizes all the developments above. The methodology and software can be applied in different study designs and data structures. This extension of DLNMs is described in \cite{gasparrini2014statmed}.
+%-------------------------%%-------------------------%
+\subsection{A penalized version of DLMs and DLNMs}
+\label{sec:penmod}
+
+In the standard definition of the DLM/DLNM modelling framework, models are fitted with common regression methods, such as generalized linear models (GLMs) or Cox proportional hazard models. Here, the bi-dimensional shape of the exposure-lag-response relationship depends entirely on the parametric form of the basis functions applied in each of the two spaces of predictor and lag. Recently, \citet{gasparrini2017biomet} has described an extension of DLNMs based on the use of penalized splines through generalized additive models (GAMs), where potentially flexible shapes are smoothed with the application of specific penalties \citep{wood2006book}. This extension generalizes similar methods previously proposed for simpler models assuming linear \citep{zanobetti2000biostat, obermeier2015jrssb} and linear threshold \citep{muggeo2008bios} exposure-response shapes.
+
+The vignette \vign{dlnmPenalized} offers an overview of the implementation of penalized DLMs and DLNMs in the \Rpkg{dlnm} package and the use of the functions in illustrative examples.
+
+%-------------------------%%-------------------------%
+\subsection{A general tool for regression analysis}
+\label{sec:regression}
+
+The functions in the \Rpkg{dlnm} package can be used more generally to facilitate the computation and interpretation of associations estimated from regression models, beyod the specific case of distributed lag modelling. Specifically, the functions can be applied to obtain predictions and plots of point estimates and measures of uncertainty for linear or non-linear unlagged relationships, estimated from either unpenalized (\emph{e.g.}, GLMs and Cox models) or penalized (GAMs) models.
+
+The vignette \vign{dlnmExtended} provides examples of the use of the functions to derive predictions and plots of exposure-response associations from standard regression models.
 
 
 %-------------------------%%-------------------------%%-------------------------%
-\section{The functions in the package \Rpkg{dlnm}}
+\section{Functions and data in the package \Rpkg{dlnm}}
 \label{sec:functions}
 
-This section describes the main functions included in the package \Rpkg{dlnm}. Here I provide a brief description of all the stages involved in the definition, estimation and interpretation of DLNMs, summarizing the conceptual and analytical steps. In addition, I illustrate the structure of the functions and discuss specific issues about their usage. Examples of applications to real data, with a more detailed overview of the use of the functions in time series analysis and beyond, are described in the vignettes \textbf{\textsf{dlnmTS}} and \textbf{\textsf{dlnmExtended}} respectively. Examples involving the old usage of the functions are also provided in \citet{gasparrini2011jss}.
+This section describes the main functions and data included in the package \Rpkg{dlnm}. The functions are grouped consistently with the various steps in the definition, estimation and interpretation of DLMs and DLNMs. Only a general summary is provided here. For details on the usage of the functions and for real-data examples, the user can refer to the related help pages and the other vignettes, respectively.
 
 %-------------------------%%-------------------------%
-\subsection{Basic functions}
-\label{sec:basicfun}
+\subsection{Basis functions}
+\label{sec:basisfun}
 
-The package \Rpkg{dlnm} contains basic functions to specify standard exposure-response and lag-response relationships, such polynomials, step or threshold functions. These functions are not exported to the namespace in order to prevent conflicts with other existing functions in recommended packages, and are only meant to be used internally through \Rfun{onebasis} (see Section~\ref{sec:onebasis}) and \Rfun{crossbasis} (see Section~\ref{sec:crossbasis}).
+The first step for performing DLMs or DLNMs consists of the choice of two sets of basis functions for modelling the exposure-lag-response association. Any kind of function determining completely known parametric transformations of the predictor can be used, and several options are available in the \Rpkg{dlnm} package. All the functions below are meant to be called internally by \Rfun{onebasis} and \Rfun{crossbasis} (see sections below) and not directly run by the users.
 
-Other existing or user-defined functions can also be used within the framework of \Rpkg{dlnm}, as shown in Section~\ref{sec:onebasis}. For example, splines are specified by the functions \Rfun{ns} and \Rfun{bs} included in the recommended package \Rpkg{splines}. The package is installed together with the main \R{}  distribution. The user can refer to the related help pages of these functions for further info (type \Rcomm{?ns} or \Rcomm{?bs} in \R{}).
+First, the package contains basic functions to specify standard relationships. Specifically, the functions \Rfun{strata}, \Rfun{thr} and \Rfun{poly} can be applied to obtain indicator variables defining intervals through dummy parameterization, high, low or double-threshold relationships, and polynomial variables, respectively. The function \Rfun{lin} returns the un-transformed predictor variable and it is applied to specify simple DLMs, while the function \Rfun{integer} produces indicator variables for each integer value and it is used in unconstrained DLMs and DLNMs \citep{gasparrini2010statmed}. These functions are not exported to the namespace in order to prevent conflicts with other existing functions in recommended packages.
 
-Polynomials are obtained through the function \Rfun{poly}. As mentioned earlier, this function is not exported in the namespace in order to avoid conflicts with the function with the same name included in the package \Rpkg{stats}. The user can call this or other functions described below by using the triple colon operator '\Rcode{:::}'. This is an example of transformation of a simple vector:
+Functions from other packages can also be called for deriving more complex transformations. For instance, the functions \Rfun{ns} and \Rfun{bs} from the recommended package \Rpkg{splines} can be called for deriving spline parameterizations. In addition, the functions \Rfun{ps} and \Rfun{cr}, available in \Rpkg{dlnm}, are used to specify penalized splines, as described in Section~\ref{sec:penfun} and in the vignette \vign{dlnmPenalized}.
 
-<<poly>>=
-dlnm:::poly(1:5,degree=3)
-@
+More generally, user-defined functions defining any type of basis transformations can also be used within \Rpkg{dlnm}. The only requirements is that the function returns a matrix of basis variables univocally determined by its arguments, and that all these parameters are stored as attributes in order to reproduce exactly the same transformations. The vignette \vign{dlnmExtended} provides more details and some examples.
 
-The result is a basis matrix with additional class \Rclass{poly}, with attributes storing the info on the arguments exactly defining the transformation. The first unnamed argument \Rarg{x} specifies the vector to be transformed, while the argument \Rarg{degree} sets the degree of the polynomial. Other arguments let to default values are \Rarg{scale} (a scaling factor) and \Rarg{intercept} (a logical value specifying if an intercept should be included). See \Rcomm{?poly} for further info.
-
-Step functions defining strata are specified through \Rfun{strata} (again, be aware that this function is different from the other one with the same name in the recommended package \Rpkg{survival}). An example is shown below, with square brackets preventing the printing of attributes to save space:
-
-<<strata>>=
-dlnm:::strata(1:5,breaks=c(2,4))[,]
-@
-
-The result is a basis matrix with additional class \Rclass{strata}. The transformation is a dummy parameterization defining contrasts. The argument \Rarg{breaks} defines lower boundaries for right-open intervals of the strata. Other arguments of \Rfun{strata} are \Rarg{df}, which sets the number of intervals (with cut-offs at equally-spaced percentiles) when \Rarg{breaks} is undefined, \Rarg{ref} to select the refence interval, and \Rarg{intercept} to include the intercept. See \Rcomm{?strata} for further info.
-
-Threshold functions are specified through \Rfun{thr}. An example:
-
-<<thr>>=
-dlnm:::thr(1:5,thr.value=3,side="d")[,]
-@
-
-The result is a basis matrix with additional class \Rclass{thr}. The argument \Rarg{thr.value} defines a vector with one or two thresholds, while \Rarg{side} is used to specify high (\Rcode{"h"}, the default), low (\Rcode{"l"}) or double (\Rcode{"d"} threshold parameterizations. The default value for \Rarg{side} is \Rcode{"h"} or \Rcode{"d"} depending on the length of \Rarg{thr.value}. As above, an intercept can be included with the argument \Rarg{intercept}. See \Rcomm{?thr} for further info.
-
-Two special functions are \Rfun{lin} and \Rfun{integer}. The former returns the untransformed variable (optionally with intercept), and is used to specify DLM with linear exposure-response relationships via \Rfun{crossbasis}. The latter returns an identity matrix (minus the first column if an intercept is not included) for specifying unconstrained DLMs and DLNMs, where the lag-response functions includes one parameter per lag. Again, this is different from the function with the same name included in the package \Rpkg{base}. See \Rcomm{?lin} and \Rcomm{?integer} for further info.
+The user can refer to the related help pages of these functions for further info on their usage (for instance, type \Rcomm{?strata} or \Rcomm{?bs} in \R{}). 
 
 %-------------------------%%-------------------------%
 \subsection{The function \Rfun{onebasis}}
 \label{sec:onebasis}
 
-This function represents the workhorse for basis transformation in \Rpkg{dlnm}, and it is applied for the specification of exposure-response and lag-response relationships.  It has replaced the old functions \Rfun{mkbasis} and \Rfun{mklagbasis} since version 1.5.1 of \Rpkg{dlnm}. Its role is to apply chosen transformations and generate basis matrices in a format suitable for other functions such as \Rfun{crossbasis} and \Rfun{crosspred}. However, the function can be also used directly for generating uni-dimensional functions in regression models, with predictions and graphs derived by \Rfun{crosspred} (see Section~\ref{sec:crosspred}) and plotting methods (see Section~\ref{sec:plotting}).
+This function represents the workhorse for basis transformation in \Rpkg{dlnm}. It has replaced the old functions \Rfun{mkbasis} and \Rfun{mklagbasis} since version 1.5.1 of the package. Its main role is to apply chosen transformations and generate basis matrices in a format suitable for other functions such as \Rfun{crossbasis} and \Rfun{crosspred}.
 
-Since version 2.0.0 of \Rpkg{dlnm}, \Rfun{onebasis} simply acts as a wrapper to other functions, such as those described in Section~\ref{sec:basicfun}. The following example replicate the polynomial transformation shown in that section:
+Since version 2.0.0 of \Rpkg{dlnm}, \Rfun{onebasis} simply acts as a wrapper to other functions, such as those described in Section~\ref{sec:basisfun}. The function has a first argument \Rarg{x} for the predictor variable, and another argument \Rarg{fun} for specifying the basis function to be called internally, whose arguments are passed through the ellipsis argument '\Rarg{...}'.
 
-<<onebasis1>>=
-onebasis(1:5,fun="poly",degree=3)
-@
+Interestingly, \Rfun{onebasis} can also be used more generally for generating uni-dimensional functions in regression models, with predictions and graphs derived by \Rfun{crosspred} (see Section~\ref{sec:crosspred}) and plotting methods (see Section~\ref{sec:plotting}). Examples are provided in the vignette \vign{dlnmExtended}.
 
-The result is a basis matrix with additional class \Rclass{onebasis}. Again, the first unnamed argument \Rarg{x} specifies the vector to be transformed, while the second  argument \Rarg{fun} defines the name of the function to be called for applying the transformation, as a character. The result is very similar to the call to \Rfun{poly}, although other attributes are stored, and used later for simplifying predictions and plotting. Specifically, the basis matrix includes the attributes \Rarg{fun} and \Rarg{range}, plus the arguments of the called function which exactly define the transformation.
-
-As mentioned earlier, \Rfun{onebasis} can also call other existing or user-defined functions, with specific requirements. A simple example:
-
-<<onebasis2>>=
-mylog <- function(x) log(x)
-onebasis(1:5,"mylog")
-@
-
-The called function must have \Rarg{x} as its first argument and being a closure (\emph{i.e.} primitive functions such as \Rfun{log} itself are not accepted). In addition, it must return a vector or matrix of transformed basis variables together with attributes storing the arguments defining the function. More detailed examples of the usage with user-defined functions are illustrated in the vignette \textbf{\textsf{dlnmExtended}}.
-
-A method function \Rfun{summary} for objects of class \Rclass{onebasis} summarizes the function and the content and the basis matrix. See \Rcomm{?onebasis} for further info.
+The function \Rfun{onebasis} returns a basis matrix with additional class \Rclass{onebasis}, with attributes determining the chosen parameterization. See \Rcomm{?onebasis} for further info.
 
 %-------------------------%%-------------------------%
 \subsection{The function \Rfun{crossbasis}}
 \label{sec:crossbasis}
 
-This is the main function in the package \Rpkg{dlnm}. It internally calls \Rfun{onebasis} to generate the basis matrices for exposure-response and lag-response relationships, and combines them through a special tensor product in order to create the cross-basis, which specifies the exposure-lag-response dependency simultaneously in the two dimensions. See \citet[Sections 2.1--2.2]{gasparrini2014statmed} and \citet[Sections 4.1--4.2]{gasparrini2010statmed} for details.
+This is the main function in the package \Rpkg{dlnm}. It calls \Rfun{onebasis} internally to generate the basis matrices for exposure-response and lag-response relationships, and combines them through a special tensor product in order to create the cross-basis, which specifies the exposure-lag-response dependency simultaneously in the two dimensions. See \citet[Sections 2.1--2.2]{gasparrini2014statmed}, \citet[Sections 4.1--4.2]{gasparrini2010statmed}, and \citet[Section 2]{gasparrini2017biomet} for details.
 
-The class of its first argument \Rarg{x} defines how the data are interpreted. If a $n$-dimensional vector, \Rarg{x} is assumed to represent an equally-spaced, complete and ordered series of observations in a time series framework. If a $n \times (L-\ell_0+1)$ matrix, \Rarg{x} is assumed to represent a series of exposure histories for $n$ observations over the lag period from $\ell_0$ to $L$. The latter can be used to extend DLNMs beyond time series data, as thoroughly illustrated in the vignette \textbf{\textsf{dlnmExtended}}. The lag period can be modified with the second argument \Rarg{lag}. The two arguments \Rarg{argvar} and \Rarg{arglag} contain lists of arguments, each of them to be passed to \Rfun{onebasis} to build the matrices for the exposure-response and lag-response relationships respectively (see Section~\ref{sec:onebasis}). The additional argument \Rarg{group}, used only for time series data defines groups of observations to be considered as individual unrelated series, and may be useful for example in seasonal analyses (see the vignette \textbf{\textsf{dlnmTS}}).
+The class of the first argument \Rarg{x} of \Rfun{crossbasis} defines how the data are interpreted. If a vector, \Rarg{x} is assumed to represent an equally-spaced, complete and ordered series of observations in a time series framework. If a matrix, \Rarg{x} is assumed to represent a series of exposure histories for each observation (rows) and lag (columns). This second format can be used to extend DLNMs beyond time series data, as illustrated in the vignette \vign{dlnmExtended}. The lag period can be defined through the second argument \Rarg{lag}. The two arguments \Rarg{argvar} and \Rarg{arglag} contain lists of arguments, each of them to be passed to \Rfun{onebasis} to build the matrices for the exposure-response and lag-response relationships respectively (see Sections~\ref{sec:basisfun}--\ref{sec:onebasis}). The additional argument \Rarg{group}, used only for time series data, defines groups of observations to be considered as individual unrelated series, and may be useful for example in seasonal analyses (see the vignette \vign{dlnmTS}).
 
-As a simple example, I simulate a matrix of exposure histories for 3 subjects over the lag period 2--5:
+The usage of \Rfun{crossbasis} has repeatedly changed in different versions of the package \Rpkg{dlnm}. The user is advised to follow the usage in the last available version.
 
-<<histories>>=
-hist <- matrix(sample(1:12),3,dimnames=list(paste("sub",1:3,sep=""),
-  paste("lag",2:5,sep="")))
-hist
-@
+The function returns a matrix object of class \Rclass{crossbasis}, with attributes storing information on the original variable and the parameters of the chosen parameterization in the two spaces. See \Rcomm{?crossbasis} for further info. The cross-basis matrix needs to be included in a regression model formula in order to fit a model. 
 
-Then, I apply the cross-basis parameterization, with a quadratic polynomial as the exposure-response function and a step function defining strata 2--3 and 4--5 as the lag-response function:
+%-------------------------%%-------------------------%
+\subsection{Functions for penalized models}
+\label{sec:penfun}
 
-<<crossbasis1>>=
-crossbasis(hist,lag=c(2,5),argvar=list(fun="poly",degree=2),
-  arglag=list(fun="strata",breaks=4))[,]
-@
+More flexible versions of DLMs and DLNMs can be specified through penalized splines by embedding functions of the packages \Rpkg{dlnm} and \Rpkg{mgcv} \citep{gasparrini2017biomet}. Here I briefly introduce the functions available in \Rpkg{dlnm}, while a more comprehensive overview is provided in the vignette \vign{dlnmExtended}.
 
-The function returns a matrix object of class \Rclass{crossbasis} (again, printing the long series of attributes if prevented by th use of the square brackets). It first calls \Rfun{onebasis} with arguments in the lists \Rarg{argvar} and \Rarg{arglag} to build the matrix bases for exposure-response and lag-response spaces. In particular, the basis matrix for the lag space by default includes an intercept (see \Rcomm{?poly} and \Rcomm{?strata} for this specific example). The two matrices of dimension 2 are then combined through a special tensor product in the final cross-basis matrix of dimension $2 \times 2 = 4$, with column labels identifying the product. The cross-basis object also included the attributes \Robj{df}, \Robj{range}, \Robj{lag}, \Robj{argvar} and \Robj{arglag}, not printed here by using the square brackets. The latter two can be different from the specified arguments due to internal checks and setting of default values.
+There are two approaches for defining penalized DLMs and DLNMs. Using the \emph{external} method, the cross-basis parameterization is derived as usual by calling the function \Rfun{ps} and/or \Rfun{cr} through \Rfun{crossbasis}. These two functions (see Section~\ref{sec:basisfun}) create a basis matrix with specific spline parameterizations, and a related penalty matrix stored as an additional attribute \Robj{S}. The function \Rfun{cbPen} is then called on the cross-basis object to generate the bi-dimensional penalty matrices using consistent tensor product transformations. Additional penalties on the lag dimension can be added through the argument \Rarg{addSlag} of \Rfun{cbPen}. The models are fitted by the regression function \Rfun{gam} of \Rpkg{mgcv}, including the cross-basis object in the formula and the penalty matrices as the argument \Rarg{paraPen}.
 
-The function can also be used with time series data, simply including a vector with the series as the first argument \Rarg{x}. In another example, I apply \Rfun{crossbasis} to the variable \Robj{temp} in the data set \Robj{chicagoNMMAPS}, representing the series of daily mean temperature in Chicago during the period 1987--2000:
+Using instead the \emph{internal} method, the cross-basis transformation is not generated by \Rfun{crossbasis}, but using the function \Rfun{smooth.construct.cb.smooth.spec} available in \Rpkg{dlnm}. This smooth constructor is called internally as a smooth term using \Rcode{s(X,L,bs="cb",...)} within the formula of the regression function \Rfun{gam} of \Rpkg{mgcv}, with \Robj{X} and \Robj{L} as a matrix of exposure histories and a matrix of lags, respectively. Additional info can be passed to the constructor using a named list as the argument \Rarg{xt} of \Rfun{s}, for instance lists \Robj{argvar} and \Robj{arglag} to define othe types of transformations in the two spaces, and \Rarg{addSlag} for additional penalties on the lag dimension.
 
-<<crossbasis>>=
-cb <- crossbasis(chicagoNMMAPS$temp,lag=30,argvar=list("thr",thr.value=c(10,20)),
-  arglag=list(knots=c(1,4,12)))
-summary(cb)
-@
+Note that, in both methods, it is possible to define unpenalized functions in either the predictor or lag space through \Robj{argvar} and \Robj{arglag}. Indeed, the function \Rfun{lin} can be called through the former for performing penalized DLMs.
 
-Here the exposure-response is modelled as a a double threshold function with thresholds at 10 and 20, as the argument \Rarg{side} of \Rfun{thr} is set by default to \Rcode{"d"} if two values are provided in \Rarg{thr.value}. The lag period is fixed to 0 to 30. The lag-response function is left to the default natural cubic spline (\Rcode{fun="ns"}) with knots at 1, 4 and 12 lags. As the default for the space of lag, this function includes the intercept. The method function \Rfun{summary} for \Robj{crossbasis} objects provides an overview of the transformation, and can be used to check the results.
-
-Missing values are properly handled by \Rfun{crossbasis}. Specifically, if \Rarg{x} is provided as a matrix of exposure history, a missing value causes the related row in the transformed matrix to be set to \Rcode{NA}. In time series data, a missing value in the vector series causes all the following rows corresponding to the lag period to be set to \Rcode{NA}.
-
-The usage of the function has repeatedly changed in different versions of the package \Rpkg{dlnm}. The user is advised to follow the usage in the last available version.
+The user can refer to the help pages for additional details, and to the vignette \vign{dlnmPenalized} for an overview of penalized DLMs and DLNMs using the package \Rpkg{dlnm}.
 
 %-------------------------%%-------------------------%
 \subsection{The function \Rfun{crosspred}}
 \label{sec:crosspred}
 
-The cross-basis matrix produced by \Rfun{crossbasis} needs to be included in a regression model formula in order to fit a model. The interpretation of the estimated related parameters, is usually complex for non-trivial basis transformations, and virtually impossible in bi-dimensional DLNMs. The association is summarized through the function \Rfun{crosspred}, which predicts the association for a grid of combinations of predictor and lag values, chosen by default or directly by the user. The function creates the same basis or cross-basis functions for the chosen predictor and lag values, based on the attributes of the original basis or cross-basis matrix, and generates predictions (with associated standard errors and confidence intervals) by extracting the related parameters estimated in the model (see \citet[Section 2.3]{gasparrini2014statmed} and \citet[Section 4.3]{gasparrini2010statmed} for algebraic details).
+The interpretation of estimated parameters is usually complex for non-trivial basis transformations in DLMs, and virtually impossible in bi-dimensional DLNMs. The function \Rfun{crosspred} facilitates the interpretation by predicting the association for a grid of predictor and lag values, chosen by default or directly by the user. The function creates the same basis or cross-basis functions for the chosen predictor and lag values, extracts the related parameters estimated in the regression model, and generates predictions with associated standard errors and confidence intervals (see \citet[Section 2.3]{gasparrini2014statmed} and \citet[Section 4.3]{gasparrini2010statmed} for algebraic details).
 
-As an example, I use the cross-basis matrix \Robj{cb} created in Section~\ref{sec:crossbasis} to study the association between temperature and cardiovascular mortality, using the time series data in the data set \Robj{chicagoNMMAPS}. First, I fit a simple linear model with the cross-basis matrix included in the model formula (the model proposed here is only chosen for illustrative purposes). Then, I obtain the predictions by calling \Rfun{crosspred} with the cross-basis and regression model objects as the first two arguments:
+The first two  arguments \Rarg{basis} and \Rarg{model} of \Rfun{crosspred} are usually the cross-basis matrix and the fitted model object. When using the internal method for penalized models (see Section~\ref{sec:penfun}), the argument \Rarg{basis} must be a character string identifying the first argument of \Rfun{s} in \Rfun{gam}. The function \Rfun{crosspred} automatically extract the parameters related to the cross-basis from several regression functions, or alternatively these can be directly inputted using the arguments \Rarg{coef} and \Rarg{vcov}. The predictor values used for prediction can be selected with the argument \Rarg{at} or alternatively with \Rarg{from}-\Rarg{to}-\Rarg{by}. The arguments \Rarg{lag} and \Rarg{bylag} determine instead the range and increment of the sequence of lag values. Predictions are computed versus a reference value, with default values dependent on the function used for modelling the exposure-response, or manually set through the argument \Rcode{cen}.
 
-<<regression>>=
-model <- lm(cvd~cb,chicagoNMMAPS)
-pred <- crosspred(cb,model,at=-20:30)
-@
+An alternative use of \Rfun{crosspred} is to predict the results for specific sets of lagged exposures. This can be achieved by inputting a matrix of exposure histories as the argument \Rarg{at}. The function \Rfun{exphist} can be used to simplify the computation (see the vignette \vign{dlnmExtended} for example of these extended prediction summaries).
 
-The result is a list object of class \Rclass{crosspred}, with components storing the predictions and other information about the model, such as coefficients and part of associated (co)variance matrix related to the parameters of the cross-basis. The grid of predictions can be chosen for specific predictor-lag combinations. The values of the predictor are selected with the argument \Rarg{at} as above, or alternatively with \Rarg{from}-\Rarg{to}-\Rarg{by}. If specified by \Rarg{at}, the values are automatically ordered and made unique. If \Rarg{at} and \Rarg{by} are not provided, approximately 50 equally-spaced rounded values are returned using \Rfun{pretty}. The arguments \Rarg{lag} and \Rarg{bylag} (not used here) determine instead the range and increment of the sequence of lag values used for prediction, by default the series of integers used for estimation.
+Multiple cross-basis matrices associated with different predictors may be included in \Rarg{model}, and predictions for each of them can be computed with \Rfun{crosspred}. More generally, the function \Rfun{crosspred} can be used to predict estimated effects from regression models defining standard uni-dimensional exposure-response relationships with no lag, either as penalized functions in \Rfun{gam} or in other regression functions through \Rfun{onebasis} (see the vignette \vign{dlnmExtended} for some examples).
 
-Predictions are computed versus a reference value, with default values dependent on the function used for modelling the exposure-response, or manually set through the argument \Rcode{cen} of \Rfun{crosspred}. Briefly, sensible default values are automatically defined for \Rfun{strata}, \Rfun{thr} and \Rfun{integer} (corresponding to the reference region), and for \Rfun{lin} (corresponding to 0). For other choices, such as \Rfun{ns}, \Rfun{bs}, \Rfun{poly} or other existing or user-defined functions, the centering value is set by default to the mid-range. In this case, no centering is needed, as the function \Rfun{thr} has an default selection of the reference.
-
-The predictions can be accessed directly through the components of the \Robj{crosspred} list. In particular, components with names starting with \Rcode{mat-} store the matrices of prediction over the grid, namely rows with lag-response relationships for specific predictor values or columns with exposure-response relationships for specific lag-values. Instead, components \Rcode{all-} include vectors with the overall cumulative predictions. As an example, I extract the prediction and confidence interval for temperature -10\Ctemp{} and lag 5, and then the overall cumulative prediction for 25\Ctemp{}:
-
-<<prediction1>>=
-c(pred$matfit["-10","lag5"],pred$matlow["-10","lag5"],pred$mathigh["-10","lag5"])
-pred$allfit["25"]
-@
-
-The results are interpreted following the forward and backward perspectives illustrated in Section~\ref{sec:explagresp}. The first result indicates that a temperature of -20\Ctemp{} in a given day produces an estimated increase of \Sexpr{round(pred$matfit["-10","lag5"],2)} cardiovascular deaths five days later (forward), or that the number of cardiovascular deaths in a given day are increased by \Sexpr{round(pred$matfit["-10","lag5"],2)} from a temperature of -20\Ctemp{} experienced five days earlier (backward), compared to the reference temperature 10--20\Ctemp{}. The second figure indicates an overall increase of \Sexpr{round(pred$allfit["25"],2)} cardiovascular deaths within the next 30 days for an exposure to 25\Ctemp{} in a given day (forward), or an overall increase of \Sexpr{round(pred$allfit["25"],2)} cardiovascular deaths in a given day following a constant exposure to 25\Ctemp{} in the previous 30 days (backward).
-
-Other types of predictions can be obtained through \Rfun{crosspred}. In particular, exponentiated predictions are automatically returned if the model link is equal to \Rcode{log} or \Rcode{logit}, and stored in components \Rcode{matRR-} and \Rcode{allRR-}. Matrices \Rcode{cum-} of incremental cumulative predictions are optionally included if the argument \Rarg{cum} is set to \Rcode{TRUE}, and stored in components \Rcode{cum-}. The user can refer to \Rcomm{help(crosspred)} for a complete list of components.
-
-An alternative use of \Rfun{crosspred} is to predict the effect of specific sets of exposure histories. This can be achieved by inputting a matrix of exposure histories as the argument \Rarg{at}. For example, we can predict from the fitted model which is the overall cumulative increase in cardiovascular deaths following an exposure to 30\Ctemp{} in the last 10 days and 22\Ctemp{} in the rest of the lag period:
-
-<<prediction2>>=
-histpred <- t(c(rep(30,10),rep(22,21)))
-crosspred(cb,model,at=histpred)$allfit
-@
-
-The user should be careful in inputting a matrix as the argument \Rarg{at}, which is interpreted by \Rfun{crosspred} as a series of exposure histories and not as a vector of predictor values as above. A more detailed overview of this prediction method is given in the vignette \textbf{\textsf{dlnmExtended}}.
-
-One of the main advantages of the \Rpkg{dlnm} package is that the user can perform DLNMs with standard regression functions, simply including the cross-basis matrix in the model formula. The function \Rfun{crosspred} automatically works with model objects from regression function \Rfun{lm} and \Rfun{glm}, \Rfun{gam} (package \Rpkg{mgcv}), \Rfun{coxph} and \Rfun{clogit} (package \Rpkg{survival}), \Rfun{lme} and \Rfun{nlme} (package \Rpkg{nlme}), \Rfun{lmer} and \Rfun{glmer} and \Rfun{nlmer} (package \Rpkg{lme4}), \Rfun{gee} (package \Rpkg{gee}), \Rfun{geeglm} (package \Rpkg{geepack}). The function also works with any regression function for which \Rfun{coef} and \Rfun{vcov} methods are available. Otherwise, the user needs to input the coefficients and associated (co)variance matrix related to the parameters of the cross-basis as arguments \Rarg{coef} and \Rarg{vcov}, and the model link in \Rarg{model.link}.
-
-Multiple cross-basis matrices associated with different predictors may be included in \Rarg{model}, and predictions for each of them can be computed with \Rfun{crosspred}. Also, the function \Rfun{crosspred} can produce predictions for simple uni-dimensional functions produced by \Rfun{onebasis}.
+The function returns a list object of class \Rclass{crosspred}, with components storing the predictions and other information about the model. The user can refer to \Rcomm{help(crosspred)} for a complete list of argument and returned list components.
 
 %-------------------------%%-------------------------%
 \subsection{The function \Rfun{crossreduce}}
 \label{sec:crossreduce}
 
-As described in Section~\ref{sec:extension}, the fit of a DLNM may be reduced to a single dimension of predictor or lags, expressing summaries such as overall cumulative exposure-responses, lag-specific exposure-responses, or predictor-specific lag-responses only in terms of the original basis functions chosen for the related space, and modified associated parameters. The method is thoroughly illustrated in \citet{gasparrini2013bmcmrm}.
+As described in Section~\ref{sec:framework}, results from DLMs and DLNMs can be expressed as one-dimensional summaries, namely overall cumulative exposure-responses, lag-specific exposure-responses, or predictor-specific lag-responses. The function \Rfun{crossreduce} reduces the fit of DLMs and DLNMs consistently with these summaries, and re-expresses it in terms of modified parameters of the one-dimensional basis functions chosen for that space. Algebraic details are provided in \citet{gasparrini2013bmcmrm}.
 
-This computation is carried out through the function \Rfun{crossreduce}, which works very similarly to \Rfun{crosspred} (see Section~\ref{sec:crosspred}). The first two arguments \Rarg{basis} and \Rarg{model} specify the cross-basis matrix and the model object for which the computation need to be performed. The type of reduction is defined by \Rarg{type}, with options \Rcode{"overall"}-\Rcode{"lag"}-\Rcode{"var"} for summarizing overall cumulative exposure-responses, lag-specific exposure-responses or predictor-specific lag-responses, respectively. The single value of predictor or lags for which predictor-specific or lag-specific summaries must be defined is chosen by the argument \Rarg{value}. The other arguments (see \Rcode{?crossreduce}) have the same meaning and specification as in \Rfun{crosspred} (see Section~\ref{sec:crosspred}).
+The function works very similarly to \Rfun{crosspred} (see Section~\ref{sec:crosspred}), with similar usage and arguments. The type of reduction is defined by \Rarg{type}, with options \Rcode{"overall"}-\Rcode{"lag"}-\Rcode{"var"} for summarizing overall cumulative exposure-responses, lag-specific exposure-responses or predictor-specific lag-responses, respectively. The single value of predictor or lags for which predictor-specific or lag-specific summaries must be defined is chosen by the argument \Rarg{value}. The other arguments have the same meaning and specification as in \Rfun{crosspred} (see Section~\ref{sec:crosspred} and \Rcode{?crossreduce}).
 
-The function \Rfun{crossreduce} returns a list object of class \Rclass{crossreduce}, including the modified parameters and associated (co)variance matrix, the vector of values used for prediction and associated uni-dimensional basis matrix, and the vectors of predictions and associated standard errors, optionally exponentiated.
-
-An illustrative example of the use of the function in given in the vignette \textbf{\textsf{dlnmTS}}.
+The function returns a list object of class \Rclass{crossreduce}, againg similar to that returned by \Rfun{crosspred}.  An illustrative example of the use of the function in given in the vignette \vign{dlnmTS}.
 
 %-------------------------%%-------------------------%
 \subsection{Plotting functions}
 \label{sec:plotting}
 
-Interpretation of one-dimensional or bi-dimensional associations is aided by graphical representation. High and low-level plotting functions are provided through the method functions \Rmethod{plot}, \Rmethod{lines} and \Rmethod{points} for classes \Rclass{crosspred} and \Rclass{crossreduce}. These methods have replaced the old function \Rfun{crossplot} since version 1.3.0, providing the user with the possibility of specifying the whole range or arguments of the plotting functions above, allowing complete flexibility in the choices of colours, axes, labels and other graphical parameters. As an example, I use the predictions stored in the object \Robj{pred} defined in Section~\ref{sec:crosspred}.
+Interpretation of one-dimensional or bi-dimensional associations is aided by graphical representation. High and low-level plotting functions are provided through the method functions \Rmethod{plot}, \Rmethod{lines} and \Rmethod{points} for classes \Rclass{crosspred} and \Rclass{crossreduce}. These methods have replaced the old function \Rfun{crossplot} since version 1.3.0.
 
-The \Rmethod{plot} method can generate different types of plots for \Rclass{crosspred} objects through the argument \Rarg{ptype}. Specifically, it generates graphs of the entire bi-dimensional exposure-lag-response association, or of exposure-response or lag-response summaries defined in Section~\ref{sec:interpretation}. Bi-dimensional associations are plotter as 3-D or contour graphs, as for example:
+The \Rmethod{plot} method can produce different types of plots through the argument \Rarg{ptype}. Specifically, it can generate 3-D or countour graphs of the entire bi-dimensional exposure-lag-response association (\Rcode{ptype="3d"} and \Rcode{ptype="contour"} calling \Rfun{persp} and \Rfun{filled.contour} internally, respectively), or uni-dimensional exposure-response or lag-response summaries defined in Section~\ref{sec:framework} (\Rcode{ptype="slices"} calling default \Rfun{plot} functions). Methods \Rmethod{lines} and \Rmethod{points} for  may be used as low-level plotting functions to add lines or points to an existing plot. 
 
-<<plot3dcontournoeval,eval=F>>=
-plot(pred,ptype="3d",main="3D plot",xlab="Temperature",zlab="CVD excess count",
-  theta=200, ltheta=180)
-plot(pred,ptype="contour",key.title=title("CVD"),
-  plot.title=title("Contour plot",xlab="Temperature",ylab="Lag"))
-@
-
-<<plot3d,fig=T,echo=F>>=
-plot(pred,ptype="3d",main="3D plot",xlab="Temperature",zlab="CVD excess count",
-  theta=200, ltheta=180)
-@
-
-<<plotcontour,fig=T,echo=F>>=
-plot(pred,ptype="contour",key.title=title("CVD"),
-  plot.title=title("Contour plot",xlab="Temperature",ylab="Lag"))
-@
-
-\begin{figure}
-  \centering
-  \caption{}
-	\label{fig:plot3dcontour}
-  \begin{subfigure}{0.49\textwidth}
-    \centering
-    \caption{}
-    \includegraphics[width=\textwidth]{fig-plot3d.pdf}
-    \label{fig:plot3d}
-  \end{subfigure}
-  \begin{subfigure}{0.49\textwidth}
-    \centering
-    \caption{}
-    \includegraphics[width=\textwidth]{fig-plotcontour.pdf}
-    \label{fig:plotcontour}
-  \end{subfigure}
-\end{figure}
-
-The two plots are shown in Figures \ref{fig:plot3d} and \ref{fig:plotcontour}. The \Rmethod{plot} method function internally calls the functions \Rfun{persp} and \Rfun{filled.contour} when \Rarg{ptype} is equal to \Rcode{"3d"} and \Rcode{"contour"}, respectively. The user can include in the function call also other arguments specific to each function, such as \Rarg{main}-\Rarg{xlag}-\Rarg{zlag}-\Rarg{theta}-\Rarg{ltheta} and \Rarg{key.title}-\Rarg{plot.title} above. See \Rcomm{?persp} and \Rcomm{?filled.contour} for a complete list of arguments.
-
-The two plots in Figure~\ref{fig:plot3dcontour} summarize the whole exposure-lag-response association. The risk surface reflects the choice of a threshold function for the exposure-response relationship and a smooth spline function for the lag-response relationship. Summaries of the associations defined in Section~\ref{sec:interpretation} can be obtained by a different choice of \Rarg{ptype}. In particular, \Rcode{ptype="overall"} is used for plotting the exposure-response relationship expressing the overall cumulative association:
-
-<<plotoverall,fig=T>>=
-plot(pred,"overall",xlab="Temperature",ylab="CVD counts",ylim=c(-5,25))
-@
-
-The plot is shown in Figure~\ref{fig:plotoverall}. In this case, the method function \Rmethod{plot} internally calls the function \Rfun{plot.default}, and as shown in the example above other specific arguments can be added to the function call. Lag-specific and predictor-specific associations can be plotted as exposure-response and lag-response relationships, respectively, by setting \Rarg{ptype="slices"}, as they are \textit{slices} in the 3-D surface cut along specific dimensions. For example:
-
-<<plotslicenoeval,eval=F>>=
-plot(pred,"slices",lag=5,xlab="Temperature",ylab="CVD count",
-  col="blue",ci="lines",ci.arg=list(lty=5))
-plot(pred,"slices",var=25,xlab="Lag",ylab="CVD count",type="p",pch=19,ci="bars")
-@
-
-<<plotslicelag,fig=T,echo=F>>=
-plot(pred,"slices",lag=5,xlab="Temperature",ylab="CVD count",
-  col="blue",ci="lines",ci.arg=list(lty=5))
-@
-
-<<plotslicevar,fig=T,echo=F>>=
-plot(pred,"slices",var=25,xlab="Lag",ylab="CVD count",type="p",pch=19,ci="bars")
-@
-
-\begin{figure}
-  \centering
-  \caption{}
-	\label{fig:plotot}
-  \begin{subfigure}{0.32\textwidth}
-    \centering
-    \caption{}
-    \includegraphics[width=\textwidth]{fig-plotoverall.pdf}
-    \label{fig:plotoverall}
-  \end{subfigure}
-  \begin{subfigure}{0.32\textwidth}
-    \centering
-    \caption{}
-    \includegraphics[width=\textwidth]{fig-plotslicelag.pdf}
-    \label{fig:plotslicelag}
-  \end{subfigure}
-  \begin{subfigure}{0.32\textwidth}
-    \centering
-    \caption{}
-    \includegraphics[width=\textwidth]{fig-plotslicevar.pdf}
-    \label{fig:plotslicevar}
-  \end{subfigure}
-\end{figure}
-
-The two plots are shown in Figures \ref{fig:plotslicelag} and \ref{fig:plotslicevar}, and represent the exposure-response specific to lag 5 and the lag-response specific to a temperature of 25\Ctemp{}, respectively. The arguments \Rarg{lag} and \Rarg{var} specify the value for which lag and predictor-specific associations must be plotted, respectively. Again, additional arguments of the function \Rfun{plot.default} can be called as well, such as \Rarg{col}, \Rarg{type} and \Rarg{pch}. The method function \Rfun{plot} also includes two additional arguments for plotting confidence intervals: the type is chosen by the argument \Rarg{ci} among \Rcode{"area"} (default), \Rcode{"bars"} and \Rcode{"lines"}, as shown in the three plots in Figure~\ref{fig:plotot}. Low-level plotting functions \Rfun{polygon}, \Rfun{segments} and \Rfun{lines} are called, respectively, whose arguments are passed by a list specified with the argument \Rarg{ci.arg}. See the help of these low-level functions for additional details and a complete list of the arguments. Incremental cumulative associations along lags are reported if \Rcode{cumul=TRUE}: in this case, the same option must have been set to obtain the predictions (see Section~\ref{sec:crosspred}). 
-
-Methods \Rmethod{lines} and \Rmethod{points} may be used as low-level plotting functions to add lines or points to an existing plot. When \Rfun{crosspred} is used for predictions of one-dimensional associations defined by \Rfun{onebasis}, only the plotting of the overall summary is meaningful and possible. The same plotting method functions are defined also for objects of class \Rclass{crossreduce}. Examples are included in the vignette \textbf{\textsf{dlnmTS}}. 
-
-All the predictions are reported versus a reference value. For continuous functions, this is specified by the centering point, directly defined or set by default in \Rfun{crosspred}. Exponentiated predictions are automatically plotted if generated in the predictions, or forced with the argument \Rcode{exp=TRUE}.
+The argument \Rarg{ci} (with options \Rcode{"area"}, the default, and \Rcode{"bars"} and \Rcode{"lines"}) and \Rarg{ci.arg} can be used to add a graphical representation of confidence intervals. Exponentiated predictions are automatically plotted if generated in the predictions, or forced with the argument \Rcode{exp=TRUE}. Additional arguments of plotting functions called internally can be specified through the ellipsis argument '\Rarg{...}', allowing complete flexibility in the choices of colours, axes, labels and other graphical parameters.
 
 %-------------------------%%-------------------------%
 \subsection{Other functions}
 \label{sec:otherfun}
 
-The two functions \Rfun{equalknots} and \Rfun{logknots} are used to select knots or cut-off values for spline or strata functions at equally-spaced values and log-values, respectively. In particular, the latter is used to select knots for lag-response spline functions following the default used up to version 2.0.0 of \Rpkg{dlnm}, based on equally-spaced log values of lags.
+The two functions \Rfun{equalknots} and \Rfun{logknots} are used to select knots or cut-off values for spline or strata functions at equally-spaced values and log-values, respectively. In particular, the latter is used to select knots for lag-response spline functions following the default used up to version 2.0.0 of \Rpkg{dlnm}, based on equally-spaced log values of lags. The function \Rfun{exphist}, mentioned in Section~\ref{sec:crosspred}, builds a matrix of exposure histories given an exposure profile, and is used in particular for data management tasks in applications beyond time series analysis (see the vignette \vign{dlnmExtended}).
 
-The package \Rpkg{dlnm} also contains a set of functions which are called internally by the other functions illustrated above, in particular \Rfun{onebasis}, \Rfun{crossbasis} and \Rfun{crosspred}. Some of this functions are documented, and help pages are opened with the usual call (results not shown):
+The package \Rpkg{dlnm} also contains a set of functions which are called internally by the other functions illustrated above, in particular \Rfun{onebasis}, \Rfun{crossbasis} and \Rfun{crosspred}. Some of these functions are documented, and help pages are opened with the usual call (results not shown):
 
 <<internal1,eval=F>>=
 help(getcoef)
@@ -447,23 +270,41 @@ dlnm:::fci
 getAnywhere(fci)
 @
 
+Other method functions, such as \Rfun{summary}, \Rfun{coef} and \Rfun{vcov}, are provided for objects of class \Rclass{crossbasis}, \Rclass{onebasis}, \Rclass{crosspred} and \Rclass{crossreduce}.
+
+
+%-------------------------%%-------------------------%
+\subsection{Data}
+\label{sec:data}
+
+This version the package includes the three data sets \Rdata{chicagoNMMAPS}, \Rdata{nested} and \Rdata{drug}. The former is used to illustrate the use of DLMs and DLNMs in time series analysis (in particular in the vignette \vign{dlnmTS}), while the other two are used in examples of the extension of the methodology and package in other study designs (in particular in the vignette \vign{dlnmExtended}).
+
+The data set \Rdata{chicagoNMMAPS} contains daily mortality (all causes, CVD, respiratory), weather (temperature, dew point temperature, relative humidity) and pollution data (PM10 and ozone) for Chicago in the period 1987-2000. The data were assembled from publicly available data sources as part of the National Morbidity, Mortality, and Air Pollution Study (NMMAPS) sponsored by the Health Effects Institute \citep{samet2000b,samet2000a}. They used to be downloadable from the package \Rpkg{NMMAPSlite} (now archived) and from  Internet-based Health and Air Pollution Surveillance System (iHAPSS) website (\href{http://www.ihapss.jhsph.edu}{www.ihapss.jhsph.edu}).
+
+The data set \Rdata{nested} contains simulated data from an hypothetical nested case-control study on the association between a time-varying occupational exposure and a cancer outcome. The study includes 250 risk sets, each with a case and a control matched by age year. The data on the exposure is collected on 5-year age intervals between 15 and 65 years.
+
+The data set \Rdata{drug} contains simulated data from an hypothetical randomized controlled trial on the effect of time-varying doses of a drug. The study includes 200 randomized subject, each receiving daily doses of drug for 28 days, varying each week. The exposure level is reported on 7-day intervals.
+
 
 %-------------------------%%-------------------------%%-------------------------%
 \section{Changes in the package \Rpkg{dlnm}}
 \label{sec:comments}
 
-The package \Rpkg{dlnm} has experienced several changes since the first version 0.1.0, uploaded on CRAN on the 1\textsuperscript{st} of July 2009, up to the current version \Sexpr{packageDescription("dlnm")[["Version"]]}. In particular, the new functions have been added or replaced and, more importantly, the usage of some of the existing functions has changed. An important change first occurred in the version 1.5.1, where the long set of arguments of \Rfun{crossbasis} were grouped in \Rarg{argvar} and \Rarg{arglag}. The second important development occurred instead in version 2.0.0, where the extension of the package described in the vignette \textbf{\textsf{dlnmExtended}} required a substantial restructure of the internal code of \Rfun{onebasis} and \Rfun{crossbasis}. This included changes in the default value of some arguments, the most important being the placement of knots values for spline bases in the space of lag to equally-spaced quantiles in the original scale, instead than equally-spaced values in the log scale. Another important change occurred in version 2.2.0, with the moving of the centering procedure from \Rfun{onebasis}-\Rfun{crossbasis} to \Rfun{crosspred}-\Rfun{crossreduce}. This change avoids the need to refit the model to obtain predictions with different reference values.
+A GitHub page of the package \Rpkg{dlnm} (\href{https://github.com/gasparrini}{github.com/gasparrini/dlnm}) includes information on ongoing developments. In addition, changes in the last version \Sexpr{packageDescription("dlnm")[["Version"]]}, and in previous ones since the first version 0.1.0 uploaded on CRAN on the 1\textsuperscript{st} of July 2009, are documented in the NEWS file, visualized with:
 
-These changes are documented in the change-log and more extensively in two additional documents, accessed through:
+<<news,eval=F>>=
+news(package="dlnm")
+@
+
+In some versions, new functions have been added and existing functions replaced, and, more importantly, the usage of some of them has changed. These important changes are detailed more extensively in three additional documents, accessed through:
 
 <<changelog,eval=F>>=
-file.show(system.file("ChangeLog", package="dlnm"))
 file.show(system.file("Changesince151", package="dlnm"))
 file.show(system.file("Changesince200", package="dlnm"))
 file.show(system.file("Changesince220", package="dlnm"))
 @
 
-In particular, some of the changes may cause some of the \R{} code written for old versions to produce different results with the updated versions. This marginally applies also to code included as supplementary material of published papers. An updated version of published code is available at \href{http://www.ag-myresearch.com}{www.ag-myresearch.com}.
+In particular, some of the changes may cause some of the \R{} code written for old versions to produce different results with the updated versions. This applies also to code included as supplementary material of published papers. An updated version of published code is available at the GitHub page (\href{https://github.com/gasparrini}{github.com/gasparrini}) or personal web page (\href{http://www.ag-myresearch.com}{www.ag-myresearch.com}) of the package maintainer.
 
 Such changes became unavoidable for the development of the \Rpkg{dlnm} package. Although further changes cannot be excluded in future versions, these will become less likely as long as the the package will take a definite structure.
 

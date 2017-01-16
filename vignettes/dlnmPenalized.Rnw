@@ -1,0 +1,100 @@
+\documentclass{article}
+\setlength{\parindent}{0pt}	% Eliminate the indent at the beginning of a new paragraph
+%\setcounter{secnumdepth}{0}	% Elimate the section numbering starting from a specific depth (see WikiBook)
+
+\usepackage[sort]{natbib}	% Bibliography
+\usepackage{fixltx2e}	% Fix some errors
+\usepackage{graphicx}	% To manage external pictures
+\usepackage{float}	% Improves float environment and force the placement figures
+\usepackage{caption} % customise the captions in floating environments
+\usepackage{subcaption} % To add subfigures within figures, with labels (see WikiBooks)
+\usepackage{verbatim}	% To improve the verbatim environment, fixing some bugs. 
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref} % Manage cross-references and hyperlinks
+\usepackage{amssymb,amsbsy,amsmath}	% Packages for maths
+\usepackage{bm} % Allow use of bold greek letters in math mode using the \bm{} command.
+\usepackage{setspace}	% Allow doublespacing
+%\usepackage{epsfig}	% Don't remember!!!
+%\usepackage{fullpage}	% Standardized smaller margins for the page
+\usepackage[left=3cm,top=3cm,bottom=3.5cm,right=3cm]{geometry}	% For easy management of document margins
+\usepackage{fancyhdr} % To customize the header/footer (see WikiBooks)
+%\usepackage{rotating}	% To rotate any objects
+\numberwithin{equation}{section}	% Equation numbers relative to sections
+
+%-------------------------%%-------------------------%
+
+% \VignetteIndexEntry{Penalized distributed lag linear and non-linear models}
+% \VignettePackage{dlnm}
+% \VignetteDepends{dlnm}
+% \VignetteKeyword{Distributed lag non-linear models}
+
+\newcommand{\Robj}[1]{{\texttt{#1}}}
+\newcommand{\Rfun}[1]{{\texttt{#1()}}}
+\newcommand{\Rdata}[1]{{\texttt{#1}}}
+\newcommand{\Rcode}[1]{{\texttt{#1}}}
+\newcommand{\Rcomm}[1]{{\textsl{\texttt{#1}}}}
+\newcommand{\Rpkg}[1]{{\textsf{#1}}}
+\newcommand{\Rclass}[1]{{\emph{"#1"}}}
+\newcommand{\Rmethod}[1]{{\texttt{#1()}}}
+\newcommand{\Rarg}[1]{{\texttt{#1}}}
+\newcommand{\R}{{\textsf{R}}}
+
+\newcommand{\vign}[1]{{\textsc{#1}}}
+
+\newcommand{\PM}{{PM\textsubscript{10}}}
+\newcommand{\ozone}{{O\textsubscript{3}}}
+\newcommand{\microg}{{$\mu$gr/m\textsuperscript{3}}}
+\newcommand{\Ctemp}{{$^{\circ}$C}}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\SweaveOpts{prefix.string=fig,include=F,keep.source=T,eps=FALSE}
+
+<<echo=false>>=
+options(continue="  ")
+set.seed(13041975)
+@
+@% TO ELIMINATE THE "+" IN CONSECUTIVE SCRIPT LINES
+
+\title{Penalized distributed lag linear and non-linear models}
+\author{Antonio Gasparrini\\
+\emph{London School of Hygiene \& Tropical Medicine, UK}
+}
+\date{\Rpkg{dlnm} version \Sexpr{packageDescription("dlnm")[["Version"]]} , \Sexpr{Sys.Date()} }
+\maketitle
+
+\tableofcontents
+\setcounter{footnote}{1}
+\footnotetext{This document is included as a vignette (a \LaTeX\ document created using the \R{} function \Rfun{Sweave}) of the package \Rpkg{dlnm}. It is automatically downloaded together with the package and can be simply accessed through \R{} by typing \Rcomm{vignette("dlnmPenalized")}.}
+\newpage
+\setlength{\parskip}{4pt}	% Space between paragraph
+
+%-------------------------%%-------------------------%%-------------------------%
+\section{Preamble}
+\label{sec:preamble}
+
+This vignette \vign{dlnmPenalized} illustrates the extension of the \R{} package \Rpkg{dlnm} to perform a penalized versions of distributed lag linear (DLMs) and non-linear models (DLNMs). This development is thoroughly described in \citet{gasparrini2017biomet}.
+
+The extension of the DLM/DLNM framework to penalized splines within generalized additive models is implemented by embedding the \Rpkg{dlnm} and \Rpkg{mgcv} packages. The latter is used primarily as a computational engine for the estimation of smoothed exposure-lag-response relationships, and to a some extent as a tool for deriving the parameterization of the basis functions and penalty terms. Specifically, two approaches to penalization are implemented in \Rpkg{dlnm} and described here.
+
+A general overview of functions included in the package, with information on its installation and a brief summary of the DLNM methodology are included in the vignette \vign{dlnmOverview}, which represents the main documentation of \Rpkg{dlnm}. The user can refer to that vignette for a general introduction to the package.
+
+Please send comments or suggestions and report bugs to \href{mailto:antonio.gasparrini@lshtm.ac.uk}{\texttt{antonio.gasparrini@lshtm.ac.uk}}.
+
+
+%-------------------------%%-------------------------%%-------------------------%
+\section{Penalized DLMs and DLNMs}
+\label{sec:pendlnm}
+
+This vignette is under development. For an illustration, refer to \citet{gasparrini2017biomet} and the \R{} code included as supplementary material that reproduces the examples in the article.
+
+
+%-------------------------%%-------------------------%%-------------------------%
+
+\bibliographystyle{plainnat}
+\bibliography{biblioVignette}
+\addcontentsline{toc}{section}{Bibliography} % To add bibliography to the TOC
+
+%-------------------------%%-------------------------%%-------------------------%
+
+\end{document}

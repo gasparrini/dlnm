@@ -31,12 +31,12 @@ The exposure history for each subject (series of daily doses from day 28 to 1) c
 This data set only contains simulated data.
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \seealso{
 \code{\link{nested}} for an example of nested case-control study data. \code{\link{chicagoNMMAPS}} for an example of time series data.
 
-The application of DLNMs to these data with detailed examples are given in vignette \strong{dlnmExtended}.
+The application of DLNMs to these data with detailed examples are provided in the vignette \strong{dlnmExtended}.
 
 See \code{\link{dlnm-package}} for an introduction to the package and for links to package vignettes providing more detailed information.
 }

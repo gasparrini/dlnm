@@ -7,7 +7,7 @@
 \title{ Plot Predictions for a DLNM }
 
 \description{
-High and low-level method functions for graphs (3d, contour, slices and overall) of predictions from distributed lag non-linear models (DLNM).
+High and low-level method functions for graphs (3d, contour, slices and overall) of predictions from distributed lag linear (DLMs) and non-linear (DLNMs) models.
 }
 
 \usage{
@@ -56,14 +56,16 @@ For a detailed illustration of the use of the functions, see:
 }
 
 \references{
-Gasparrini A. Distributed lag linear and non-linear models in R: the package dlnm. \emph{Journal of Statistical Software}. 2011; \bold{43}(8):1-20. [freely available \href{http://www.ag-myresearch.com/jss2011}{here}].
+Gasparrini A. Distributed lag linear and non-linear models in R: the package dlnm. \emph{Journal of Statistical Software}. 2011; \bold{43}(8):1-20. [freely available \href{http://www.ag-myresearch.com/2011_gasparrini_jss.html}{here}].
 
-Gasparrini A. Modeling exposure-lag-response associations with distributed lag non-linear models. \emph{Statistics in Medicine}. 2014; \bold{33}(5):881-899. [freely available \href{http://www.ag-myresearch.com/statmed2014}{here}]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
+
+Gasparrini A. Modeling exposure-lag-response associations with distributed lag non-linear models. \emph{Statistics in Medicine}. 2014; \bold{33}(5):881-899. [freely available \href{http://www.ag-myresearch.com/2014_gasparrini_statmed.html}{here}]
   
-Gasparrini A., Armstrong, B.,Kenward M. G. Distributed lag non-linear models. \emph{Statistics in Medicine}. 2010; \bold{29}(21):2224-2234. [freely available \href{http://www.ag-myresearch.com/statmed2010}{here}]
+Gasparrini A., Armstrong, B.,Kenward M. G. Distributed lag non-linear models. \emph{Statistics in Medicine}. 2010; \bold{29}(21):2224-2234. [freely available \href{http://www.ag-myresearch.com/2010_gasparrini_statmed.html}{here}]
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 All the predictions are plotted using a reference value corresponding to the centering point for continuous functions or different values for the other functions (see the related help pages). This is determined by the argument \code{cen} in \code{\link{crosspred}}. Exponentiated predictions are returned by default if \code{x$model.link} is equal to \code{log} or \code{logit}.
@@ -142,6 +144,62 @@ plot(pnest, zlab="OR", xlab="Exposure", ylab="Lag (years)")
 plot(pnest, var=50, ylab="OR for exposure 50", xlab="Lag (years)", xlim=c(0,40))
 # exposure-response curve for lag 10
 plot(pnest, lag=5, ylab="OR at lag 5", xlab="Exposure", ylim=c(0.95,1.15))
+
+### example of extended predictions - see vignette("dlnmExtended")
+
+# compute exposure profiles and exposure history
+expnested <- rep(c(10,0,13), c(5,5,10))
+hist <- exphist(expnested, time=length(expnested), lag=c(3,40))
+
+# predict association with a specific exposure history
+pnesthist <- crosspred(cbnest, mnest, cen=0, at=hist)
+with(pnesthist, c(allRRfit,allRRlow,allRRhigh))
+
+### example of user-defined functions - see vignette("dlnmExtended")
+
+# define a log function
+mylog <- function(x) log(x+1)
+
+# define the cross-basis
+cbnest2 <- crossbasis(Qnest, lag=c(3,40), argvar=list("mylog"),
+  arglag=list(fun="ns",knots=c(10,30),intercept=FALSE))
+summary(cbnest2)
+
+# run the model and predict
+mnest2 <- clogit(case~cbnest2+strata(riskset), nested)
+pnest2 <- crosspred(cbnest2, mnest2, cen=0, at=0:20*5)
+
+# plot and compare with previous fit
+plot(pnest2, zlab="OR", xlab="Exposure", ylab="Lag (years)")
+plot(pnest2, var=50, ylab="OR for exposure 50", xlab="Lag (years)", xlim=c(0,40))
+lines(pnest, var=50, lty=2)
+plot(pnest2, lag=5, ylab="OR at lag 5", xlab="Exposure", ylim=c(0.95,1.15))
+lines(pnest, lag=5, lty=2)
+
+### example of general use for regression models - see vignette("dlnmExtended")
+
+# replicate example illustrated in help(ns)
+library(splines)
+oneheight <- onebasis(women$height, "ns", df=5)
+mwomen <- lm(weight ~ oneheight, data=women)
+pwomen <- crosspred(oneheight, mwomen, cen=65, at=58:72)
+with(pwomen, cbind(allfit, alllow, allhigh)["70",])
+plot(pwomen, ci="l", ylab="Weight (lb) difference", xlab="Height (in)", col=4)
+
+# replicate example illustrated in help(gam)
+library(mgcv)
+dat <- gamSim(1,n=200,dist="poisson",scale=.1)
+b2 <- gam(y ~ s(x0,bs="cr") + s(x1,bs="cr") + s(x2,bs="cr") + s(x3,bs="cr"),
+  family=poisson, data=dat, method="REML")
+plot(b2, select=3)
+pgam <- crosspred("x2", b2, cen=0, at=0:100/100)
+with(pgam, cbind(allRRfit, allRRlow, allRRhigh)["0.7",])
+plot(pgam, ylim=c(0,3), ylab="RR", xlab="x2", col=2)
+
+### example of penalized models - see vignette("dlnmPenalized")
+
+# to be added soon
+
 }
 
 \keyword{hplot}

@@ -1,7 +1,7 @@
 \name{integer}
 \alias{integer}
 
-\title{ Generate a Basis Matrix of with a Indicator Variables for Integer Values }
+\title{ Generate a Basis Matrix of Indicator Variables for Integer Values }
 
 \description{
 The function generates a basis matrix including indicator variables defining intervals for integer values. It is meant to be used internally by \code{\link{onebasis}} and \code{\link{crossbasis}} and not directly run by the users.
@@ -18,7 +18,7 @@ integer(x, values, intercept=FALSE)
 }
 
 \details{
-The function returns indicator variables for intervals defined by the integer values within the range of \code{x}. It is expressly created to specify an unconstrained function in the space of lags for distributed lag linear or non-linear models, and probably of no use beyond that.
+The function returns indicator variables for intervals defined by the integer values within the range of \code{x}. It is expressly created to specify an unconstrained function in the space of lags for distributed lag linear (DLMs) or non-linear (DLNMs) models, and probably of no use beyond that.
 
 The argument \code{intercept} determines the presence of an intercept. If \code{FALSE}, the interval corresponding to the first value in \code{values} is excluded, and the parameterization is indentical to dummy variables with the first group as a reference.
 }
@@ -26,7 +26,7 @@ The argument \code{intercept} determines the presence of an intercept. If \code{
 \value{
 A matrix object of class \code{"integer"}. It contains the attributes \code{values} and \code{intercept}.}
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
 This function is mainly used internally thorugh \code{\link{onebasis}} to create basis matrices. It is not exported in the namespace to avoid conflicts with the function with the same name in the package \pkg{base}, and can be accessed through the triple colon operator '\code{:::}' (see Examples below).

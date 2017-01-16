@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2016
+### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2017
 #
 crossreduce <-
 function(basis, model=NULL, type="overall", value=NULL, coef=NULL, vcov=NULL,
@@ -19,16 +19,16 @@ function(basis, model=NULL, type="overall", value=NULL, coef=NULL, vcov=NULL,
 ###########################################################################
 # COHERENCE CHECKS (SEE CROSSPRED)
 #
-  if(is.null(model)&&(is.null(coef)||is.null(vcov))) {
+  if(is.null(model) && (is.null(coef)||is.null(vcov))) {
     stop("At least 'model' or 'coef'-'vcov' must be provided")
   }
   type <- match.arg(type,c("overall","var","lag"))
   if(type!="overall") {
     if(is.null(value)) stop("'value' must be provided for type 'var' or 'lag'")
-    else if(!is.numeric(value)||length(value)>1) {
+    else if(!is.numeric(value) || length(value)>1) {
       stop("'value' must be a numeric scalar")
     }
-    if(type=="lag" && (any(value<attr$lag[1]) ||any(value>attr$lag[2]))) {
+    if(type=="lag" && (any(value<attr$lag[1])||any(value>attr$lag[2]))) {
       stop("'value' of lag-specific effects must be within the lag range")
     }
   } else value <- NULL
@@ -38,7 +38,7 @@ function(basis, model=NULL, type="overall", value=NULL, coef=NULL, vcov=NULL,
   if(lag!=attr$lag && attr$arglag$fun=="integer")
       stop("prediction for lag sub-period not allowed for type 'integer'")
 #
-  if(!is.numeric(ci.level)||ci.level>=1||ci.level<=0) {
+  if(!is.numeric(ci.level) || ci.level>=1 || ci.level<=0) {
     stop("'ci.level' must be numeric and between 0 and 1")
   }
 #
@@ -133,11 +133,11 @@ function(basis, model=NULL, type="overall", value=NULL, coef=NULL, vcov=NULL,
 # CREATE THE OBJECT
 #
   # INITIAL LIST
-  list <- list(coefficients=newcoef,vcov=newvcov,basis=newbasis,type=type,
+  list <- list(coefficients=newcoef, vcov=newvcov, basis=newbasis, type=type,
     value=value)
   if(type!="var") list$predvar <- at
   if(!is.null(cen)) list$cen <- cen
-  list <- c(list,list(lag=lag,bylag=bylag,fit=fit,se=se))
+  list <- c(list, list(lag=lag, bylag=bylag, fit=fit, se=se))
 #
   # VECTORS WITH EXPONENTIATED EFFECTS AND CONFIDENCE INTERVALS
   z <- qnorm(1-(1-ci.level)/2)

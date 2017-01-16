@@ -1,8 +1,8 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2016
+### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2017
 #
 checkcrossbasis <- 
-function(argvar,arglag,addarg) {
+function(argvar, arglag, addarg) {
 #
 ################################################################################
 #

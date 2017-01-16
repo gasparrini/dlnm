@@ -26,7 +26,7 @@ These method functions extract the estimated model coefficients and their (co)va
   \item{\dots}{ further arguments passed to or from other methods.}
 }
 
-\author{Antonio Gasparrini, \email{antonio.gasparrini@lshtm.ac.uk}}
+\author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \seealso{
 See \code{\link{dlnm-package}} for an introduction to the package and for links to package vignettes providing more detailed information.
