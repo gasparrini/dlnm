@@ -1,5 +1,17 @@
 -----------------------------------
 
+### Changes in dlnm 2.3.3 (06 Aug 2017)
+
+#### Major changes
+
+  * .
+  
+#### Minor changes
+
+  * Replaced spline.des() with splineDesign() in ps(), and changed namespace.
+
+-----------------------------------
+
 ### Changes in dlnm 2.3.2 (16 Jan 2017)
 
 #### Major changes
@@ -22,7 +34,7 @@
   
 #### Minor changes
 
-  * Improved Description files, with links to GitHub page.
+  * Improved Description file, with links to GitHub page.
   
   * Fixed links, in particular to article in www.ag-myresearch.com.
 

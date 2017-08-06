@@ -30,7 +30,7 @@ function(x, df=10, knots=NULL, degree=3, intercept=FALSE, fx= FALSE,
     warning('all obs expected within inner df-degree+int knots')
 #
   # TRANSFORMATION
-  basis <- spline.des(knots,x,degree+1,x*0,TRUE)$design
+  basis <- splineDesign(knots,x,degree+1,x*0,TRUE)
   if(!intercept) basis <- basis[,-1L,drop=FALSE]
 #
   # RE-INSERT MISSING
