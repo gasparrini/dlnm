@@ -23,7 +23,7 @@ ps(x, df=10, knots=NULL, degree=3, intercept=FALSE, fx= FALSE, S=NULL, diff=2)
 }
 
 \details{
-The function has a usage similar to \code{\link{bs}} and \code{\link{ns}} in the \pkg{splines} package. It produces B-spline transformations through a call to \code{\link{spline.des}}, plus a difference matrix to define penalties. The same results are returned by the related \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}} in the package \pkg{mgcv}.
+The function has a usage similar to \code{\link{bs}} and \code{\link{ns}} in the \pkg{splines} package. It produces B-spline transformations through a call to \code{\link{splineDesign}}, plus a difference matrix to define penalties. The same results are returned by the related \code{\link[=smooth.construct.ps.smooth.spec]{smooth constructor}} in the package \pkg{mgcv}.
 
 The argument \code{knots} defines a vector of knots or (if of length 2) the lower and upper limits between which the splines can be evaluated. However, knots should be usually left automatically selected, and in particular these P-splines only have sense with equally-spaced knots, due to the nature of the penalization. It is important to highlight that, differently from \code{\link{bs}} where \emph{internal} and \emph{boundary} knots are defined, this function adopts a standard B-spline parameterization, including by default \code{2*(degree+1)} knots beyond the range of the variable.
 
