@@ -55,7 +55,7 @@ function(basis, model=NULL, type="overall", value=NULL, coef=NULL, vcov=NULL,
     coef <- getcoef(model,model.class)
     vcov <- getvcov(model, model.class)
     indcoef <- grep(cond,names(coef))
-    indvcov <- rownames(vcov) %in% names(coef[indcoef])
+    indvcov <- grep(cond,rownames(vcov))
     coef <- coef[indcoef]
     vcov <- vcov[indvcov,indvcov,drop=FALSE]
     model.link <- getlink(model,model.class)
