@@ -1,14 +1,14 @@
 -----------------------------------
 
-### Changes in dlnm 2.3.3 (06 Aug 2017)
+### Changes in dlnm 2.3.3 (05 Dec 2017)
 
-#### Major changes
-
-  * .
-  
 #### Minor changes
 
   * Replaced spline.des() with splineDesign() in ps(), and changed namespace.
+  
+  * Fixed a bug in crosspred() and crossreduce() when extracting vcov without accounting for the fact that missing parameters where excluded.
+  
+  * Minor correction to documentation.
 
 -----------------------------------
 

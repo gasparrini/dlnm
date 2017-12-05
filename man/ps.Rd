@@ -37,9 +37,9 @@ A matrix object of class \code{"ps"}. It contains the attributes \code{df}, \cod
 }
 
 \references{
-Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2017; in press. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
+Gasparrini A, Scheipl F, Armstrong B, Kenward MG. A penalized framework for distributed lag non-linear models. \emph{Biometrics}. 2017;\bold{73}(3):938-948. [freely available \href{http://www.ag-myresearch.com/2017_gasparrini_biomet.html}{here}]
 
-Eilers P. H. C. and Marx B. D. Flexible smoothing with B-splines and penalties. \emph{Statistical Science}. 1996; \bold{11}(2):89-121.
+Eilers P. H. C. and Marx B. D. Flexible smoothing with B-splines and penalties. \emph{Statistical Science}. 1996;\bold{11}(2):89-121.
 
 Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and Hall/CRC Press, 2006.
 }

@@ -1,8 +1,8 @@
 Package: dlnm
 Type: Package
 Title: Distributed Lag Non-Linear Models
-Version: 2.3.3
-Date: 2017-08-06
+Version: 2.3.4
+Date: 2017-12-05
 Author: Antonio Gasparrini [aut, cre],
   Ben Armstrong [aut],
   Fabian Scheipl [ctb]

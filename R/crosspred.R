@@ -62,14 +62,16 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   if(!is.null(model)) {
     model.class <- class(model)
     coef <- getcoef(model,model.class)
-    ind <- if(type=="gam") cond else grep(cond,names(coef))
-    coef <- coef[ind]
-    vcov <- getvcov(model, model.class)[ind,ind,drop=FALSE]
+    vcov <- getvcov(model, model.class)
+    indcoef <- if(type=="gam") cond else grep(cond,names(coef))
+    indvcov <- rownames(vcov) %in% names(coef[indcoef])
+    coef <- coef[indcoef]
+    vcov <- vcov[indvcov,indvcov,drop=FALSE]
     model.link <- getlink(model, model.class)
   } else model.class <- NA
 #
   # CHECK
-  npar <- if(type=="gam") length(ind) else ncol(basis)
+  npar <- if(type=="gam") length(indcoef) else ncol(basis)
   if(length(coef)!=npar || length(coef)!=dim(vcov)[1] || any(is.na(coef)) ||
       any(is.na(vcov)))
     stop("coef/vcov not consistent with basis matrix. See help(crosspred)")
