@@ -1,5 +1,15 @@
 -----------------------------------
 
+### Changes in dlnm 2.3.5 (02 Aug 2018)
+
+#### Minor changes
+
+  * Fixed a bug in getlink(), now with correct link extraction for coxph objects. In addition, added coxme objects. Thanks to Chau-Ren Jung.
+
+  * Minor correction to documentation.
+
+-----------------------------------
+
 ### Changes in dlnm 2.3.4 (05 Dec 2017)
 
 #### Minor changes

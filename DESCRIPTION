@@ -1,8 +1,9 @@
 Package: dlnm
 Type: Package
+Version: 2.3.5
+Date: 2018-08-02
 Title: Distributed Lag Non-Linear Models
-Version: 2.3.4
-Date: 2017-12-05
+Description: Collection of functions for distributed lag linear and non-linear models.
 Author: Antonio Gasparrini [aut, cre],
   Ben Armstrong [aut],
   Fabian Scheipl [ctb]
@@ -25,7 +26,7 @@ Suggests: survival,
   gee,
   geepack,
   mvmeta
-Description: Collection of functions for distributed lag linear and non-linear models.
-URL: https://github.com/gasparrini/dlnm, http://www.ag-myresearch.com/package-dlnm
+URL: https://github.com/gasparrini/dlnm,
+  http://www.ag-myresearch.com/package-dlnm
 License: GPL (>=2)
 LazyData: yes

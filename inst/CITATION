@@ -9,9 +9,10 @@ citEntry(
   pages = "1--20",
   url = "http://www.jstatsoft.org/v43/i08/",
   textVersion  =
-  paste("Gasparrini A.",
-    "Distributed lag linear and non-linear models in R: the package dlnm.",
-    "Journal of Statistical Software. 2011; 43(8):1-20.",
-    "URL http://www.jstatsoft.org/v43/i08/."),
-  header = "To cite the R package 'dlnm' in publications use:",
+    paste("Gasparrini A.",
+      "Distributed lag linear and non-linear models in R: the package dlnm.",
+      "Journal of Statistical Software. 2011; 43(8):1-20.",
+      "URL http://www.jstatsoft.org/v43/i08/."),
+    header = "To cite the R package 'dlnm' in publications use:",
+    footer = "A BibTeX entry for LaTeX users is returned by: toBibtex(citation('dlnm'))"
 )

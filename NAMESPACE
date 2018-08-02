@@ -15,7 +15,7 @@ export(exphist)
 #
 #
 #################
-# NOT EXPORTED
+# NOT EXPORTED BUT DOCUMENTED
 #################
 #
 # poly,thr,strata,lin, integer
