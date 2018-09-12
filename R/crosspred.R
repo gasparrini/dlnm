@@ -61,13 +61,13 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   # IF MODEL PROVIDED, EXTRACT FROM HERE, OTHERWISE DIRECTLY FROM COEF AND VCOV
   if(!is.null(model)) {
     model.class <- class(model)
-    coef <- getcoef(model,model.class)
+    coef <- getcoef(model, model.class)
     vcov <- getvcov(model, model.class)
     indcoef <- if(type=="gam") cond else grep(cond,names(coef))
     indvcov <- if(type=="gam") cond else grep(cond,rownames(vcov))
     coef <- coef[indcoef]
     vcov <- vcov[indvcov,indvcov,drop=FALSE]
-    model.link <- getlink(model, model.class)
+    model.link <- getlink(model, model.class, model.link)
   } else model.class <- NA
 #
   # CHECK

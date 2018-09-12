@@ -25,7 +25,7 @@ findrank(X)
 
 getcoef(model, class)
 
-getlink(model, class)
+getlink(model, class, model.link=NULL)
 
 getvcov(model, class)
 

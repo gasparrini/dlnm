@@ -45,7 +45,7 @@ Gasparrini A., Armstrong, B., Kenward M. G. Reducing and meta-analyzing estimate
 \author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
-All the predictions are plotted using a reference value corresponding to the centering point for continuous functions or different values for the other functions (see the related help pages). This is determined by the argument \code{cen} in \code{\link{crossreduce}}. Exponentiated predictions are returned by default if \code{x$model.link} is equal to \code{log} or \code{logit}.
+All the predictions are plotted using a reference value corresponding to the centering point for continuous functions or different values for the other functions (see the related help pages). This is determined by the argument \code{cen} in \code{\link{crossreduce}}. Exponentiated predictions are returned by default if \code{x$model.link} is equal to \code{"log"} or \code{"logit"}.
 }
 
 \seealso{

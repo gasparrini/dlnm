@@ -68,7 +68,7 @@ Gasparrini A., Armstrong, B.,Kenward M. G. Distributed lag non-linear models. \e
 \author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>}
 
 \note{
-All the predictions are plotted using a reference value corresponding to the centering point for continuous functions or different values for the other functions (see the related help pages). This is determined by the argument \code{cen} in \code{\link{crosspred}}. Exponentiated predictions are returned by default if \code{x$model.link} is equal to \code{log} or \code{logit}.
+All the predictions are plotted using a reference value corresponding to the centering point for continuous functions or different values for the other functions (see the related help pages). This is determined by the argument \code{cen} in \code{\link{crosspred}}. Exponentiated predictions are returned by default if \code{x$model.link} is equal to \code{"log"} or \code{"logit"}.
 
 These methods for class \code{"crosspred"} have replaced the old function \code{crossplot} since version 1.3.0.
 }
@@ -120,7 +120,7 @@ legend("topright",paste("Temperature =",c(-20,0,27,33)), col=1:4, lwd=1.5)
 
 # in one plot
 plot(pred3.temp, "slices", var=c(-20,0,27,33), lag=c(0,5,15,28), col=4,
-	ci.arg=list(density=40,col=grey(0.7)))
+  ci.arg=list(density=40,col=grey(0.7)))
 
 ### example of application beyond time series - see vignette("dlnmExtended")
 

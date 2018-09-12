@@ -1,5 +1,15 @@
 -----------------------------------
 
+### Changes in dlnm 2.3.6 (12 Aug 2018)
+
+#### Minor changes
+
+  * Some changes in crosspred(), where now model.link can be set directly independently from the model class, making the use of the function more flexible and general. This is implemented with a minor change in getlink(). In addition, the inclusion of the coxme objects (see below) has been removed.
+
+  * Minor correction to documentation.
+
+-----------------------------------
+
 ### Changes in dlnm 2.3.5 (02 Aug 2018)
 
 #### Minor changes

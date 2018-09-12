@@ -1,7 +1,7 @@
 Package: dlnm
 Type: Package
-Version: 2.3.5
-Date: 2018-08-02
+Version: 2.3.6
+Date: 2018-09-12
 Title: Distributed Lag Non-Linear Models
 Description: Collection of functions for distributed lag linear and non-linear models.
 Author: Antonio Gasparrini [aut, cre],
