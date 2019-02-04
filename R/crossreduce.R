@@ -35,7 +35,7 @@ function(basis, model=NULL, type="overall", value=NULL, coef=NULL, vcov=NULL,
 #
   #  lag MUST BE A POSITIVE INTEGER VECTOR, BY DEFAULT THAT USED FOR ESTIMATION
   lag <- if(missing(lag)) attr$lag else mklag(lag)
-  if(lag!=attr$lag && attr$arglag$fun=="integer")
+  if(any(lag!=attr$lag) && attr$arglag$fun=="integer")
       stop("prediction for lag sub-period not allowed for type 'integer'")
 #
   if(!is.numeric(ci.level) || ci.level>=1 || ci.level<=0) {

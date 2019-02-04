@@ -34,7 +34,7 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
     one = c(0,0),
     gam = if(is.null(basis$lag)) c(0,0) else basis$lag
   ) else mklag(lag)
-  if(type=="cb" && lag!=attr(basis,"lag") && attr(basis,"arglag")$fun=="integer")
+  if(type=="cb" && any(lag!=attr(basis,"lag")) && attr(basis,"arglag")$fun=="integer")
     stop("prediction for lag sub-period not allowed for type 'integer'")
 #
   # OTHER COHERENCE CHECKS

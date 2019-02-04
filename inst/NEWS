@@ -1,5 +1,13 @@
 -----------------------------------
 
+### Changes in dlnm 2.3.8 (04 Feb 2019)
+
+#### Minor changes
+
+  * Fixed bug in if/stop statements with && and !!.
+
+-----------------------------------
+
 ### Changes in dlnm 2.3.7 (01 Feb 2019)
 
 #### Minor changes

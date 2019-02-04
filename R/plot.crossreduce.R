@@ -6,7 +6,7 @@ function(x, ci="area", ci.arg, ci.level=x$ci.level, exp=NULL, ...) {
 #
 ################################################################################
 #
-  if(class(x)!="crossreduce") stop("'x' must be of class 'crossreduce'")
+  if(all(class(x)!="crossreduce")) stop("'x' must be of class 'crossreduce'")
   ci <- match.arg(ci,c("area","bars","lines","n"))
 #
   if(missing(ci.arg)) {

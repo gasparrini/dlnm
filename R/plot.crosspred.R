@@ -7,7 +7,7 @@ function(x, ptype, var=NULL, lag=NULL, ci="area", ci.arg,
 #
 ################################################################################
 #
-  if(class(x)!="crosspred") stop("'x' must be of class 'crosspred'")
+  if(all(class(x)!="crosspred")) stop("'x' must be of class 'crosspred'")
   ci <- match.arg(ci,c("area","bars","lines","n"))
 #
   # SETTING DEFAULT FOR ptype: OVERALL FOR NO LAG, SLICES FOR VAR/LAG, OTHERWISE 3D

@@ -7,7 +7,7 @@ function(x, ptype, var=NULL, lag=NULL, ci="n", ci.arg,
 #
 ################################################################################
 #
-  if(class(x)!="crosspred") stop("'x' must be of class 'crosspred'")
+  if(all(class(x)!="crosspred")) stop("'x' must be of class 'crosspred'")
   ci <- match.arg(ci,c("area","bars","lines","n"))
 #
   # SETTING DEFAULT FOR ptype: OVERALL FOR NO LAG, SLICES FOR VAR/LAG, OTHERWISE 3D
@@ -27,10 +27,10 @@ function(x, ptype, var=NULL, lag=NULL, ci="n", ci.arg,
   if(!is.null(lag)&&!is.numeric(lag)&&length(lag)>1&&ptype=="slices") {
     stop("'lag' must be a numeric scalar")
   }
-  if(!is.null(var)&&!var%in%x$predvar&&(ptype=="slices")) {
+  if(!is.null(var)&&any(!var%in%x$predvar)&&(ptype=="slices")) {
     stop("'var' must match values used for prediction")
   }
-  if(!is.null(lag)&&!lag%in%seqlag(x$lag,x$bylag)&&(ptype=="slices")) {
+  if(!is.null(lag)&&any(!lag%in%seqlag(x$lag,x$bylag))&&(ptype=="slices")) {
     stop("'lag' must match values used for prediction")
   }
   if(missing(ci.arg)) {
