@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2017
+### R routines for the R package dlnm (c)
 #
 crosspred <-
 function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,

@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini and Fabian Scheipl 2016-2017
+### R routines for the R package dlnm (c)
 #
 Predict.matrix.cb.smooth <- function(object, data) {
 #

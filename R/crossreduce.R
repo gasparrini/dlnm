@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2017
+### R routines for the R package dlnm (c)
 #
 crossreduce <-
 function(basis, model=NULL, type="overall", value=NULL, coef=NULL, vcov=NULL,

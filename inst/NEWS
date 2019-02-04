@@ -1,5 +1,15 @@
 -----------------------------------
 
+### Changes in dlnm 2.3.7 (01 Feb 2019)
+
+#### Minor changes
+
+  * Changes in the function exphist() to allow negative times and lags. This has required a complete recoding of the internal steps which has also made the code simpler and the function faster.
+
+  * Minor correction to documentation.
+
+-----------------------------------
+
 ### Changes in dlnm 2.3.6 (12 Aug 2018)
 
 #### Minor changes

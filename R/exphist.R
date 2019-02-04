@@ -1,35 +1,29 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2017
+### R routines for the R package dlnm (c)
 #
 exphist <-
-function(exp, times, lag, fill=0) {
-#
-################################################################################
-#
-  # CHECKS
-  exp <- as.vector(exp)
-  lag <- if(missing(lag)) c(0,length(exp)-1) else mklag(lag)
-  if(any(lag<0)) stop("only non-negative lags allowed")
-  times <- if(missing(times)) seq(length(exp)) else round(times)
-  if(any(times<1)) stop("'times' must composed by positive integer numbers")
-#
-  # DEFINE THE FUNCTION TO COMPUTE EXPOSURE HISTORY FOR A SINGLE TIME
-  fexphist1 <- function(time1, exp, lag, fill) {
+  function(exp, times, lag, fill=0) {
+    #
+    ################################################################################
+    #
+    # CHECKS
+    exp <- as.vector(exp)
+    lag <- if(missing(lag)) c(0,length(exp)-1) else mklag(lag)
+    times <- if(missing(times)) seq(length(exp)) else round(times)
+    #
+    # DEFINE THE EXTENSION OF exp IN BOTH SIDES, DEPENDING ON timees AND lag[2]
+    left <- max(0,lag[2L]+1-min(times))
+    right <- max(0,max(times)-length(exp))
+    #
     # EXTEND exp
-    exp <- c(exp,rep(fill,max(0,time1-length(exp))))
-    # DEFINE EXPOSURE HISTORY
-    exphist <- rev(exp[seq(time1)])
-    # FILL
-    exphist <- c(exphist,rep(fill,lag[2]))[seq(lag[1],lag[2])+1]
-    # NAMES
-    names(exphist) <- paste("lag",seq(lag[1],lag[2]),sep="")
-    return(exphist)
+    exp <- c(rep(fill,left),exp,rep(fill,right))
+    #
+    # DEFINE THE LIST OF SEQUENCES
+    seqlist <- lapply(times,"-",lag-left)
+    #
+    # GENERATE EXPOSURE HISTORIES FOR EACH OF times
+    hist <- do.call(rbind, lapply(seqlist, function(x) exp[seq(x[1L],x[2L])]))
+    rownames(hist) <- times
+    #
+    return(hist)
   }
-#
-  # GENERATE EXPOSURE HISTORIES FOR EACH OF times
-  hist <- do.call(rbind, lapply(times, fexphist1, exp, lag, fill))
-  rownames(hist) <- times
-#
-  return(hist)
-}
-

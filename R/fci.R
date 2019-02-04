@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2017
+### R routines for the R package dlnm (c)
 #
 fci <-
 function(ci, x, high, low, ci.arg, plot.arg, noeff=NULL) {

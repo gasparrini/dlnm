@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2017
+### R routines for the R package dlnm (c)
 #
 strata <-
 function(x, df=1, breaks=NULL, ref=1, intercept=FALSE) {

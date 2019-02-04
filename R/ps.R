@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2015-2017
+### R routines for the R package dlnm (c)
 #
 ps <-
 function(x, df=10, knots=NULL, degree=3, intercept=FALSE, fx= FALSE,

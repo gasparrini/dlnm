@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2013-2017
+### R routines for the R package dlnm (c)
 #
 checkgroup <- 
 function(group, x, basisvar, lag) {

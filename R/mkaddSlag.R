@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2017
+### R routines for the R package dlnm (c)
 #
 mkaddSlag <- function(addSlag, d) {
 #

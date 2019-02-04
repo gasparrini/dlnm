@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2017
+### R routines for the R package dlnm (c)
 #
 plot.crossreduce <-
 function(x, ci="area", ci.arg, ci.level=x$ci.level, exp=NULL, ...) {

@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2012-2017
+### R routines for the R package dlnm (c)
 #
 plot.crosspred <-
 function(x, ptype, var=NULL, lag=NULL, ci="area", ci.arg,

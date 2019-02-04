@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2015-2017
+### R routines for the R package dlnm (c)
 #
 cr <-
 function(x, df=10, knots=NULL, intercept=FALSE, fx= FALSE, S=NULL) {

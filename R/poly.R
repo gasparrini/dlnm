@@ -1,5 +1,5 @@
 ###
-### R routines for the R package dlnm (c) Antonio Gasparrini 2016-2017
+### R routines for the R package dlnm (c)
 #
 poly <-
 function(x, degree=1, scale, intercept=FALSE) {
