@@ -13,8 +13,8 @@ exphist(exp, times, lag, fill=0)
 
 \arguments{
   \item{exp }{ an exposure profile defined at equally-spaced time units, from time 1 on.}
-  \item{times }{ either a numeric scalar or vector of positive integer numbers specifying the time points at which each exposure history is evaluated. By default, all the time points of \code{exp}.}
-  \item{lag }{ either an integer scalar or vector of length 2, defining the the maximum lag or the lag range, respectively. Only non-negative lags allowed. By default, the lag period from 0 to \code{length(exp)-1}.}
+  \item{times }{ either a numeric scalar or vector of  integer numbers specifying the time points at which each exposure history is evaluated. By default, all the time points of \code{exp}. See Details.}
+  \item{lag }{ either an integer scalar or vector of length 2, defining the the maximum lag or the lag range, respectively. By default, the lag period from 0 to \code{length(exp)-1}.}
   \item{fill }{ value used to fill the exposure history. See Details.}
 }
 
@@ -23,7 +23,7 @@ This function is used to define matrices of exposure histories (backward in time
 
 The exposure profile in \code{exp} is assumed to represent a series of exposure events defined forward in time, starting from time 1 and on. An exposure history is then evaluated backward in time for each point defined by \code{times} (rounded to integers) on the lag period defined by \code{lag}.
 
-If the values in \code{times} are higher than the length of \code{exp}, or if the lag period extends backward before the beginning of the exposure profile, the exposure history is padded with values defined by \code{fill}.
+Negative numbers in \code{exp} represent time points before the start of the exposure profile, with 0 as the time immediately before, -1 as two times before, and so on. If the values in \code{times} are higher than the length of \code{exp}, or negative, or if the lag period extends backward before the beginning of the exposure profile, the exposure history is padded with values defined by \code{fill}.
 }
 
 \value{
