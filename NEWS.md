@@ -1,5 +1,17 @@
 -----------------------------------
 
+### Changes in dlnm 2.3.9 (11 Mar 2019)
+
+#### Minor changes
+
+  * Fixed bug in exphist() with negative lags.
+  
+  * Added colnames in object returned by exphist().
+
+  * Minor correction to documentation.
+
+-----------------------------------
+
 ### Changes in dlnm 2.3.8 (04 Feb 2019)
 
 #### Minor changes

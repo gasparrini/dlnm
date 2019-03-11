@@ -27,7 +27,7 @@ Negative numbers in \code{exp} represent time points before the start of the exp
 }
 
 \value{
-A numeric matrix of exposure histories, with rows corresponding to the values in \code{times} and columns corresponding to the lag period in \code{lag}.
+A numeric matrix of exposure histories, with named rows corresponding to the values in \code{times} and named columns corresponding to the lag period in \code{lag}.
 }
 
 \references{
