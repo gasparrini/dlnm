@@ -10,6 +10,7 @@ getcoef <-
     # NB: gam, gee AND geeglm HAVE CLASS glm AS WELL
     coef <- if(any(class%in%c("glm","gam","coxph"))) coef(model) else
       if(any(class%in%c("lme","lmerMod","glmerMod"))) fixef(model) else
+        if(class == "glmmTMB") fixef(model)$cond else
         tryCatch(coef(model),error=function(w) "error")
     if(identical(coef,"error")) stop("methods for coef() and vcov() must ",
       "exist for the class of object 'model'. If not, extract them manually and ",
@@ -17,4 +18,3 @@ getcoef <-
     #
     return(coef)
   }
-
