@@ -34,20 +34,18 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
     one = c(0,0),
     gam = if(is.null(basis$lag)) c(0,0) else basis$lag
   ) else mklag(lag)
-  if(type=="cb" && any(lag!=attr(basis,"lag")) && attr(basis,"arglag")$fun=="integer")
-    stop("prediction for lag sub-period not allowed for type 'integer'")
+#
+  # CHECKS ON lag AND bylag
+  if(type=="cb" && any(lag!=attr(basis,"lag")) && cumul)
+    stop("cumulative prediction not allowed for lag sub-period")
+  if(bylag!=1L && attr(basis,"arglag")$fun=="integer")
+    stop("prediction for non-integer lags not allowed for type 'integer'")
 #
   # OTHER COHERENCE CHECKS
   if(is.null(model) && (is.null(coef) || is.null(vcov)))
     stop("At least 'model' or 'coef'-'vcov' must be provided")
   if(!is.numeric(ci.level) || ci.level>=1 || ci.level<=0)
     stop("'ci.level' must be numeric and between 0 and 1")
-#
-  # CUMULATIVE EFFECTS ONLY WITH LAGGED EFFECTS AND lag[1]==0
-  if(cumul==TRUE && (diff(lag)==0L || lag[1]!=0L)) {
-    cumul <- FALSE
-    warning("Cumulative predictions only computed if diff(lag)>0 and lag[1]=0")
-  }
 #
 ################################################################################
 # SET COEF, VCOV CLASS AND LINK FOR EVERY TYPE OF MODELS

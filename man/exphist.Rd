@@ -50,7 +50,7 @@ exphist(exp, 5, 12)
 exphist(exp, 15, 3)
 
 ### use of argument lag
-exphist(exp, 15, c(3,7))
+exphist(exp, 10, c(3,7))
 
 ### exposure histories evaluated at multiple times
 exphist(exp, 3:5, 12)

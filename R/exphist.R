@@ -23,8 +23,8 @@ function(exp, times, lag, fill=0) {
   seqlist <- lapply(times,"-",lag-left)
 #
   # GENERATE EXPOSURE HISTORIES FOR EACH OF times
-  hist <- do.call(rbind, lapply(seqlist, function(x) exp[seq(x[1L],x[2L])]))
+  hist <- t(sapply(seqlist, function(x) exp[seq(x[1L],x[2L])]))
   dimnames(hist) <- list(times,paste0("lag",seqlag(lag)))
 #
   return(hist)
-  }
+}
