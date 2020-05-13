@@ -1,6 +1,14 @@
 -----------------------------------
 
-### Changes in dlnm 2.4.0 (0 May 2020)
+### Changes in dlnm 2.4.1 (13 May 2020)
+
+#### Minor changes
+
+  * Fixes for CRAN checks.
+
+-----------------------------------
+
+### Changes in dlnm 2.4.0 (01 May 2020)
 
 #### Minor changes
 
