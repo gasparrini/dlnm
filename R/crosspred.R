@@ -28,17 +28,20 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
       stop("predictions not provided for multi-dimensional smoothers other than 'cb'")
   } else name <- deparse(substitute(basis))
 #
-  #  EXTRACT lag (DEPENDENT ON TYPE)
-  lag <- if(missing(lag)) switch(type,
+  #  EXTRACT ORIGINAL lag (DEPENDENT ON TYPE)
+  origlag <- switch(type,
     cb = attr(basis,"lag"),
     one = c(0,0),
     gam = if(is.null(basis$lag)) c(0,0) else basis$lag
-  ) else mklag(lag)
+  )
+  lag <- if(missing(lag)) origlag else mklag(lag)
 #
   # CHECKS ON lag AND bylag
-  if(type=="cb" && any(lag!=attr(basis,"lag")) && cumul)
+  if(!all.equal(lag,origlag) && cumul)
     stop("cumulative prediction not allowed for lag sub-period")
-  if(bylag!=1L && attr(basis,"arglag")$fun=="integer")
+  lagfun <- switch(type, cb=attr(basis,"arglag")$fun, one=NULL,
+    gam=if(basis$dim==1L) NULL else basis$margin[[2]]$fun)
+  if(bylag!=1L && !is.null(lagfun) && lagfun=="integer")
     stop("prediction for non-integer lags not allowed for type 'integer'")
 #
   # OTHER COHERENCE CHECKS

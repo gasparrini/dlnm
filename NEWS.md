@@ -1,5 +1,18 @@
 -----------------------------------
 
+### Changes in dlnm 2.4.2 (22 May 2020)
+
+#### Minor changes
+
+  * smooth.construct.cb.smooth.spec() and Predict.matrix.cb.smooth() now defined
+    as method functions and registered as such in namespace.
+    
+  * Changes in crosspred() to fix issues with penalized version 
+    
+  * Documentation amended accordingly.
+
+-----------------------------------
+
 ### Changes in dlnm 2.4.1 (13 May 2020)
 
 #### Minor changes
