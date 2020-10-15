@@ -1,4 +1,9 @@
 -----------------------------------
+### Changes in dlnm 
+
+  * smooth.construct.cb.smooth.spec() can now take the "cs" basis.
+
+-----------------------------------
 
 ### Changes in dlnm 2.4.2 (22 May 2020)
 
