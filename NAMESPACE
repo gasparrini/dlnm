@@ -3,15 +3,15 @@
 #################
 #
 export(onebasis,crossbasis,crosspred,crossreduce)
-export(plot.crosspred,lines.crosspred,points.crosspred)
-export(ps,cr)
-export(cbPen)
-export(smooth.construct.cb.smooth.spec,Predict.matrix.cb.smooth)
-export(plot.crossreduce,lines.crossreduce,points.crossreduce)
-export(summary.onebasis,summary.crossbasis,summary.crosspred,summary.crossreduce)
-export(coef.crosspred,vcov.crosspred,coef.crossreduce,vcov.crossreduce)
 export(logknots,equalknots)
 export(exphist)
+export(ps,cr)
+export(cbPen)
+export(summary.onebasis,summary.crossbasis,summary.crosspred,summary.crossreduce)
+export(plot.crosspred,lines.crosspred,points.crosspred)
+export(plot.crossreduce,lines.crossreduce,points.crossreduce)
+export(coef.crosspred,vcov.crosspred,coef.crossreduce,vcov.crossreduce)
+export(smooth.construct.cb.smooth.spec,Predict.matrix.cb.smooth)
 #
 #
 #################
@@ -66,9 +66,11 @@ S3method(points, crosspred)
 S3method(plot, crossreduce)
 S3method(lines, crossreduce)
 S3method(points, crossreduce)
-S3method(plot, crossreduce)
 #
 S3method(coef, crosspred)
 S3method(vcov, crosspred)
 S3method(coef, crossreduce)
 S3method(vcov, crossreduce)
+#
+S3method(smooth.construct, cb.smooth.spec)
+S3method(Predict.matrix, cb.smooth)

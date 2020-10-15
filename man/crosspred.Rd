@@ -26,7 +26,7 @@ crosspred(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   \item{by, bylag}{ increment of the sequences of predictor and lag values used for prediction.}
   \item{cen }{ logical or a numeric scalar. It specifies the centering value, then used as a reference for predictions. See Details below.}
   \item{ci.level }{ confidence level for the computation of confidence intervals.}
-  \item{cumul }{ logical. If \code{TRUE}, incremental cumulative associations along lags are also predicted. See Details.}
+  \item{cumul }{ logical. If \code{TRUE}, incremental cumulative associations along (integer) lags are also predicted. See Details.}
   \item{object }{ an object of class \code{"crosspred"}.}
   \item{\dots }{ additional arguments to be passed to \code{summary}.}
 }
@@ -40,7 +40,7 @@ The values in \code{at} can be provided as a vector, and in this case they are r
 
 Predictions are computed versus a reference value, with default values dependent on the function used in \code{basis}, or manually set through \code{cen}. Briefly, sensible default values are automatically defined for \code{\link{strata}}, \code{\link{thr}} and \code{\link{integer}} (corresponding to the reference region), and for \code{\link{lin}} (corresponding to 0). For other choices, such as \code{\link{ns}}, \code{\link{bs}}, \code{\link{poly}} or other existing or user-defined functions, the centering value is set by default to the mid-range. The inclusion of the intercept in \code{basis} term nullifies the centering.
 
-Exponentiated predictions are included if \code{model.link} is equal to \code{"log"} or \code{"logit"}. Confidence intervals computed using a normal approximation and a confidence level of \code{ci.level}. \code{model.link} is automatically selected from \code{model} for some classes when set to \code{NULL} (default), but needs to be provided for different classes. Matrices with incremental cumulative predicted associations along lags at each values used for prediction are included if \code{cumul=TRUE}.
+Exponentiated predictions are included if \code{model.link} is equal to \code{"log"} or \code{"logit"}. Confidence intervals computed using a normal approximation and a confidence level of \code{ci.level}. \code{model.link} is automatically selected from \code{model} for some classes when set to \code{NULL} (default), but needs to be provided for different classes. Matrices with incremental cumulative predicted associations along integer lags at each exposure values used for prediction are included if \code{cumul=TRUE}.
 
 The function automatically works with model objects from regression function \code{\link{lm}} and \code{\link{glm}}, \code{\link[mgcv]{gam}} (package \pkg{mgcv}), \code{\link[survival]{coxph}} and \code{\link[survival]{clogit}} (package \pkg{survival}), \code{\link[nlme]{lme}} and \code{\link[nlme]{nlme}} (package \pkg{nlme}), \code{\link[lme4]{lmer}} and \code{\link[lme4]{glmer}} and \code{\link[lme4]{nlmer}} (package \pkg{lme4}), \code{\link[gee]{gee}} (package \pkg{gee}), \code{\link[geepack]{geeglm}} (package \pkg{geepack}). The function also works with any regression function for which \code{\link{coef}} and \code{\link{vcov}} methods are available. Otherwise, the user needs to input the coefficients and associated (co)variance matrix related to the parameters of the crossbasis as arguments \code{coef} and \code{vcov}, and information on the link function in \code{model.link}. In this case, dimensions and order must match the variables included in \code{basis}. 
 
@@ -58,7 +58,7 @@ A list object of class \code{"crosspred"} with the following (optional) componen
   \item{matlow, mathigh }{ matrices of confidence intervals for \code{matfit}.}
   \item{allfit, allse }{ vectors of the overall cumulative predicted association and standard errors.}
   \item{alllow, allhigh }{ vectors of confidence intervals for \code{allfit}.}
-  \item{cumfit, cumse }{ matrices of incremental cumulative predicted associations along lags and related standard errors at the chosen combinations of predictor and lag values. Computed if \code{cumul=TRUE}.}
+  \item{cumfit, cumse }{ matrices of incremental cumulative predicted associations along lags and related standard errors at the chosen combinations of predictor and (integer) lag values. Computed if \code{cumul=TRUE}.}
   \item{cumlow, cumhigh }{ matrices of confidence intervals for \code{cumfit}. Computed if \code{cumul=TRUE}.}
   \item{matRRfit }{ matrix of exponentiated specific associations from \code{matfit}.}
   \item{matRRlow, matRRhigh }{ matrices of confidence intervals for \code{matRRfit}.}

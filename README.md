@@ -8,7 +8,7 @@ The package `dlnm` contains functions to specify and interpret distributed lag l
 
 ### Info on the `dlnm` package
 
-The package is available on the Comprehensive R Archive Network (CRAN), with info at the related web page (https://cran.r-project.org/package=dlnm). A development website is available on GitHub (https://github.com/gasparrini/dlnm).
+The package `dlnm` is available on the Comprehensive R Archive Network (CRAN), with info at the related web page (https://cran.r-project.org/package=dlnm). A development website is available on GitHub (https://github.com/gasparrini/dlnm).
 
 For a short summary of the functionalities of this package, refer to the main help page by typing:
 
@@ -32,7 +32,7 @@ install.packages("dlnm")
 
 ### R code in published articles
 
-Several peer-reviewed articles and documents provide R code illustrating methodological developments or replicating substantive results. An updated version of the code can be found at the GitHub (https://github.com/gasparrini) or personal web page (http://www.ag-myresearch.com) of the package maintainer.
+Several peer-reviewed articles and documents provide R code illustrating methodological developments of `dlnm` or replicating substantive results using this package. An updated version of the code can be found at the GitHub (https://github.com/gasparrini) or personal web page (http://www.ag-myresearch.com) of the package maintainer.
 
 ### References:
 
