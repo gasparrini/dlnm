@@ -29,8 +29,8 @@ smooth.construct.cb.smooth.spec <- function(object, data, knots) {
 #
   # EVALUATE bs (STORED IN xt, DEFAULT TO 'ps', AND ONLY 'ps'-'cr' ACCEPTED)
   bs <- object$xt$bs
-  if(is.null(bs)) bs <- "ps" else if(!all(bs%in%c("ps","cr"))) 
-      stop("only 'ps' and 'cr' smoothers accepted within 'cb'")
+  if(is.null(bs)) bs <- "ps" else if(!all(bs%in%c("ps","cr", "cs"))) 
+      stop("only 'ps', 'cr', and 'cs' smoothers accepted within 'cb'")
   if(length(bs)==1) bs <- rep(bs,2)
 #
   # EVALUATE m (FROM p.order)
@@ -63,8 +63,13 @@ smooth.construct.cb.smooth.spec <- function(object, data, knots) {
     knt <- knots[term[i]]
     if(is.null(xtarg)) {
       sobj <- do.call(s,list(as.name(term[i]),k=k[i],fx=fx[i],bs=bs[i],m=m[[i]]))
-      margin[[i]] <- if(mc[i]) smoothCon(sobj,dat,knt,absorb.cons=TRUE,
-        n=length(dat[[1]]))[[1]] else smooth.construct(sobj,dat,knt)
+      margin[[i]] <- 
+        if(mc[i]) {
+          smoothCon(sobj,dat,knt,absorb.cons=TRUE,
+                    n=length(dat[[1]]))[[1]] 
+        } else {
+          smooth.construct(sobj,dat,knt)
+        }
       Xm[[i]] <- margin[[i]]$X
       if(!fx[i]) Sm[[i]] <- margin[[i]]$S[[1]]
       d[i] <- ncol(margin[[i]]$X)
