@@ -57,7 +57,19 @@ See \code{\link{dlnm-package}} for an introduction to the package and for links 
 }
 
 \examples{
-# to be added soon
+library(mgcv)
+data(drug)
+Q <- as.matrix(drug[, 4:7])
+L <- matrix(1:4, nrow = nrow(Q), ncol = ncol(Q), byrow = TRUE)
+
+# with default basis, "ps"
+m_ps <- gam(out ~ sex + s(Q, L, bs = "cb"), data = drug)
+
+# with "cr" basis and 3 knots on each dimension
+m_cr <- gam(out ~ sex + s(Q, L, bs = "cb", k = c(3,3), xt = list(bs = "cr")), data = drug)
+
+# with "ps" basis for response dimension and "cs" basis for lag dimension
+m_ps_cs <- gam(out ~ sex + s(Q, L, bs = "cb", k = c(3,3), xt = list(bs = c("cs", "cs"))), data = drug)
 }
 
 \keyword{smooth} \keyword{models} \keyword{regression}
