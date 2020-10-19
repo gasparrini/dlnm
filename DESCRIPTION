@@ -21,11 +21,13 @@ Imports: stats,
   mgcv,
   tsModel
 Depends: R (>= 3.2)
-Suggests: survival,
-  lme4,
-  gee,
-  geepack,
-  mvmeta
+Suggests: 
+    survival,
+    lme4,
+    gee,
+    geepack,
+    mvmeta,
+    testthat
 URL: https://github.com/gasparrini/dlnm,
   http://www.ag-myresearch.com/package-dlnm
 License: GPL (>=2)
