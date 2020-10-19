@@ -105,12 +105,12 @@ smooth.construct.cb.smooth.spec <- function(object, data, knots) {
   # PENALTY MATRICES: FIRST RESCALE, THEN EXPAND (AS tensor.prod.penalties)
   S <- list()
   if(!fx[1]) {
-    Sm[[1]] <- Sm[[1]]/eigen(Sm[[1]],symmetric=TRUE,only.values=TRUE)$values[1]
-    S <- c(S,list(Svar=Sm[[1]]%x%diag(d[2])))
+    Sm[["var"]] <- Sm[["var"]]/eigen(Sm[["var"]],symmetric=TRUE,only.values=TRUE)$values[1]
+    S <- c(S,list(Svar=Sm[["var"]]%x%diag(d[2])))
   }
   if(!fx[2]) {
-    Sm[[2]] <- Sm[[2]]/eigen(Sm[[2]],symmetric=TRUE,only.values=TRUE)$values[1]
-    S <- c(S,list(Slag=diag(d[1])%x%Sm[[2]]))
+    Sm[["lag"]] <- Sm[["lag"]]/eigen(Sm[["lag"]],symmetric=TRUE,only.values=TRUE)$values[1]
+    S <- c(S,list(Slag=diag(d[1])%x%Sm[["lag"]]))
   }
 #
   # RANK
