@@ -76,16 +76,20 @@ smooth.construct.cb.smooth.spec <- function(object, data, knots) {
       r[i] <- margin[[i]]$rank
       nr[i] <- margin[[i]]$null.space.dim
     } else {
+      #TODO: warn if user supplies basis in `bs = ` as well as `arglag` or `argvar` because this is going to ignore the `bs` argument
       # IF arglag, ADD AN INTERCEPT IF APPROPRIATE
-      if(i==2&&(is.null(xtarg$fun)||"intercept"%in%names(formals(xtarg$fun)))&&
-          sum(pmatch(names(xtarg),"intercept",nomatch=0))==0) 
+      if (i == 2 &&
+          (is.null(xtarg$fun) ||
+           "intercept" %in% names(formals(xtarg$fun))) &&
+          sum(pmatch(names(xtarg), "intercept", nomatch = 0)) == 0) {
         xtarg$intercept <- TRUE
+      }
       Xm[[i]] <- do.call("onebasis",modifyList(xtarg,list(x=dat[[term[i]]])))
       attr <- attributes(Xm[[i]])
       ind <- match(c("fun",names(formals(attr$fun))),names(attr),nomatch=0)
       margin[[i]] <- attr[ind]
       class(margin[[i]]) <- "onebasis"
-      if(!attr$fun%in%c("ps","cr")) fx[i] <- TRUE
+      if(!attr$fun%in%c("ps","cr", "cs")) fx[i] <- TRUE
       if(!fx[i]) Sm[[i]] <- attr$S
       d[i] <- nr[i] <- ncol(Xm[[i]])
     }
@@ -132,9 +136,29 @@ smooth.construct.cb.smooth.spec <- function(object, data, knots) {
   # NB:
   #   - np SET TO FALSE (NO REPARAMETERIZATION), SO XP=list()
   #   - plot.me DOES NOT ALLOW (YET) PLOTTING USING mgcv FUNCTIONS
-  ret <- list(margin=margin,term=term,by=object$by,fx=fx,label=object$label,
-    dim=dim,mp=TRUE,np=FALSE,id=object$id,sp=object$sp,inter=TRUE,mc=mc,
-    plot.me=FALSE,X=X,S=S,C=C,df=ncol(X),null.space.dim=nr,rank=r,XP=list())
+  ret <-
+    list(
+      margin = margin,
+      term = term,
+      by = object$by,
+      fx = fx,
+      label = object$label,
+      dim = dim,
+      mp = TRUE,
+      np = FALSE,
+      id = object$id,
+      sp = object$sp,
+      inter = TRUE,
+      mc = mc,
+      plot.me = FALSE,
+      X = X,
+      S = S,
+      C = C,
+      df = ncol(X),
+      null.space.dim = nr,
+      rank = r,
+      XP = list()
+    )
 #
   # ADD ADDITIONAL ATTRIBUTES SPECIFIC TO cb SMOOTHER
   ret$lag <- range(data[[term[2]]])
