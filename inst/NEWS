@@ -1,5 +1,14 @@
 -----------------------------------
 
+### Changes in dlnm 2.4.3 (19 Mar 2021)
+
+#### Minor changes
+
+  * Remove warning about old knot default placement in 'arglag' argument of
+    crossbasis().
+
+-----------------------------------
+
 ### Changes in dlnm 2.4.2 (22 May 2020)
 
 #### Minor changes

@@ -21,16 +21,6 @@ function(argvar, arglag, addarg) {
     assign("arglag",arglag,parent.frame())
     warning("argument 'type' replaced by 'fun'. See ?onebasis")
   }
-  # OLD DEFAULT KNOTS PLACEMENT FOR LAG SPACE
-  checklag <- function(fun=NULL,df=NULL,knots=NULL,...) {
-    if((is.null(fun)||fun%in%c("ns","bs","strata")) && 
-      is.null(knots) && (!is.null(df)&&df>1))
-      warning("default knots placement along lags has changed since version 2.0.0.",
-        "\n","See 'file.show(system.file('Changesince200',package='dlnm'))'.",
-        "\n","See also help(logknots) for setting the knots",
-        "\n","consistently with the previous versions")
-  }
-  do.call(checklag,arglag)
   # 'VERY' OLD USAGE
   if(any(c("vartype","vardf","vardegree","varknots","varbound","varint",
     "cen","cenvalue","maxlag","lagtype","lagdf","lagdegree","lagknots",

@@ -27,8 +27,9 @@ added for placing the knots at equally-spaced values in the log scale, the
 default previously used.
 
 The syntax for the old versions still works in many other cases, and changes are
-included internally when possible. However, the functions return a warning with
-a suggestion of adopting the new syntax.
+included internally when possible. However, results can now be different when
+using the default knots placement. The functions do not anymore return any
+warning about the new syntax.
 
 An updated version of code published in various articles is available at:
 www.ag-myresearch.com
