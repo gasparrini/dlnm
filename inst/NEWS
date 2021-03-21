@@ -1,6 +1,6 @@
 -----------------------------------
 
-### Changes in dlnm 2.4.4 (21 Mar 2021)
+### Changes in dlnm 2.4.5 (21 Mar 2021)
 
 #### Minor changes
 
