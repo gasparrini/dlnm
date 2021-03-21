@@ -39,7 +39,7 @@ The variable \code{temp} is derived from the original \code{tmpd} after a transf
 \source{
 The complete dataset used to be available at the Internet-based Health and Air Pollution Surveillance System (iHAPSS) website:
 
-\url{http://www.ihapss.jhsph.edu}
+\url{http://www.ihapss.jhsph.edu/}
 
 or through the packages \pkg{NMMAPSdata} or \pkg{NMMAPSlite}. Currently, the data are not available any more and the two packages have been archived.
 }

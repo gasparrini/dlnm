@@ -1,5 +1,13 @@
 -----------------------------------
 
+### Changes in dlnm 2.4.4 (21 Mar 2021)
+
+#### Minor changes
+
+  * Fixed issues with hyperlinks.
+
+-----------------------------------
+
 ### Changes in dlnm 2.4.3 (19 Mar 2021)
 
 #### Minor changes

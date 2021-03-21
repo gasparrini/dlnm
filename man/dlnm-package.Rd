@@ -70,7 +70,7 @@ Gasparrini A, Armstrong, B, Kenward MG. Distributed lag non-linear models. \emph
 
 Gasparrini A, Armstrong B, Kenward MG. Reducing and meta-analyzing estimates from distributed lag non-linear models.\emph{BMC Medical Research Methodology}. 2013;\bold{13}(1):1. [freely available \href{http://www.ag-myresearch.com/2013_gasparrini_bmcmrm.html}{here}].
 
-Armstrong B. Models for the relationship between ambient temperature and daily mortality. \emph{Epidemiology}. 2006;\bold{17}(6):624-31. [available \href{http://www.ncbi.nlm.nih.gov/pubmed/17028505}{here}]
+Armstrong B. Models for the relationship between ambient temperature and daily mortality. \emph{Epidemiology}. 2006;\bold{17}(6):624-31. [available \href{https://pubmed.ncbi.nlm.nih.gov/17028505/}{here}]
 }
 
 \keyword{package}
