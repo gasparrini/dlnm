@@ -4,6 +4,14 @@
 
 #### Minor changes
 
+  * Fixed bug in crosspred() with lag sub-periods (thanks to Jeffrey Carlson).
+
+-----------------------------------
+
+### Changes in dlnm 2.4.5 (21 Mar 2021)
+
+#### Minor changes
+
   * Fixed issues with hyperlinks.
 
 -----------------------------------

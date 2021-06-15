@@ -37,7 +37,7 @@ function(basis, model=NULL, coef=NULL, vcov=NULL, model.link=NULL, at=NULL,
   lag <- if(missing(lag)) origlag else mklag(lag)
 #
   # CHECKS ON lag AND bylag
-  if(!all.equal(lag,origlag) && cumul)
+  if(!all(lag==origlag) && cumul)
     stop("cumulative prediction not allowed for lag sub-period")
   lagfun <- switch(type, cb=attr(basis,"arglag")$fun, one=NULL,
     gam=if(basis$dim==1L) NULL else basis$margin[[2]]$fun)
