@@ -23,8 +23,8 @@ High and low-level method functions for graphs (3d, contour, slices and overall)
 
 \arguments{
   \item{x }{ an object of class \code{"crosspred"}.}
-  \item{ptype }{ type of plot. Default to \code{"3d"} for lagged relationship, otherwise \code{"overall"}. See Details below.}
-   \item{var, lag }{ vectors (for \code{plot}) or numeric scalars (for \code{lines}-\code{points}) of predictor or lag values at which specific associations must be plotted. Used only if \code{ptype="slices"}.}
+  \item{ptype }{ type of plot. Default to \code{"3d"} for lagged relationship, otherwise \code{"overall"}. Other options are \code{"slices"} and \code{"contour"}. See Details below.}
+   \item{var, lag }{ vectors (for \code{plot}) or numeric scalars (for \code{lines}-\code{points}) of predictor or lag values, respectively, at which specific associations must be plotted. Used only if \code{ptype="slices"}.}
   \item{ci }{ type of confidence intervals representation: one of \code{"area"}, \code{"bars"}, \code{"lines"} or \code{"n"}. Default to \code{"area"} in high level functions, \code{"n"} for low-level functions.}
   \item{ci.arg }{ list of arguments to be passed to low-level plotting functions to draw the confidence intervals. See Details.}
   \item{ci.level }{ confidence level for the computation of confidence intervals.}
