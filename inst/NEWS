@@ -1,6 +1,32 @@
 -----------------------------------
 
-### Changes in dlnm 2.4.5 (21 Mar 2021)
+### Changes in dlnm 2.4.9 (17 Apr 2025)
+
+#### Minor changes
+
+  * Fixed links in Rd pages, consistently with new R requirements.
+  
+  * Minor fixes in documentation.
+
+-----------------------------------
+
+### Changes in dlnm 2.4.8 (06 Nov 2021)
+
+#### Minor changes
+
+  * Fixed bug in getvcov() with geeglm() (thanks to Zhongzheng (Jason) Niu).
+
+-----------------------------------
+
+### Changes in dlnm 2.4.7 (07 Oct 2021)
+
+#### Minor changes
+
+  * Fixed url/doi in main reference (change in JSS repository).
+
+-----------------------------------
+
+### Changes in dlnm 2.4.6 (15 June 2021)
 
 #### Minor changes
 

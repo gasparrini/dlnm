@@ -21,7 +21,7 @@ cr(x, df=10, knots=NULL, intercept=FALSE, fx= FALSE, S=NULL)
 }
 
 \details{
-The function has a usage similar to \code{\link{bs}} and \code{\link{ns}} in the \pkg{splines} package. It produces spline transformations, however using a parameterization that represents the splines fit in terms of values at the knots. A penalty matrix is also defined. The same results are returned by the related \code{\link[=smooth.construct.cr.smooth.spec]{smooth constructor}} in the package \pkg{mgcv}, which is in fact called internally.
+The function has a usage similar to \code{\link{bs}} and \code{\link{ns}} in the \pkg{splines} package. It produces spline transformations, however using a parameterization that represents the splines fit in terms of values at the knots. A penalty matrix is also defined. The same results are returned by the related \code{\link[mgcv]{smooth.construct.cr.smooth.spec}} in the package \pkg{mgcv}, which is in fact called internally.
 
 The argument \code{knots} defines a vector of knots within the range of the predictor \code{x}, by default at equally-spaced quantiles. The penalization is defined on the second derivative of the function through a penalty matrix \code{S}.
 
@@ -41,11 +41,11 @@ Wood S. N. Generalized Additive Models: An Introduction with R. Chapman and Hall
 \author{Antonio Gasparrini <\email{antonio.gasparrini@lshtm.ac.uk}>, with internall calls to functions included in the package \pkg{mgcv} by Simon N. Wood.}
 
 \note{
-The function is primarily added here to specify penalized DLMs and DLNMs using the so-called \emph{external} method, \emph{i.e.} by including the penalty matrix in the argument \code{paraPen} of the \code{\link[mgcv]{gam}} regression function in \pkg{mgcv}  (see \code{\link{cbPen}}). However, this approach can be also used to fit standard uni-dimensional penalized cubic spline models as an alternative to the use of specific \code{\link[=smooth.construct.cr.smooth.spec]{smooth constructor}}, as it takes advantage of the use of prediction and plotting functions in \pkg{dlnm}.
+The function is primarily added here to specify penalized DLMs and DLNMs using the so-called \emph{external} method, \emph{i.e.} by including the penalty matrix in the argument \code{paraPen} of the \code{\link[mgcv]{gam}} regression function in \pkg{mgcv}  (see \code{\link{cbPen}}). However, this approach can be also used to fit standard uni-dimensional penalized cubic spline models as an alternative to the use of specific \code{\link[mgcv]{smooth.construct.cr.smooth.spec}}, as it takes advantage of the use of prediction and plotting functions in \pkg{dlnm}.
 }
 
 \seealso{
-\code{\link{ps}} for P-splines. \code{\link{bs}} and \code{\link{ns}} for B-splines and natural cubic splines, respectively. \code{\link{cbPen}} for defining tensor-type bi-dimensional penalties in DLNMs. The related \code{\link[=smooth.construct.cr.smooth.spec]{smooth constructor}} for cubic regression spline smooths in \pkg{mgcv}. The \code{\link[=smooth.construct.cb.smooth.spec]{cb smooth constructor}} for cross-basis penalized spline smooths.
+\code{\link{ps}} for P-splines. \code{\link{bs}} and \code{\link{ns}} for B-splines and natural cubic splines, respectively. \code{\link{cbPen}} for defining tensor-type bi-dimensional penalties in DLNMs. The related \code{\link[mgcv]{smooth.construct.cr.smooth.spec}} for cubic regression spline smooths in \pkg{mgcv}. The \code{\link[=smooth.construct.cb.smooth.spec]{cb smooth constructor}} for cross-basis penalized spline smooths.
 
 See \code{\link{dlnm-package}} for an introduction to the package and for links to package vignettes providing more detailed information.
 }

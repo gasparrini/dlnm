@@ -1,7 +1,11 @@
-citEntry(
-  entry = "Article",
+bibentry(
+  bibtype = "Article",
   title ="Distributed lag linear and non-linear models in {R}: the package {dlnm}",
-  author = personList(as.person("A. Gasparrini")),
+  author = c(
+    person("Antonio","Gasparrini",role=c("aut","cre"),email="antonio.gasparrini@lshtm.ac.uk"),
+    person("Ben","Armstrong",role="aut",email="ben.armstrong@lshtm.ac.uk"),
+    person("Fabian","Scheipl",role="ctb",email="fabian.scheipl@stat.uni-muenchen.de")
+  ),
   journal = "Journal of Statistical Software",
   year = "2011",
   volume = "43",
@@ -9,11 +13,11 @@ citEntry(
   pages = "1--20",
   doi = "10.18637/jss.v043.i08",
   url = "https://doi.org/10.18637/jss.v043.i08",
-  textVersion  =
+  textVersion =
     paste("Gasparrini A.",
       "Distributed lag linear and non-linear models in R: the package dlnm.",
       "Journal of Statistical Software. 2011; 43(8):1-20.",
       "https://doi.org/10.18637/jss.v043.i08"),
-    header = "To cite the R package 'dlnm' in publications use:",
-    footer = "A BibTeX entry for LaTeX users is returned by: toBibtex(citation('dlnm'))"
+  header = "To cite the R package 'dlnm' in publications use:",
+  footer = "A BibTeX entry for LaTeX users is returned by: toBibtex(citation('dlnm'))"
 )

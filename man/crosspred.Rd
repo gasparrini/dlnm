@@ -93,7 +93,7 @@ Exponentiated predictions are included if \code{model.link} (selected by the use
 \section{Warnings}{
 In case of collinear variables in the \code{basis} object, some of them are discarded and the related parameters not included in \code{model}. Then, \code{crosspred} will return an error. Check that the specification of the variables is meaningful through \code{\link{summary.crossbasis}} or \code{\link{summary.onebasis}}.
 
-The name of the object \code{basis}  will be used to extract the related estimated parameters from \code{model}. If more than one variable is transformed by cross-basis functions in the same model, different names must be specified.
+The name of the object \code{basis}  will be used to extract the related estimated parameters from \code{model}. If more than one variable is transformed by cross-basis functions in the same model, \emph{completely} different names must be specified (excluding also partial matching such as abbreviations).
 }
 
 \seealso{
